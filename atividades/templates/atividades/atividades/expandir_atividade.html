@@ -1,0 +1,46 @@
+{% extends "atividades/base.html" %}
+{% load meus_filtros %}
+    {% block title %}
+        PRoDutividade | Expandir atividade
+    {% endblock title %}
+        {{ atividade.tipo }}
+    {% block content %}
+        <div class="card">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">{{ atividade.descricao }}</h3>
+                </div>
+                <div class="box-body">
+                    <h5 class="card-title">Área: {{ atividade.area }}</h5>
+                    <h5 class="card-title">Sub-Área: {{ atividade.sub_area }}</h5>
+                    <h5 class="card-title">Plataforma: {{ atividade.plataforma }}</h5>
+                    <h5 class="card-title">Início: {{ atividade.inicio }}</h5>
+                    <h5 class="card-title">Conclusão: {{ atividade.fim }}</h5>
+                    <h5 class="card-title">Tempo atividade: {{ tempo_atividade }} min.</h5>
+                    <h5 class="card-title">Tempo Total: {{ tempo_total|em_horas }}</h5>
+                </div>
+            <div class="box-footer">
+                <form method="post">
+                    <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary">Voltar</a>
+                </form>
+            </div>
+        </div>
+        {% for i in atividades %}
+            {% if i.detalhamento != '' %}
+                <div class="card">
+                    <div class="box box-primary">
+                    <div class="box-header">
+                        <h4>{{ i.data }} - {{ i.tempo }} minutos</h4>
+                    </div>
+                    <div class="box-body">
+                        <p>{{ i.detalhamento|safe }}</p>
+                    </div>
+                    <div class="box-footer">
+                        <form method="post">
+                            <a href="{% url 'editar_atividade' i.id %}">Editar</a>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endblock content %}

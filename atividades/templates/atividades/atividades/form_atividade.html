@@ -1,0 +1,85 @@
+{% extends "atividades/base.html" %}
+{% load meus_filtros %}
+{% load static %}
+{% block title %}
+    PRoDutividade | Cadastro de atividades
+{% endblock title %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'atividades/css/style.css' %}">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Cronômetro</h3>
+        </div>
+        <div class="box-body">
+            <span id="counter">00:00</span>
+            <a class="btn btn-info btn-cronometro" onclick="plus()">+</a>
+            <a class="btn btn-info btn-cronometro" onclick="minus()">-</a>
+        </div>
+        <div class="box-footer">
+            <a class="btn btn-primary" id="start" onclick="start()">Iniciar</a>
+            <a class="btn btn-info" onclick="registrar()">Registrar</a>
+            <a class="btn btn-danger" onclick="zerar()">Zerar</a>
+        </div>
+    </div>
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Cadastro de Atividade</h3>
+        </div>
+        <div class="box-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form_atividade.data.errors }}
+                    <label>Data:</label>
+                    {{ form_atividade.data|addclass:'form-control' }}
+                </div>
+                <div class="form-group">
+                    {{ form_atividade.area.errors }}
+                    <label>Área:</label>
+                    {{ form_atividade.area|addclass:'form-control' }}
+                </div>
+                <div class="form-group">
+                    {{ form_atividade.sub_area.errors }}
+                    <label>Sub-Área:</label>
+                    {{ form_atividade.sub_area|addclass:'form-control' }}
+                </div>
+                <div class="form-group">
+                    {{ form_atividade.plataforma.errors }}
+                    <label>Plataforma:</label>
+                    {{ form_atividade.plataforma|addclass:'form-control' }}
+                </div>
+                <div class="form-group">
+                    {{ form_atividade.pessoa.errors }}
+                    <label>Pessoa:</label>
+                    {{ form_atividade.pessoa|addclass:'form-control' }}
+                </div>
+                <div class="form-group">
+                    {{ form_atividade.descricao.errors }}
+                    <label>Descrição:</label>
+                    {{ form_atividade.descricao|addclass:'form-control' }}
+                </div>
+                <div class="form-group">
+                    {{ form_atividade.detalhamento.errors }}
+                    <label>Detalhamento:</label><br>
+                    {{ form_atividade.media }}
+                    {{ form_atividade.detalhamento|addclassplace:"form-control,Faça suas notas e observações aqui." }}
+                </div>
+                <div class="form-group">
+                    {{ form_atividade.tempo.errors }}
+                    <label>Tempo:</label>
+                    {{ form_atividade.tempo|addclass:'form-control' }}
+                </div>
+                <div>
+                    <input class="btn btn-primary" type="submit" name="Cadastrar">
+                    <a href="{{request.META.HTTP_REFERER}}" class="btn btn-info">Voltar</a>
+                    {% block excluir %}
+                    {% endblock excluir %}
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'atividades/js/cronometro.js' %}"></script>
+{% endblock content %}
+

@@ -1,0 +1,137 @@
+{% extends "atividades/base.html" %}
+{% load static %}
+{% load meus_filtros %}
+    {% block title %}
+        PRoDutividade | Listar atividades
+    {% endblock title %}
+
+    {% block content %}
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Tempo Total por Área {{ tempo_areas.nome }}</h3>
+        </div>
+        <div class="box-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Área</th>
+                        <th>Tempo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for area in tempo_areas %}
+                        <tr>
+                            {% if area.nome != 'Total' %}
+                                <td><a href="/atividades/area/{{ area.nome|slugify }}/">{{ area.nome }}</a></td>
+                                <td>{{ area.tempo|em_horas }}</td>
+                            {% else %}
+                                <td>{{ area.nome }}</td>
+                                <td>{{ area.tempo|em_horas }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Gráfico de Atividades</h3>
+        </div>
+        <!-- Start Canvas -> Desenhar elementos gráficos usando JS -->
+        <canvas class="line-chart"></canvas>
+    </div>
+
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Lista de Atividades</h3>
+        </div>
+        <div class="box-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Área</th>
+                    <th>Sub-Área</th>
+                    <th>Plataforma</th>
+                    <th>Pessoa</th>
+                    <th>Descrição</th>
+                    <th>Tempo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in atividades %}
+                    {% if request.user.id == i.usuario.id %}
+                        <td><a href="{% url 'listar_por_data' i.data %}">{{ i.data | date:"d/m" }}</a></td>
+                        <td><a href="{% url 'listar_por_area' i.area|slugify %}">{{ i.area }}</a></td>
+                        <td><a href="{% url 'listar_por_sub_area' i.sub_area|slugify %}">{{ i.sub_area }}</a></td>
+                        <td><a href="{% url 'listar_por_plataforma' i.plataforma|slugify %}">{{ i.plataforma }}</a></td>
+                        <td><a href="{% url 'listar_por_pessoa' i.pessoa|slugify %}">{{ i.pessoa }}</a></td>
+                        <td><a href="{% url 'expandir_atividade' i.id %}">{{ i.descricao }}</a></td>
+                        <td>{{ i.tempo }}</td>
+                        <td>
+                            <a href="{% url 'expandir_atividade' i.id %}">Detalhar</a>
+                            <a href="{% url 'editar_atividade' i.id %}">Editar</a>
+                        </td>
+                    {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        <div class="box-footer">
+        <p class="text-right">Total de {{ contador_atividades }} itens listados.</p>
+        </div>
+
+    </div>
+
+    <!-- Include Chart Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+    <!-- <script src="{% static 'atividades/js/chartjs.graphic.js' %}">-->
+    <script>
+        var ctx = document.getElementsByClassName("line-chart")
+        var lista_json = {{ json_tempo_areas |safe }};
+        let nomes = [];
+        let valores = [];
+        let cores = [];
+        function listas(elemento, indice, array){
+            nomes.push(elemento.nome);
+            valores.push(elemento.tempo);
+            cores.push(elemento.cor);
+        }
+
+        lista_json.forEach(listas);
+        nomes.pop()
+        valores.pop()
+
+        // Type, Data e Options
+        var chartGraph = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: nomes,
+                datasets: [
+                    {
+                    label: "ÁREAS",
+                    data: valores,
+                    borderWidth: 6,
+                    borderColor: cores,
+                    backgroundColor: cores,
+                    <!-- minBarLength: 80,-->
+                    }
+                    ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    fontSize: 20,
+<!--                                text: "PRODUTIVIDADE POR ÁREA"-->
+                }
+            },
+            labels: {
+                fontStyle: "bold"
+            }
+        });
+            </script>
+    {% endblock content %}

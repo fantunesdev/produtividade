@@ -1,0 +1,6 @@
+{% extends "atividades/atividades/form_atividade.html" %}
+{% load meus_filtros %}
+
+{% block excluir %}
+    <a href="{% url 'remover_atividade' atividade_antiga.id %}" class="btn btn-danger">Excluir</a>
+{% endblock excluir %}

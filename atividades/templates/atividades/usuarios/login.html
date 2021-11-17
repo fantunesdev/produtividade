@@ -1,0 +1,38 @@
+{% extends "atividades/usuarios/index.html" %}
+{% load static %}
+{% load  i18n %}
+{% load meus_filtros %}
+
+{% block title %}
+    Login
+{% endblock title %}
+
+{% block content %}
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Login</h3>
+        </div>
+        <div class="box-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form_usuario.username.errors }}
+                    <label>Usuário: </label>
+                    {{ form_usuario.username|addclass:'form-control' }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_usuario.password.errors }}
+                    <label>Senha: </label>
+                    {{ form_usuario.password|addclass:'form-control' }}
+                </div>
+        <div class="box-footer">
+            <div class="form-group">
+                <input type="submit" value="Logar" class="btn btn-primary">
+                <a href="{% url 'cadastrar_usuario' %}">Cadastrar usuário</a>
+            </div>
+        </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

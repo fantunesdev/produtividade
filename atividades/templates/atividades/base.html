@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+{% load static %}
+{% load  i18n %}
+<html lang="pt-br">
+    <head>
+        <title>
+            {% block title %}
+
+            {% endblock title %}
+        </title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{% static 'atividades/css/style.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Philosopher:wght@700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;1,200&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&family=Nunito+Sans&display=swap" rel="stylesheet">
+        <link rel="icon" href="{% static 'atividades/img/favicon.png' %}">
+    </head>
+    <body>
+        <header class="main-header">
+            <nav class="main-header">
+                <span id="logo">PRoDutividade</span>
+                <input type="checkbox" id="check" value="off">
+                <a href=""><label id="button" for="check" onclick="toggle()">☰</label></a>
+                <section class="profile-button" onclick="colapseProfile('profile')">
+                    <img id="profile-photo" src="{% static 'atividades/img/profile.jpg' %}" alt="">
+                </section>
+                <div id="profile">
+                    <div class="profile-main">
+                        <img id="photo" src="{% static 'atividades/img/profile.jpg' %}" alt="">
+			<label for="photo" id="nome">{{ request.user.first_name }} {{ request.user.last_name }}</label>
+			<span id="mail">{{ request.user.email  }}</span>
+			<span id="desde">Membro desde {{ request.user.date_joined  }}</span>
+                    </div>
+                    <div class="profile-footer">
+                        <div id="footer-left">
+                            <a class="btn" href="">Perfil</a>
+                        </div>
+                        <div id="footer-right">
+				<a class="btn" href="{% url 'deslogar_usuario'  %}">Logoff</a>
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <aside id="navegacao">
+            <div id="user-panel">
+                <img id="aside-profile-photo" src="{% static 'atividades/img/profile.jpg' %}" alt="">
+		<span id="aside-profile-name">{{ request.user.username }}</span>
+            </div>
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="{% url 'cadastrar_atividade' %}" class="menu-item-link"><i class="fas fa-edit icon"></i><span>Cadastrar</span></a>
+                </li>
+                <li class="menu-item">
+                    <a href="{% url 'listar_atividades' %}" class="menu-item-link"><i class="fas fa-list icon"></i><span class="collapse">Listar</span></a>
+                </li>
+                <li class="menu-item">
+                    <a href="/atividades/listar/semana/{{ semana_atual }}/" class="menu-item-link"><i class="fas fa-list icon"></i><span class="collapse">Listar Semana Atual</span></a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-item-link" onclick="mostrar('listar-por-mes')">
+                        <i class="far fa-calendar icon"></i><span class="collapse">Listar por mês</span>
+                    </a>
+                </li>
+                    <ul class="sub-menu" id="listar-por-mes">
+                        <li class="sub-menu-item">
+                            <a href="/atividades/listar/mes/1/" class="sub-menu-item-link">Janeiro</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a href="/atividades/listar/mes/2/" class="sub-menu-item-link">Fevereiro</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a href="/atividades/listar/mes/3/" class="sub-menu-item-link">Março</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a href="/atividades/listar/mes/4/" class="sub-menu-item-link">Abril</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a href="/atividades/listar/mes/5/" class="sub-menu-item-link">Maio</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a href="/atividades/listar/mes/6/" class="sub-menu-item-link">Junho</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a href="/atividades/listar/mes/7/" class="sub-menu-item-link">Julho</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a href="/atividades/listar/mes/8/" class="sub-menu-item-link">Agosto</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a href="/atividades/listar/mes/9/" class="sub-menu-item-link">Setembro</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a href="/atividades/listar/mes/10/" class="sub-menu-item-link">Outubro</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a href="/atividades/listar/mes/11/" class="sub-menu-item-link">Novembro</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a href="/atividades/listar/mes/12/" class="sub-menu-item-link">Dezembro</a>
+                    </ul>
+                    <li class="menu-item">
+                        <a class="menu-item-link" onclick="mostrar('area')">
+                            <i class="fas fa-sitemap icon"></i><span>Área</span>
+                        </a>
+                    </li>
+                        <ul class="sub-menu" id="area">
+                            <li class="sub-menu-item">
+                                <a href="{% url 'cadastrar_area' %}" class="sub-menu-item-link">Cadastrar</a>
+                            </li>
+                            <li class="sub-menu-item">
+                                <a href="{% url 'listar_areas' %}" class="sub-menu-item-link">Listar</a>
+                            </li>
+                        </ul>
+                    <li class="menu-item">
+                        <a class="menu-item-link" onclick="mostrar('sub-area')">
+                            <i class="fas fa-sitemap icon"></i><span class="collapse">Sub-Área</span>
+                        </a>
+                    </li>
+                        <ul class="sub-menu" id="sub-area">
+                            <li class="sub-menu-item">
+                                <a href="" class="sub-menu-item-link">Cadastrar</a>
+                            </li>
+                            <li class="sub-menu-item">
+                                <a href="" class="sub-menu-item-link">Listar</a>
+                            </li>
+                        </ul>
+            </ul>
+        </aside>
+
+        <main id="conteudo">
+        {% block content %}
+
+        {% endblock content %}
+        </main>
+        <script src="{% static 'atividades/js/script.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+    </body>
+</html>
