@@ -409,6 +409,15 @@ h1{
     font-size: 13px;
 }
 
+/* #### GRÁFICO #### */
+
+.grafico{
+    width: 55%;
+    min-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* #### TABELA #### */
 
 table {
