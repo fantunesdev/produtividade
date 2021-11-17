@@ -1,5 +1,7 @@
 from atividades.services import area_service
 from ..utils import tempo_area
+from datetime import date
+
 
 def tempo_atividade(inicio, fim):
     resto = (fim - inicio).total_seconds() % 60
@@ -8,11 +10,13 @@ def tempo_atividade(inicio, fim):
         tempo = tempo + 1
     return tempo
 
+
 def contador_atividades(atividades):
     contador = 0
     for i in atividades:
         contador += 1
     return contador
+
 
 def calcular_tempo_atividade_area(atividades):
     areas = area_service.listar_areas()
@@ -31,6 +35,7 @@ def calcular_tempo_atividade_area(atividades):
     lista_areas.append(tempo_total)
     return lista_areas
 
+
 def to_rgba(hex, format_string='rgba({r},{g},{b},0.85)'):
     hex = hex.replace('#', '')
     out = {'r': int(hex[0:2], 16),
@@ -38,4 +43,20 @@ def to_rgba(hex, format_string='rgba({r},{g},{b},0.85)'):
            'b': int(hex[4:6], 16)}
     return format_string.format(**out)
 
-int()
+
+def criar_dicionario(numero, tipo):
+    if tipo == 'y':
+        atual = date.today().year
+    elif tipo == 'm':
+        atual = date.today().month
+    elif tipo == 'w':
+        atual = date.today().isocalendar()[1]
+    else:
+        atual = date.today().isocalendar()[1]
+
+    dicionario = {
+        '<<': numero - 1,
+        'Atual': atual,
+        '>>': numero + 1
+    }
+    return dicionario

@@ -10,6 +10,15 @@ from ..encoder import Encoder
 
 # Create your views here.
 
+ano_atual = date.today().year
+mes_atual = date.today().month
+semana_atual = date.today().isocalendar()[1]
+
+semana = semana_atual
+mes = mes_atual
+ano = ano_atual
+
+
 def cadastrar_atividade(request):
     if request.user.is_authenticated:
         semana_atual = date.today().isocalendar()[1]
@@ -52,11 +61,15 @@ def cadastrar_atividade(request):
 def listar_atividades(request):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_atividades(request.user)
-        semana_atual = date.today().isocalendar()[1]
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
         return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
+                                                                                'mes_atual': mes_atual,
+                                                                                'ano_atual': ano_atual,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                 'atividades': atividades,
                                                                                 'tempo_areas': tempo_areas,
                                                                                 'contador_atividades': contador_atividades,
@@ -64,15 +77,18 @@ def listar_atividades(request):
     else:
         return redirect(logar_usuario)
 
-def listar_por_ano(request):
+def listar_por_ano(request, ano):
     if request.user.is_authenticated:
-        ano = 2021
         atividades = atividade_service.listar_por_ano(request.user, ano)
-        semana_atual = date.today().isocalendar()[1]
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
         return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
+                                                                                'mes_atual': mes_atual,
+                                                                                'ano_atual': ano_atual,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                 'atividades': atividades,
                                                                                 'tempo_areas': tempo_areas,
                                                                                 'contador_atividades': contador_atividades,
@@ -83,11 +99,15 @@ def listar_por_ano(request):
 def listar_por_mes(request, mes):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_mes(request.user, mes)
-        semana_atual = date.today().isocalendar()[1]
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
         return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
+                                                                                'mes_atual': mes_atual,
+                                                                                'ano_atual': ano_atual,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                 'atividades': atividades,
                                                                                 'tempo_areas': tempo_areas,
                                                                                 'contador_atividades': contador_atividades,
@@ -98,11 +118,15 @@ def listar_por_mes(request, mes):
 def listar_semana_atual(request):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_semana_atual(request.user)
-        semana_atual = date.today().isocalendar()[1]
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
         return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
+                                                                                'mes_atual': mes_atual,
+                                                                                'ano_atual': ano_atual,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                 'atividades': atividades,
                                                                                 'tempo_areas': tempo_areas,
                                                                                 'contador_atividades': contador_atividades,
@@ -113,11 +137,15 @@ def listar_semana_atual(request):
 def listar_por_semana(request, semana):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_semana(request.user, semana)
-        semana_atual = date.today().isocalendar()[1]
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
         return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
+                                                                                'mes_atual': mes_atual,
+                                                                                'ano_atual': ano_atual,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                 'atividades': atividades,
                                                                                 'tempo_areas': tempo_areas,
                                                                                 'contador_atividades': contador_atividades,
@@ -128,11 +156,15 @@ def listar_por_semana(request, semana):
 def listar_por_data(request, data):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_data(request.user, data)
-        semana_atual = date.today().isocalendar()[1]
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
         return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
+                                                                                'mes_atual': mes_atual,
+                                                                                'ano_atual': ano_atual,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                 'atividades': atividades,
                                                                                 'tempo_areas': tempo_areas,
                                                                                 'contador_atividades': contador_atividades,
@@ -143,11 +175,15 @@ def listar_por_data(request, data):
 def listar_por_area(request, area):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_area(request.user, area)
-        semana_atual = date.today().isocalendar()[1]
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
         return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
+                                                                                'mes_atual': mes_atual,
+                                                                                'ano_atual': ano_atual,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                 'atividades': atividades,
                                                                                 'tempo_areas': tempo_areas,
                                                                                 'contador_atividades': contador_atividades,
@@ -156,11 +192,15 @@ def listar_por_area(request, area):
 def listar_por_sub_area(request, sub_area):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_sub_area(request.user, sub_area)
-        semana_atual = date.today().isocalendar()[1]
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
         return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
+                                                                                'mes_atual': mes_atual,
+                                                                                'ano_atual': ano_atual,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                 'atividades': atividades,
                                                                                 'tempo_areas': tempo_areas,
                                                                                 'contador_atividades': contador_atividades,
@@ -171,11 +211,15 @@ def listar_por_sub_area(request, sub_area):
 def listar_por_plataforma(request, plataforma):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_plataforma(request.user, plataforma)
-        semana_atual = date.today().isocalendar()[1]
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
         return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
+                                                                                'mes_atual': mes_atual,
+                                                                                'ano_atual': ano_atual,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                 'atividades': atividades,
                                                                                 'tempo_areas': tempo_areas,
                                                                                 'contador_atividades': contador_atividades,
@@ -186,11 +230,15 @@ def listar_por_plataforma(request, plataforma):
 def listar_por_pessoa(request, pessoa):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_pessoa(request.user, pessoa)
-        semana_atual = date.today().isocalendar()[1]
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
         return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
+                                                                                'mes_atual': mes_atual,
+                                                                                'ano_atual': ano_atual,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                 'atividades': atividades,
                                                                                 'tempo_areas': tempo_areas,
                                                                                 'contador_atividades': contador_atividades,
@@ -201,11 +249,15 @@ def listar_por_pessoa(request, pessoa):
 def listar_por_descricao(request, descricao):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_descricao(request.user, descricao)
-        semana_atual = date.today().isocalendar()[1]
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
         return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
+                                                                                'mes_atual': mes_atual,
+                                                                                'ano_atual': ano_atual,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                 'atividades': atividades,
                                                                                 'tempo_areas': tempo_areas,
                                                                                 'contador_atividades': contador_atividades,
@@ -215,7 +267,6 @@ def listar_por_descricao(request, descricao):
 
 def expandir_atividade(request, id):
     if request.user.is_authenticated:
-        semana_atual = date.today().isocalendar()[1]
         atividade = atividade_service.listar_atividade_id(request.user, id)
         atividades = atividade_service.listar_por_descricao(request.user, atividade.descricao)
         tempo_atividade = atividade_repositorio.tempo_atividade(atividade.inicio, atividade.fim)
@@ -223,6 +274,9 @@ def expandir_atividade(request, id):
         for i in atividades:
             tempo_total = tempo_total + i.tempo
         return render(request, 'atividades/atividades/expandir_atividade.html', {'atividade': atividade,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                  'atividades': atividades,
                                                                                  'tempo_atividade': tempo_atividade,
                                                                                  'tempo_total': tempo_total,
@@ -232,7 +286,6 @@ def expandir_atividade(request, id):
 
 def editar_atividade(request, id):
     if request.user.is_authenticated:
-        semana_atual = date.today().isocalendar()[1]
         atividade_antiga = atividade_service.listar_atividade_id(request.user, id)
         form_atividade = AtividadeForm(request.POST or None, instance=atividade_antiga)
         if form_atividade.is_valid():
@@ -261,6 +314,9 @@ def editar_atividade(request, id):
             atividade_service.editar_atividade(atividade_antiga, atividade_nova)
             return redirect('listar_semana_atual')
         return render(request, 'atividades/atividades/editar_atividade.html', {'form_atividade': form_atividade,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                'atividade_antiga': atividade_antiga,
                                                                                'semana_atual': semana_atual})
     else:
@@ -268,7 +324,6 @@ def editar_atividade(request, id):
 
 def remover_atividade(request, id):
     if request.user.is_authenticated:
-        semana_atual = date.today().isocalendar()[1]
         atividade = atividade_service.listar_atividade_id(request.user, id)
         if request.method == "POST":
             form_exclusao = ExclusaoForm(request.POST)
@@ -280,6 +335,9 @@ def remover_atividade(request, id):
         else:
             form_exclusao = ExclusaoForm()
         return render(request, 'atividades/atividades/confirma_exclusao.html', {'atividade': atividade,
+                                                                                'semana': semana,
+                                                                                'mes': mes,
+                                                                                'ano': ano,
                                                                                 'semana_atual': semana_atual,
                                                                                 'form_exclusao': form_exclusao})
     else:

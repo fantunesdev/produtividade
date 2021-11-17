@@ -6,7 +6,36 @@
     {% endblock title %}
 
     {% block content %}
-    <div class="box box-primary">
+        <div class="texto-centralizado">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mês</th>
+                        <th>Semana</th>
+                        <th>Ano</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th>
+                        <a class="btn" href="{% url 'listar_por_mes' mes|subtrair1 %}"><<</a>
+                        <a class="btn" href="{% url 'listar_por_mes' mes_atual %}">Atual</a>
+                        <a class="btn" href="{% url 'listar_por_mes' mes|somar1 %}">>></a>
+                    </th>
+                    <th>
+                        <a class="btn" href="{% url 'listar_por_semana' semana|subtrair1 %}"><<</a>
+                        <a class="btn" href="{% url 'listar_por_semana' semana_atual %}">Atual</a>
+                        <a class="btn" href="{% url 'listar_por_semana' semana|somar1 %}">>></a>
+                    </th>
+                    <th>
+                        <a class="btn" href="{% url 'listar_por_ano' ano|subtrair1 %}"><<</a>
+                        <a class="btn" href="{% url 'listar_por_ano' ano %}">Atual</a>
+                        <a class="btn" href="{% url 'listar_por_ano' ano|somar1 %}">>></a>
+                    </th>
+                </tbody>
+            </table>
+
+        </div>
+    <div class="box box-primary grafico">
         <div class="box-header with-border">
             <h3 class="box-title">Tempo Total por Área {{ tempo_areas.nome }}</h3>
         </div>
@@ -41,9 +70,6 @@
         <div class="box-body">
             <!-- Start Canvas -> Desenhar elementos gráficos usando JS -->
             <canvas class="line-chart"></canvas>
-        </div>
-        <div class="box-footer">
-            Atividades da semana {{ semana_atual }}.
         </div>
     </div>
 
@@ -86,7 +112,7 @@
         </table>
         </div>
         <div class="box-footer">
-        <p class="text-right">Total de {{ contador_atividades }} itens listados.</p>
+            <p class="text-right">Total de {{ contador_atividades }} itens listados.</p>
         </div>
 
     </div>
