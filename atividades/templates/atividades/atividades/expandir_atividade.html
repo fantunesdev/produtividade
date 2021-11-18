@@ -11,13 +11,16 @@
                     <h3 class="box-title">{{ atividade.descricao }}</h3>
                 </div>
                 <div class="box-body">
-                    <h5 class="card-title">Área: {{ atividade.area }}</h5>
-                    <h5 class="card-title">Sub-Área: {{ atividade.sub_area }}</h5>
-                    <h5 class="card-title">Plataforma: {{ atividade.plataforma }}</h5>
-                    <h5 class="card-title">Início: {{ atividade.inicio }}</h5>
-                    <h5 class="card-title">Conclusão: {{ atividade.fim }}</h5>
-                    <h5 class="card-title">Tempo atividade: {{ tempo_atividade }} min.</h5>
-                    <h5 class="card-title">Tempo Total: {{ tempo_total|em_horas }}</h5>
+                    <p>Área: <b>{{ atividade.area }}</b></p>
+                    <p>Sub-Área: <b>{{ atividade.sub_area }}</b></p>
+                    <p>Plataforma: <b>{{ atividade.plataforma }}</b></p>
+                    <p>Início: <b>{{ atividade.inicio }}</b></p>
+                    <p>Conclusão: <b>{{ atividade.fim }}</b></p>
+                    <p>Tempo atividade: <b>{{ tempo_atividade }} min. (Cálculo Automtico)</b></p>
+                    <p>Tempo atividade: <b>{{ atividade.tempo }} min. (Cronometrado)</b></p>
+                    <p>Tempo Total: <b>{{ tempo_total|em_horas }}</b></p>
+                    <p>Detalhamento: <br><br>
+                    {{ atividade.detalhamento|safe }}</p>
                 </div>
             <div class="box-footer">
                 <form method="post">
