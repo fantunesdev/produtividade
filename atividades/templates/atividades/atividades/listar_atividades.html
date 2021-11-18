@@ -1,4 +1,4 @@
-{% extends "atividades/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% load meus_filtros %}
     {% block title %}
@@ -16,21 +16,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <th>
+                    <td>
                         <a class="btn" href="{% url 'listar_por_mes' mes|subtrair1 %}"><<</a>
                         <a class="btn" href="{% url 'listar_por_mes' mes_atual %}">Atual</a>
                         <a class="btn" href="{% url 'listar_por_mes' mes|somar1 %}">>></a>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         <a class="btn" href="{% url 'listar_por_semana' semana|subtrair1 %}"><<</a>
                         <a class="btn" href="{% url 'listar_por_semana' semana_atual %}">Atual</a>
                         <a class="btn" href="{% url 'listar_por_semana' semana|somar1 %}">>></a>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         <a class="btn" href="{% url 'listar_por_ano' ano|subtrair1 %}"><<</a>
                         <a class="btn" href="{% url 'listar_por_ano' ano %}">Atual</a>
                         <a class="btn" href="{% url 'listar_por_ano' ano|somar1 %}">>></a>
-                    </th>
+                    </td>
                 </tbody>
             </table>
 
