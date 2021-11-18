@@ -48,7 +48,7 @@
         <aside id="navegacao">
             <div id="user-panel">
                 <img id="aside-profile-photo" src="{% static 'atividades/img/profile.jpg' %}" alt="">
-		<span id="aside-profile-name">{{ request.user.username }}</span>
+		        <span id="aside-profile-name">{{ request.user.username }}</span>
             </div>
             <ul class="menu">
                 <li class="menu-item">
@@ -57,51 +57,6 @@
                 <li class="menu-item">
                     <a href="{% url 'listar_atividades' %}" class="menu-item-link"><i class="fas fa-list icon"></i><span class="collapse">Listar</span></a>
                 </li>
-                <li class="menu-item">
-                    <a href="/atividades/listar/semana/{{ semana_atual }}/" class="menu-item-link"><i class="fas fa-list icon"></i><span class="collapse">Listar Semana Atual</span></a>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-item-link" onclick="mostrar('listar-por-mes')">
-                        <i class="far fa-calendar icon"></i><span class="collapse">Listar por mês</span>
-                    </a>
-                </li>
-                    <ul class="sub-menu" id="listar-por-mes">
-                        <li class="sub-menu-item">
-                            <a href="/atividades/listar/mes/1/" class="sub-menu-item-link">Janeiro</a>
-                        </li>
-                        <li class="sub-menu-item">
-                            <a href="/atividades/listar/mes/2/" class="sub-menu-item-link">Fevereiro</a>
-                        </li>
-                        <li class="sub-menu-item">
-                            <a href="/atividades/listar/mes/3/" class="sub-menu-item-link">Março</a>
-                        </li>
-                        <li class="sub-menu-item">
-                            <a href="/atividades/listar/mes/4/" class="sub-menu-item-link">Abril</a>
-                        </li>
-                        <li class="sub-menu-item">
-                            <a href="/atividades/listar/mes/5/" class="sub-menu-item-link">Maio</a>
-                        </li>
-                        <li class="sub-menu-item">
-                            <a href="/atividades/listar/mes/6/" class="sub-menu-item-link">Junho</a>
-                        </li>
-                        <li class="sub-menu-item">
-                            <a href="/atividades/listar/mes/7/" class="sub-menu-item-link">Julho</a>
-                        </li>
-                        <li class="sub-menu-item">
-                            <a href="/atividades/listar/mes/8/" class="sub-menu-item-link">Agosto</a>
-                        </li>
-                        <li class="sub-menu-item">
-                            <a href="/atividades/listar/mes/9/" class="sub-menu-item-link">Setembro</a>
-                        </li>
-                        <li class="sub-menu-item">
-                            <a href="/atividades/listar/mes/10/" class="sub-menu-item-link">Outubro</a>
-                        </li>
-                        <li class="sub-menu-item">
-                            <a href="/atividades/listar/mes/11/" class="sub-menu-item-link">Novembro</a>
-                        </li>
-                        <li class="sub-menu-item">
-                            <a href="/atividades/listar/mes/12/" class="sub-menu-item-link">Dezembro</a>
-                    </ul>
                     <li class="menu-item">
                         <a class="menu-item-link" onclick="mostrar('area')">
                             <i class="fas fa-sitemap icon"></i><span>Área</span>
