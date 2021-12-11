@@ -7,6 +7,7 @@ from datetime import date, datetime
 from ..views.usuario_view import logar_usuario
 import json
 from ..encoder import Encoder
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -134,6 +135,7 @@ def listar_semana_atual(request):
     else:
         return redirect(logar_usuario)
 
+@login_required
 def listar_por_semana(request, semana):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_semana(request.user, semana)
