@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from config import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,14 +21,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4wx%f)@)n)g&fs896txxry7m6v1lc)my*t-zwz-1$noi01g_-='
+SECRET_KEY = SECRET_DJANGO
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [
         'localhost',
-        '192.168.100.2'
+        '192.168.100.2',
+        '127.0.0.1'
         ]
 
 
@@ -42,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'atividades',
     'api',
-    'django_adminlte',
     'rest_framework',
     'ckeditor',
 ]
@@ -85,13 +86,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'produtividade',
-        'USER': 'fernando',
-        'PASSWORD': '1234',
+        'USER': USUARIO,
+        'PASSWORD': SENHA,
         'HOST': 'localhost',
         'PORT': '3306'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

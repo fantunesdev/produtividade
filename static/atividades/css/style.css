@@ -1,29 +1,9 @@
-/* ######### GERAL ######### */
-
 body{
     margin: 0;
     padding: 0;
     background: #212121;
     color: #ffffff;
-    font-family: Ubuntu;
 }
-
-.centralizado {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.texto-centralizado {
-    text-align: center;
-}
-
-a {
-    font-family: Ubuntu;
-    font-weight: 600;
-    color: #ccc;
-    text-decoration: none;
-}
-
 /* ######### HEADER ######### */
 
 .main-header{
@@ -433,7 +413,7 @@ h1{
 
 .grafico{
     width: 55%;
-    min-width: 400px;
+    min-width: 450px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -474,6 +454,11 @@ td a {
 
 td a:hover {
     color: #fff;
+}
+
+a {
+    color: #3c8dbc;
+    text-decoration: none;
 }
 
 /* #### TABELA #### */
