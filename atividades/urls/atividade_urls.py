@@ -1,8 +1,6 @@
 from django.urls import path
-from .views.atividade_views import *
-from .views.area_views import *
-from .views.plataforma_view import *
-from .views.usuario_view import *
+from atividades.views.atividade_views import *
+from atividades.views.usuario_view import *
 
 urlpatterns = [
     path('cadastrar/', cadastrar_atividade, name='cadastrar_atividade'),
@@ -21,22 +19,6 @@ urlpatterns = [
     path('descricao/<str:descricao>/', listar_por_descricao, name='listar_por_descricao'),
 
     path('remover/<int:id>', remover_atividade, name='remover_atividade'),
-
-    # ÁREAS
-    path('areas/cadastrar/', cadastrar_area, name='cadastrar_area'),
-    path('areas/listar/', listar_areas, name='listar_areas'),
-    path('areas/listar/<str:nome>/', listar_area, name='listar_area'),
-    path('areas/listar/<int:id>/', listar_area_id, name='listar_area_id'),
-    path('areas/editar/<int:id>/', editar_area, name='editar_area'),
-    path('areas/remover/<int:id>/', remover_area, name='remover_area'),
-
-    # PLATAFORMAS
-    path('plataformas/cadastrar/', cadastrar_plataforma, name='cadastrar_plataforma'),
-    path('plataformas/listar/', listar_plataformas, name='listar_plataformas'),
-    path('plataformas/listar/<int:id>/', listar_plataforma_id, name='listar_plataforma_id'),
-    path('plataformas/listar/<str:nome>/', listar_plataforma_nome, name='listar_plataforma_nome'),
-    path('plataformas/editar/<int:id>/', editar_plataforma, name='editar_plataforma'),
-    path('plataformas/remover/<int:id>/', remover_plataforma, name='remover_plataforma'),
 
     # USUÁRIOS
     path('usuarios/cadastrar/', cadastrar_usuario, name='cadastrar_usuario'),
