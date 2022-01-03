@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from ..services import area_service
 from ..forms.area_form import AreaForm
 from ..entidades.area import Area
-from datetime import date, datetime
+from ..views.usuario_view import logar_usuario
+from ..views.atividade_views import template_tags
+
 
 def cadastrar_area(request):
     if request.user.is_authenticated:
@@ -17,36 +19,38 @@ def cadastrar_area(request):
                 return redirect('listar_areas')
         else:
             form_area = AreaForm()
-        return render(request, 'atividades/areas/form_area.html', {'form_area': form_area})
+        template_tags['form_area'] = form_area
+        return render(request, 'atividades/areas/form_area.html', template_tags)
     else:
         return redirect(logar_usuario)
+
 
 def listar_areas(request):
     if request.user.is_authenticated:
         areas = area_service.listar_areas()
-        semana_atual = date.today().isocalendar()[1]
-        return render(request, 'atividades/areas/listar_areas.html', {'areas': areas,
-                                                                      'semana_atual': semana_atual})
+        template_tags['areas'] = areas
+        return render(request, 'atividades/areas/listar_areas.html', template_tags)
     else:
         return redirect(logar_usuario)
+
 
 def listar_area_id(request, id):
     if request.user.is_authenticated:
         area = area_service.listar_area_id(id)
-        semana_atual = date.today().isocalendar()[1]
-        return render(request, 'atividades/areas/expandir_area.html', {'area': area,
-                                                                      'semana_atual': semana_atual})
+        template_tags['area'] = area
+        return render(request, 'atividades/areas/expandir_area.html', template_tags)
     else:
         return redirect(logar_usuario)
+
 
 def listar_area(request, nome):
     if request.user.is_authenticated:
         area = area_service.listar_area(nome)
-        semana_atual = date.today().isocalendar()[1]
-        return render(request, 'atividades/areas/expandir_area.html', {'area': area,
-                                                                      'semana_atual': semana_atual})
+        template_tags['area'] = area
+        return render(request, 'atividades/areas/expandir_area.html', template_tags)
     else:
         return redirect(logar_usuario)
+
 
 def editar_area(request, id):
     if request.user.is_authenticated:
@@ -60,10 +64,13 @@ def editar_area(request, id):
 
             area_service.editar_area(area_antiga, area_nova)
             return redirect('listar_areas')
-        return render(request, 'atividades/areas/form_area.html', {'form_area': form_area, 'area_antiga': area_antiga})
+        template_tags['form_area'] = form_area
+        template_tags['area_antiga'] = area_antiga
+        return render(request, 'atividades/areas/form_area.html', template_tags)
 
     else:
         return redirect(logar_usuario)
+
 
 def remover_area(request, id):
     if request.user.is_authenticated:
@@ -71,6 +78,7 @@ def remover_area(request, id):
         if request.method == "POST":
             area_service.remover_area(area)
             return redirect('listar_areas')
-        return render(request, 'atividades/areas/confirma_exclusao.html', {'area': area})
+        template_tags['area'] = area
+        return render(request, 'atividades/areas/confirma_exclusao.html', template_tags)
     else:
         return redirect(logar_usuario)

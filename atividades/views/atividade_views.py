@@ -11,25 +11,22 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-ano_atual = date.today().year
-mes_atual = date.today().month
-semana_atual = date.today().isocalendar()[1]
-
-semana = semana_atual
-mes = mes_atual
-ano = ano_atual
-
-template_tags = {'semana_atual': semana_atual,
-                 'mes_atual': mes_atual,
-                 'ano_atual': ano_atual,
-                 'semana': semana,
-                 'mes': mes,
-                 'ano': ano}
+template_tags = {'semana_atual': date.today().year,
+                 'mes_atual': date.today().month,
+                 'ano_atual': date.today().isocalendar()[1],
+                 'semana': date.today().isocalendar()[1],
+                 'mes': date.today().month,
+                 'ano': date.today().year,
+                 'tipo': 'semana',
+                 'valor': 1,
+                 'atividades': None,
+                 'tempo_areas': 0,
+                 'json_tempo_areas': None,
+                 'contador_atividades': 0}
 
 
 def cadastrar_atividade(request):
     if request.user.is_authenticated:
-        semana_atual = date.today().isocalendar()[1]
         if request.method == "POST":
             form_atividade = AtividadeForm(request.POST)
             if form_atividade.is_valid():
@@ -61,8 +58,8 @@ def cadastrar_atividade(request):
         else:
             form_atividade = AtividadeForm()
             atividade_service.cadastar_inicio()
-        return render(request, 'atividades/atividades/form_atividade.html', {'form_atividade': form_atividade,
-                                                                             'semana_atual': semana_atual})
+        template_tags['form_atividade'] = form_atividade
+        return render(request, 'atividades/atividades/form_atividade.html', template_tags)
     else:
         return redirect(logar_usuario)
 
@@ -71,17 +68,11 @@ def listar_atividades(request):
         atividades = atividade_service.listar_atividades(request.user)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        contador_atividades = atividade_repositorio.contador_atividades(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
-                                                                                'mes_atual': mes_atual,
-                                                                                'ano_atual': ano_atual,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                'atividades': atividades,
-                                                                                'tempo_areas': tempo_areas,
-                                                                                'contador_atividades': contador_atividades,
-                                                                                'json_tempo_areas': json_tempo_areas})
+        template_tags['atividades'] = atividades
+        template_tags['tempo_areas'] = tempo_areas
+        template_tags['json_tempo_areas'] = json_tempo_areas
+        template_tags['contador_atividades'] = len(atividades)
+        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
     else:
         return redirect(logar_usuario)
 
@@ -90,56 +81,24 @@ def listar_ano(request, ano):
         atividades = atividade_service.listar_ano(request.user, ano)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        contador_atividades = atividade_repositorio.contador_atividades(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
-                                                                                'mes_atual': mes_atual,
-                                                                                'ano_atual': ano_atual,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                'atividades': atividades,
-                                                                                'tempo_areas': tempo_areas,
-                                                                                'contador_atividades': contador_atividades,
-                                                                                'json_tempo_areas': json_tempo_areas,
-                                                                                'valor': 1})
-    else:
-        return redirect(logar_usuario)
-
-def listar_por_mes(request, mes):
-    if request.user.is_authenticated:
-        atividades = atividade_service.listar_mes(request.user, ano, mes)
-        tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
-        json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        contador_atividades = atividade_repositorio.contador_atividades(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
-                                                                                'mes_atual': mes_atual,
-                                                                                'ano_atual': ano_atual,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                'atividades': atividades,
-                                                                                'tempo_areas': tempo_areas,
-                                                                                'contador_atividades': contador_atividades,
-                                                                                'json_tempo_areas': json_tempo_areas})
+        template_tags['atividades'] = atividades
+        template_tags['tempo_areas'] = tempo_areas
+        template_tags['json_tempo_areas'] = json_tempo_areas
+        template_tags['contador_atividades'] = len(atividades)
+        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
     else:
         return redirect(logar_usuario)
 
 def listar_semana_atual(request):
     if request.user.is_authenticated:
-        atividades = atividade_service.listar_semana_atual(request.user, ano)
+        atividades = atividade_service.listar_semana_atual(request.user)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        contador_atividades = atividade_repositorio.contador_atividades(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
-                                                                                'mes_atual': mes_atual,
-                                                                                'ano_atual': ano_atual,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                'atividades': atividades,
-                                                                                'tempo_areas': tempo_areas,
-                                                                                'contador_atividades': contador_atividades,
-                                                                                'json_tempo_areas': json_tempo_areas})
+        template_tags['atividades'] = atividades
+        template_tags['tempo_areas'] = tempo_areas
+        template_tags['json_tempo_areas'] = json_tempo_areas
+        template_tags['contador_atividades'] = len(atividades)
+        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
     else:
         return redirect(logar_usuario)
 
@@ -164,42 +123,16 @@ def listar_tipo(request, ano, tipo, valor):
     else:
         return redirect(logar_usuario)
 
-@login_required
-def listar_por_semana(request, semana):
-    if request.user.is_authenticated:
-        atividades = atividade_service.listar_semana(request.user, ano, semana)
-        tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
-        json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        contador_atividades = atividade_repositorio.contador_atividades(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
-                                                                                'mes_atual': mes_atual,
-                                                                                'ano_atual': ano_atual,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                'atividades': atividades,
-                                                                                'tempo_areas': tempo_areas,
-                                                                                'contador_atividades': contador_atividades,
-                                                                                'json_tempo_areas': json_tempo_areas})
-    else:
-        return redirect(logar_usuario)
-
 def listar_por_data(request, data):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_data(request.user, data)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        contador_atividades = atividade_repositorio.contador_atividades(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
-                                                                                'mes_atual': mes_atual,
-                                                                                'ano_atual': ano_atual,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                'atividades': atividades,
-                                                                                'tempo_areas': tempo_areas,
-                                                                                'contador_atividades': contador_atividades,
-                                                                                'json_tempo_areas': json_tempo_areas})
+        template_tags['atividades'] = atividades
+        template_tags['tempo_areas'] = tempo_areas
+        template_tags['json_tempo_areas'] = json_tempo_areas
+        template_tags['contador_atividades'] = len(atividades)
+        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
     else:
         return redirect(logar_usuario)
 
@@ -208,34 +141,22 @@ def listar_por_area(request, area):
         atividades = atividade_service.listar_por_area(request.user, area)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        contador_atividades = atividade_repositorio.contador_atividades(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
-                                                                                'mes_atual': mes_atual,
-                                                                                'ano_atual': ano_atual,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                'atividades': atividades,
-                                                                                'tempo_areas': tempo_areas,
-                                                                                'contador_atividades': contador_atividades,
-                                                                                'json_tempo_areas': json_tempo_areas})
+        template_tags['atividades'] = atividades
+        template_tags['tempo_areas'] = tempo_areas
+        template_tags['json_tempo_areas'] = json_tempo_areas
+        template_tags['contador_atividades'] = len(atividades)
+        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
 
 def listar_por_sub_area(request, sub_area):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_sub_area(request.user, sub_area)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        contador_atividades = atividade_repositorio.contador_atividades(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
-                                                                                'mes_atual': mes_atual,
-                                                                                'ano_atual': ano_atual,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                'atividades': atividades,
-                                                                                'tempo_areas': tempo_areas,
-                                                                                'contador_atividades': contador_atividades,
-                                                                                'json_tempo_areas': json_tempo_areas})
+        template_tags['atividades'] = atividades
+        template_tags['tempo_areas'] = tempo_areas
+        template_tags['json_tempo_areas'] = json_tempo_areas
+        template_tags['contador_atividades'] = len(atividades)
+        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
     else:
         return redirect(logar_usuario)
 
@@ -244,17 +165,11 @@ def listar_por_plataforma(request, plataforma):
         atividades = atividade_service.listar_por_plataforma(request.user, plataforma)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        contador_atividades = atividade_repositorio.contador_atividades(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
-                                                                                'mes_atual': mes_atual,
-                                                                                'ano_atual': ano_atual,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                'atividades': atividades,
-                                                                                'tempo_areas': tempo_areas,
-                                                                                'contador_atividades': contador_atividades,
-                                                                                'json_tempo_areas': json_tempo_areas})
+        template_tags['atividades'] = atividades
+        template_tags['tempo_areas'] = tempo_areas
+        template_tags['json_tempo_areas'] = json_tempo_areas
+        template_tags['contador_atividades'] = len(atividades)
+        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
     else:
         return redirect(logar_usuario)
 
@@ -263,17 +178,11 @@ def listar_por_pessoa(request, pessoa):
         atividades = atividade_service.listar_por_pessoa(request.user, pessoa)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        contador_atividades = atividade_repositorio.contador_atividades(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
-                                                                                'mes_atual': mes_atual,
-                                                                                'ano_atual': ano_atual,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                'atividades': atividades,
-                                                                                'tempo_areas': tempo_areas,
-                                                                                'contador_atividades': contador_atividades,
-                                                                                'json_tempo_areas': json_tempo_areas})
+        template_tags['atividades'] = atividades
+        template_tags['tempo_areas'] = tempo_areas
+        template_tags['json_tempo_areas'] = json_tempo_areas
+        template_tags['contador_atividades'] = len(atividades)
+        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
     else:
         return redirect(logar_usuario)
 
@@ -282,17 +191,11 @@ def listar_por_descricao(request, descricao):
         atividades = atividade_service.listar_por_descricao(request.user, descricao)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        contador_atividades = atividade_repositorio.contador_atividades(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', {'semana_atual': semana_atual,
-                                                                                'mes_atual': mes_atual,
-                                                                                'ano_atual': ano_atual,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                'atividades': atividades,
-                                                                                'tempo_areas': tempo_areas,
-                                                                                'contador_atividades': contador_atividades,
-                                                                                'json_tempo_areas': json_tempo_areas})
+        template_tags['atividades'] = atividades
+        template_tags['tempo_areas'] = tempo_areas
+        template_tags['json_tempo_areas'] = json_tempo_areas
+        template_tags['contador_atividades'] = len(atividades)
+        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
     else:
         return redirect(logar_usuario)
 
@@ -300,18 +203,12 @@ def expandir_atividade(request, id):
     if request.user.is_authenticated:
         atividade = atividade_service.listar_atividade_id(request.user, id)
         atividades = atividade_service.listar_por_descricao(request.user, atividade.descricao)
-        tempo_atividade = atividade_repositorio.tempo_atividade(atividade.inicio, atividade.fim)
         tempo_total = 0
         for i in atividades:
             tempo_total = tempo_total + i.tempo
-        return render(request, 'atividades/atividades/expandir_atividade.html', {'atividade': atividade,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                 'atividades': atividades,
-                                                                                 'tempo_atividade': tempo_atividade,
-                                                                                 'tempo_total': tempo_total,
-                                                                                 'semana_atual': semana_atual})
+        template_tags['atividade'] = atividade
+        template_tags['tempo_total'] = tempo_total
+        return render(request, 'atividades/atividades/expandir_atividade.html', template_tags)
     else:
         return redirect(logar_usuario)
 
@@ -344,12 +241,9 @@ def editar_atividade(request, id):
                                        usuario=usuario)
             atividade_service.editar_atividade(atividade_antiga, atividade_nova)
             return redirect('listar_semana_atual')
-        return render(request, 'atividades/atividades/editar_atividade.html', {'form_atividade': form_atividade,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                               'atividade_antiga': atividade_antiga,
-                                                                               'semana_atual': semana_atual})
+        template_tags['atividade_antiga'] = atividade_antiga
+        template_tags['form_atividade'] = form_atividade
+        return render(request, 'atividades/atividades/editar_atividade.html', template_tags)
     else:
         return redirect(logar_usuario)
 
@@ -365,11 +259,8 @@ def remover_atividade(request, id):
                     return redirect('listar_semana_atual')
         else:
             form_exclusao = ExclusaoForm()
-        return render(request, 'atividades/atividades/confirma_exclusao.html', {'atividade': atividade,
-                                                                                'semana': semana,
-                                                                                'mes': mes,
-                                                                                'ano': ano,
-                                                                                'semana_atual': semana_atual,
-                                                                                'form_exclusao': form_exclusao})
+        template_tags['atividade'] = atividade
+        template_tags['form_exclusao'] = form_exclusao
+        return render(request, 'atividades/atividades/confirma_exclusao.html', template_tags)
     else:
         return redirect(logar_usuario)

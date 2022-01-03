@@ -36,8 +36,9 @@ def listar_mes(usuario, ano, mes):
     atividades = Atividade.objects.filter(usuario=usuario, data__month=mes, data__year=ano)
     return atividades
 
-def listar_semana_atual(usuario, ano):
+def listar_semana_atual(usuario):
     semana = date.today().isocalendar()[1]
+    ano = date.today().year
     atividades = Atividade.objects.filter(usuario=usuario, data__week=semana, data__year=ano)
     return atividades
 
