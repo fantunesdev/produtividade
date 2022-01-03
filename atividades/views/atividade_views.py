@@ -11,9 +11,9 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-template_tags = {'semana_atual': date.today().year,
+template_tags = {'semana_atual': date.today().isocalendar()[1],
                  'mes_atual': date.today().month,
-                 'ano_atual': date.today().isocalendar()[1],
+                 'ano_atual': date.today().year,
                  'semana': date.today().isocalendar()[1],
                  'mes': date.today().month,
                  'ano': date.today().year,
