@@ -1,18 +1,18 @@
 server {
-        listen      80;
+        listen      800;
         server_name produtividade;
         charset     utf-8;
         access_log  /var/log/nginx/produtividade-access.log;
         error_log   /var/log/nginx/produtividade-error.log;
         client_max_body_size 75M;
         location /media  {
-                alias /app/prd/media;
+                alias /var/www/python/prd/media;
         }
         location /static {
-                alias /app/prd/static;
+                alias /var/www/python/prd/static;
         }
         location / {
                 include proxy_params;
-                proxy_pass http://unix:/app/prd/produtividade.sock;
+                proxy_pass http://unix:/var/www/python/prd/produtividade.sock;
         }
 }
