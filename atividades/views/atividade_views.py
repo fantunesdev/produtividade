@@ -19,6 +19,13 @@ semana = semana_atual
 mes = mes_atual
 ano = ano_atual
 
+template_tags = {'semana_atual': semana_atual,
+                 'mes_atual': mes_atual,
+                 'ano_atual': ano_atual,
+                 'semana': semana,
+                 'mes': mes,
+                 'ano': ano}
+
 
 def cadastrar_atividade(request):
     if request.user.is_authenticated:
@@ -78,9 +85,9 @@ def listar_atividades(request):
     else:
         return redirect(logar_usuario)
 
-def listar_por_ano(request, ano):
+def listar_ano(request, ano):
     if request.user.is_authenticated:
-        atividades = atividade_service.listar_por_ano(request.user, ano)
+        atividades = atividade_service.listar_ano(request.user, ano)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
@@ -99,7 +106,7 @@ def listar_por_ano(request, ano):
 
 def listar_por_mes(request, mes):
     if request.user.is_authenticated:
-        atividades = atividade_service.listar_por_mes(request.user, mes)
+        atividades = atividade_service.listar_mes(request.user, ano, mes)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
@@ -118,7 +125,7 @@ def listar_por_mes(request, mes):
 
 def listar_semana_atual(request):
     if request.user.is_authenticated:
-        atividades = atividade_service.listar_semana_atual(request.user)
+        atividades = atividade_service.listar_semana_atual(request.user, ano)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)
@@ -136,9 +143,30 @@ def listar_semana_atual(request):
         return redirect(logar_usuario)
 
 @login_required
+def listar_tipo(request, ano, tipo, valor):
+    if request.user.is_authenticated:
+        if tipo == 'mes':
+            atividades = atividade_service.listar_mes(request.user, ano, valor)
+        elif tipo == 'semana':
+            atividades = atividade_service.listar_semana(request.user, ano, valor)
+        tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
+        json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
+        template_tags['ano'] = ano
+        template_tags['tipo'] = tipo
+        template_tags['valor'] = valor
+        template_tags['atividades'] = atividades
+        template_tags['tempo_areas'] = tempo_areas
+        template_tags['json_tempo_areas'] = json_tempo_areas
+        template_tags['contador_atividades'] = len(atividades)
+
+        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
+    else:
+        return redirect(logar_usuario)
+
+@login_required
 def listar_por_semana(request, semana):
     if request.user.is_authenticated:
-        atividades = atividade_service.listar_por_semana(request.user, semana)
+        atividades = atividade_service.listar_semana(request.user, ano, semana)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         contador_atividades = atividade_repositorio.contador_atividades(atividades)

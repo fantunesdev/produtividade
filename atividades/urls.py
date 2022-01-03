@@ -5,12 +5,15 @@ from .views.plataforma_view import *
 from .views.usuario_view import *
 
 urlpatterns = [
+    path('listar/ano_<int:ano>/<str:tipo>_<int:valor>/', listar_tipo, name='listar_tipo'),
+    path('listar/ano_<int:ano>/', listar_ano, name='listar_ano'),
+
     path('cadastrar/', cadastrar_atividade, name='cadastrar_atividade'),
     path('listar/', listar_atividades, name='listar_atividades'),
-    path('listar/ano/<int:ano>/', listar_por_ano, name='listar_por_ano'),
-    path('listar/mes/<int:mes>/', listar_por_mes, name='listar_por_mes'),
+    #path('listar/ano/<int:ano>/', listar_por_ano, name='listar_por_ano'),
+    #path('listar/mes/<int:mes>/', listar_por_mes, name='listar_por_mes'),
     path('listar/semana_atual/', listar_semana_atual, name='listar_semana_atual'),
-    path('listar/semana/<int:semana>/', listar_por_semana, name='listar_por_semana'),
+    #path('listar/semana/<int:semana>/', listar_por_semana, name='listar_por_semana'),
     path('listar_data/<str:data>/', listar_por_data, name='listar_por_data'),
     path('listar/<int:id>', expandir_atividade, name='expandir_atividade'),
     path('area/<str:area>/', listar_por_area, name='listar_por_area'),

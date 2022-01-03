@@ -10,13 +10,11 @@ def tempo_atividade(inicio, fim):
         tempo = tempo + 1
     return tempo
 
-
 def contador_atividades(atividades):
     contador = 0
     for i in atividades:
         contador += 1
     return contador
-
 
 def calcular_tempo_atividade_area(atividades):
     areas = area_service.listar_areas()

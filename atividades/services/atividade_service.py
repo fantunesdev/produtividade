@@ -28,21 +28,21 @@ def listar_atividades(usuario):
     atividades = Atividade.objects.filter(usuario=usuario)
     return atividades
 
-def listar_por_ano(usuario, ano):
+def listar_ano(usuario, ano):
     atividades = Atividade.objects.filter(usuario=usuario, data__year=ano)
     return atividades
 
-def listar_por_mes(usuario, mes):
-    atividades = Atividade.objects.filter(usuario=usuario, data__month=mes, data__year=2021)
+def listar_mes(usuario, ano, mes):
+    atividades = Atividade.objects.filter(usuario=usuario, data__month=mes, data__year=ano)
     return atividades
 
-def listar_semana_atual(usuario):
+def listar_semana_atual(usuario, ano):
     semana = date.today().isocalendar()[1]
-    atividades = Atividade.objects.filter(usuario=usuario, data__week=semana, data__year=2021)
+    atividades = Atividade.objects.filter(usuario=usuario, data__week=semana, data__year=ano)
     return atividades
 
-def listar_por_semana(usuario, semana):
-    atividades = Atividade.objects.filter(usuario=usuario, data__week=semana, data__year=2021)
+def listar_semana(usuario, ano, semana):
+    atividades = Atividade.objects.filter(usuario=usuario, data__week=semana, data__year=ano)
     return atividades
 
 def listar_por_data(usuario, data):

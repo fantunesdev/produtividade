@@ -56,3 +56,66 @@ def somar1(numero):
 @register.filter
 def subtrair1(numero):
     return numero - 1
+
+@register.filter
+def calcular_mes_anterior(mes_selecionado):
+    mes_anterior = mes_selecionado - 1
+    if mes_anterior == 0:
+        mes_anterior = 12
+    return mes_anterior
+
+@register.filter
+def calcular_mes_proximo(mes_selecionado):
+    mes_proximo = mes_selecionado + 1
+    if mes_proximo == 13:
+        mes_proximo = 1
+    return mes_proximo
+
+@register.filter
+def calcular_ano_mes_anterior(ano_mes_selecionado, mes_selecionado):
+    ano = ano_mes_selecionado
+    mes_anterior = mes_selecionado - 1
+    if mes_anterior == 0:
+        ano -= 1
+    return ano
+
+@register.filter
+def calcular_ano_mes_proximo(ano_mes_selecionado, mes_selecionado):
+    ano = ano_mes_selecionado
+    mes_anterior = mes_selecionado + 1
+    if mes_anterior == 13:
+        ano += 1
+    return ano
+
+@register.filter
+def calcular_semana_anterior(ano_semana_selecionada, semana_selecionada):
+    semana_anterior = semana_selecionada - 1
+    if semana_anterior == 0:
+        ultimo_dia = datetime.datetime(ano_semana_selecionada, 12, 31)
+        semana_anterior = ultimo_dia.isocalendar()[1]
+    return semana_anterior
+
+@register.filter
+def calcular_semana_proxima(ano_semana_selecionada, semana_selecionada):
+    semana_proxima = semana_selecionada + 1
+    ultima_semana = datetime.datetime(ano_semana_selecionada, 12, 31).isocalendar()[1]
+    if semana_proxima > ultima_semana:
+        semana_proxima = 1
+    return semana_proxima
+
+@register.filter
+def calcular_ano_semana_anterior(ano_semana_selecionada, semana_selecionada):
+    ano = ano_semana_selecionada
+    semana_anterior = semana_selecionada - 1
+    if semana_anterior == 0:
+        ano -= 1
+    return ano
+
+@register.filter
+def calcular_ano_semana_proxima(ano_semana_selecionada, semana_selecionada):
+    ano = ano_semana_selecionada
+    semana_proxima = semana_selecionada + 1
+    ultima_semana = datetime.datetime(ano_semana_selecionada, 12, 31).isocalendar()[1]
+    if semana_proxima > ultima_semana:
+        ano += 1
+    return ano
