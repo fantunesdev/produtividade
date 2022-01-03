@@ -100,7 +100,8 @@ def listar_ano(request, ano):
                                                                                 'atividades': atividades,
                                                                                 'tempo_areas': tempo_areas,
                                                                                 'contador_atividades': contador_atividades,
-                                                                                'json_tempo_areas': json_tempo_areas})
+                                                                                'json_tempo_areas': json_tempo_areas,
+                                                                                'valor': 1})
     else:
         return redirect(logar_usuario)
 
