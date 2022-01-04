@@ -17,14 +17,14 @@
                 </thead>
                 <tbody>
                     <td>
-                        <a class="btn" href="{% url 'listar_tipo' ano|calcular_ano_mes_anterior:valor 'mes' valor|calcular_mes_anterior %}"><<</a>
-                        <a class="btn" href="{% url 'listar_tipo' ano_atual 'mes' mes_atual %}">Atual</a>
-                        <a class="btn" href="{% url 'listar_tipo' ano|calcular_ano_mes_proximo:valor 'mes' valor|calcular_mes_proximo %}">>></a>
+                        <a class="btn" href="{% url 'listar_ano_mes_semana' ano|calcular_ano_mes_anterior:valor 'mes' valor|calcular_mes_anterior %}"><<</a>
+                        <a class="btn" href="{% url 'listar_ano_mes_semana' ano_atual 'mes' mes_atual %}">Atual</a>
+                        <a class="btn" href="{% url 'listar_ano_mes_semana' ano|calcular_ano_mes_proximo:valor 'mes' valor|calcular_mes_proximo %}">>></a>
                     </td>
                     <td>
-                        <a class="btn" href="{% url 'listar_tipo' ano|calcular_ano_semana_anterior:valor 'semana' ano|calcular_semana_anterior:valor %}"><<</a>
-                        <a class="btn" href="{% url 'listar_tipo' ano_atual 'semana' semana_atual %}">Atual</a>
-                        <a class="btn" href="{% url 'listar_tipo' ano|calcular_ano_semana_proxima:valor 'semana' ano|calcular_semana_proxima:valor  %}">>></a>
+                        <a class="btn" href="{% url 'listar_ano_mes_semana' ano|calcular_ano_semana_anterior:valor 'semana' ano|calcular_semana_anterior:valor %}"><<</a>
+                        <a class="btn" href="{% url 'listar_ano_mes_semana' ano_atual 'semana' semana_atual %}">Atual</a>
+                        <a class="btn" href="{% url 'listar_ano_mes_semana' ano|calcular_ano_semana_proxima:valor 'semana' ano|calcular_semana_proxima:valor  %}">>></a>
                     </td>
                     <td>
                         <a class="btn" href="{% url 'listar_ano' ano|subtrair1 %}"><<</a>
@@ -94,11 +94,11 @@
             <tbody>
                 {% for i in atividades %}
                     {% if request.user.id == i.usuario.id %}
-                        <td><a href="{% url 'listar_por_data' i.data %}">{{ i.data | date:"d/m" }}</a></td>
-                        <td><a href="{% url 'listar_por_area' i.area|slugify %}">{{ i.area }}</a></td>
-                        <td><a href="{% url 'listar_por_sub_area' i.sub_area|slugify %}">{{ i.sub_area }}</a></td>
-                        <td><a href="{% url 'listar_por_plataforma' i.plataforma|slugify %}">{{ i.plataforma }}</a></td>
-                        <td><a href="{% url 'listar_por_pessoa' i.pessoa|slugify %}">{{ i.pessoa }}</a></td>
+                        <td><a href="{% url 'listar_sessao' 'data' i.data %}">{{ i.data | date:"d/m" }}</a></td>
+                        <td><a href="{% url 'listar_sessao' 'area' i.area|slugify %}">{{ i.area }}</a></td>
+                        <td><a href="{% url 'listar_sessao' 'sub-area' i.sub_area|slugify %}">{{ i.sub_area }}</a></td>
+                        <td><a href="{% url 'listar_sessao' 'plataforma' i.plataforma|slugify %}">{{ i.plataforma }}</a></td>
+                        <td><a href="{% url 'listar_sessao' 'pessoa' i.pessoa|slugify %}">{{ i.pessoa }}</a></td>
                         <td><a href="{% url 'expandir_atividade' i.id %}">{{ i.descricao }}</a></td>
                         <td>{{ i.tempo }}</td>
                         <td>

@@ -26,6 +26,7 @@ template_tags = {'semana_atual': date.today().isocalendar()[1],
                  'contador_atividades': 0}
 
 
+@login_required
 def cadastrar_atividade(request):
     if request.user.is_authenticated:
         if request.method == "POST":
@@ -65,6 +66,7 @@ def cadastrar_atividade(request):
         return redirect(logar_usuario)
 
 
+@login_required
 def listar_atividades(request):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_atividades(request.user)
@@ -79,6 +81,7 @@ def listar_atividades(request):
         return redirect(logar_usuario)
 
 
+@login_required
 def listar_ano(request, ano):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_ano(request.user, ano)
@@ -93,6 +96,7 @@ def listar_ano(request, ano):
         return redirect(logar_usuario)
 
 
+@login_required
 def listar_semana_atual(request):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_semana_atual(request.user)
@@ -108,7 +112,7 @@ def listar_semana_atual(request):
 
 
 @login_required
-def listar_tipo(request, ano, tipo, valor):
+def listar_ano_mes_semana(request, ano, tipo, valor):
     if request.user.is_authenticated:
         if tipo == 'mes':
             atividades = atividade_service.listar_mes(request.user, ano, valor)
@@ -129,77 +133,19 @@ def listar_tipo(request, ano, tipo, valor):
         return redirect(logar_usuario)
 
 
-def listar_por_data(request, data):
+@login_required
+def listar_sessao(request, sessao, valor_sessao):
     if request.user.is_authenticated:
-        atividades = atividade_service.listar_por_data(request.user, data)
-        tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
-        json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        template_tags['atividades'] = atividades
-        template_tags['tempo_areas'] = tempo_areas
-        template_tags['json_tempo_areas'] = json_tempo_areas
-        template_tags['contador_atividades'] = len(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
-    else:
-        return redirect(logar_usuario)
-
-
-def listar_por_area(request, area):
-    if request.user.is_authenticated:
-        atividades = atividade_service.listar_por_area(request.user, area)
-        tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
-        json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        template_tags['atividades'] = atividades
-        template_tags['tempo_areas'] = tempo_areas
-        template_tags['json_tempo_areas'] = json_tempo_areas
-        template_tags['contador_atividades'] = len(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
-
-
-def listar_por_sub_area(request, sub_area):
-    if request.user.is_authenticated:
-        atividades = atividade_service.listar_por_sub_area(request.user, sub_area)
-        tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
-        json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        template_tags['atividades'] = atividades
-        template_tags['tempo_areas'] = tempo_areas
-        template_tags['json_tempo_areas'] = json_tempo_areas
-        template_tags['contador_atividades'] = len(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
-    else:
-        return redirect(logar_usuario)
-
-
-def listar_por_plataforma(request, plataforma):
-    if request.user.is_authenticated:
-        atividades = atividade_service.listar_por_plataforma(request.user, plataforma)
-        tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
-        json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        template_tags['atividades'] = atividades
-        template_tags['tempo_areas'] = tempo_areas
-        template_tags['json_tempo_areas'] = json_tempo_areas
-        template_tags['contador_atividades'] = len(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
-    else:
-        return redirect(logar_usuario)
-
-
-def listar_por_pessoa(request, pessoa):
-    if request.user.is_authenticated:
-        atividades = atividade_service.listar_por_pessoa(request.user, pessoa)
-        tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
-        json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
-        template_tags['atividades'] = atividades
-        template_tags['tempo_areas'] = tempo_areas
-        template_tags['json_tempo_areas'] = json_tempo_areas
-        template_tags['contador_atividades'] = len(atividades)
-        return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
-    else:
-        return redirect(logar_usuario)
-
-
-def listar_por_descricao(request, descricao):
-    if request.user.is_authenticated:
-        atividades = atividade_service.listar_por_descricao(request.user, descricao)
+        if sessao == 'data':
+            atividades = atividade_service.listar_data(request.user, valor_sessao)
+        elif sessao == 'area':
+            atividades = atividade_service.listar_area(request.user, valor_sessao)
+        elif sessao == 'sub-area':
+            atividades = atividade_service.listar_sub_area(request.user, valor_sessao)
+        elif sessao == 'plataforma':
+            atividades = atividade_service.listar_plataforma(request.user, valor_sessao)
+        elif sessao == 'pessoa':
+            atividades = atividade_service.listar_pessoa(request.user, valor_sessao)
         tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
         json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
         template_tags['atividades'] = atividades

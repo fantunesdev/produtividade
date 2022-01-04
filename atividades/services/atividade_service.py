@@ -46,28 +46,24 @@ def listar_semana(usuario, ano, semana):
     atividades = Atividade.objects.filter(usuario=usuario, data__week=semana, data__year=ano)
     return atividades
 
-def listar_por_data(usuario, data):
+def listar_data(usuario, data):
     atividades = Atividade.objects.filter(usuario=usuario, data=data)
     return atividades
 
-def listar_por_area(usuario, area):
+def listar_area(usuario, area):
     atividades = Atividade.objects.filter(usuario=usuario, area__nome=area)
     return atividades
 
-def listar_por_sub_area(usuario, sub_area):
+def listar_sub_area(usuario, sub_area):
     atividades = Atividade.objects.filter(usuario=usuario, sub_area=sub_area.replace("-"," "))
     return atividades
 
-def listar_por_plataforma(usuario, plataforma):
+def listar_plataforma(usuario, plataforma):
     atividades = Atividade.objects.filter(usuario=usuario, plataforma=plataforma.replace("-"," "))
     return atividades
 
-def listar_por_pessoa(usuario, pessoa):
+def listar_pessoa(usuario, pessoa):
     atividades = Atividade.objects.filter(usuario=usuario, pessoa=pessoa.replace("-", " "))
-    return atividades
-
-def listar_por_descricao(usuario, descricao):
-    atividades = Atividade.objects.filter(usuario=usuario, descricao=descricao)
     return atividades
 
 def listar_atividade_id(usuario, id):
