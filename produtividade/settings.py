@@ -58,6 +58,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/atividades/listar/semana_atual/'
+
 ROOT_URLCONF = 'produtividade.urls'
 
 TEMPLATES = [
