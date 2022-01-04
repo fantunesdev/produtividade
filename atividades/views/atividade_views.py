@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from ..services import atividade_service
-from ..forms.atividade_form import AtividadeForm, AtividadeFormVer, ExclusaoForm
+from ..forms.atividade_form import AtividadeForm, ExclusaoForm
 from ..entidades.atividade import Atividade
 from ..repositorios import atividade_repositorio
 from datetime import date, datetime
@@ -10,6 +10,7 @@ from ..encoder import Encoder
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
 
 template_tags = {'semana_atual': date.today().isocalendar()[1],
                  'mes_atual': date.today().month,
@@ -63,6 +64,7 @@ def cadastrar_atividade(request):
     else:
         return redirect(logar_usuario)
 
+
 def listar_atividades(request):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_atividades(request.user)
@@ -75,6 +77,7 @@ def listar_atividades(request):
         return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
     else:
         return redirect(logar_usuario)
+
 
 def listar_ano(request, ano):
     if request.user.is_authenticated:
@@ -89,6 +92,7 @@ def listar_ano(request, ano):
     else:
         return redirect(logar_usuario)
 
+
 def listar_semana_atual(request):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_semana_atual(request.user)
@@ -101,6 +105,7 @@ def listar_semana_atual(request):
         return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
     else:
         return redirect(logar_usuario)
+
 
 @login_required
 def listar_tipo(request, ano, tipo, valor):
@@ -123,6 +128,7 @@ def listar_tipo(request, ano, tipo, valor):
     else:
         return redirect(logar_usuario)
 
+
 def listar_por_data(request, data):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_data(request.user, data)
@@ -136,6 +142,7 @@ def listar_por_data(request, data):
     else:
         return redirect(logar_usuario)
 
+
 def listar_por_area(request, area):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_area(request.user, area)
@@ -146,6 +153,7 @@ def listar_por_area(request, area):
         template_tags['json_tempo_areas'] = json_tempo_areas
         template_tags['contador_atividades'] = len(atividades)
         return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
+
 
 def listar_por_sub_area(request, sub_area):
     if request.user.is_authenticated:
@@ -160,6 +168,7 @@ def listar_por_sub_area(request, sub_area):
     else:
         return redirect(logar_usuario)
 
+
 def listar_por_plataforma(request, plataforma):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_plataforma(request.user, plataforma)
@@ -172,6 +181,7 @@ def listar_por_plataforma(request, plataforma):
         return render(request, 'atividades/atividades/listar_atividades.html', template_tags)
     else:
         return redirect(logar_usuario)
+
 
 def listar_por_pessoa(request, pessoa):
     if request.user.is_authenticated:
@@ -186,6 +196,7 @@ def listar_por_pessoa(request, pessoa):
     else:
         return redirect(logar_usuario)
 
+
 def listar_por_descricao(request, descricao):
     if request.user.is_authenticated:
         atividades = atividade_service.listar_por_descricao(request.user, descricao)
@@ -199,6 +210,7 @@ def listar_por_descricao(request, descricao):
     else:
         return redirect(logar_usuario)
 
+
 def expandir_atividade(request, id):
     if request.user.is_authenticated:
         atividade = atividade_service.listar_atividade_id(request.user, id)
@@ -211,6 +223,7 @@ def expandir_atividade(request, id):
         return render(request, 'atividades/atividades/expandir_atividade.html', template_tags)
     else:
         return redirect(logar_usuario)
+
 
 def editar_atividade(request, id):
     if request.user.is_authenticated:
@@ -247,6 +260,7 @@ def editar_atividade(request, id):
     else:
         return redirect(logar_usuario)
 
+
 def remover_atividade(request, id):
     if request.user.is_authenticated:
         atividade = atividade_service.listar_atividade_id(request.user, id)
@@ -254,7 +268,7 @@ def remover_atividade(request, id):
             form_exclusao = ExclusaoForm(request.POST)
             if form_exclusao.is_valid():
                 confirmacao = form_exclusao.cleaned_data['confirmacao']
-                if confirmacao == True:
+                if confirmacao:
                     atividade_service.remover_atividade(atividade)
                     return redirect('listar_semana_atual')
         else:
