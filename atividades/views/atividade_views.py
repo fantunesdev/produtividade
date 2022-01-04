@@ -130,6 +130,8 @@ def listar_sessao(request, sessao, valor_sessao):
         atividades = atividade_service.listar_plataforma(request.user, valor_sessao)
     elif sessao == 'pessoa':
         atividades = atividade_service.listar_pessoa(request.user, valor_sessao)
+    elif sessao == 'descricao':
+        atividades = atividade_service.listar_descricao(request.user, valor_sessao)
     tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
     json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
     template_tags['atividades'] = atividades
@@ -142,7 +144,7 @@ def listar_sessao(request, sessao, valor_sessao):
 @login_required
 def expandir_atividade(request, id):
     atividade = atividade_service.listar_atividade_id(request.user, id)
-    atividades = atividade_service.listar_por_descricao(request.user, atividade.descricao)
+    atividades = atividade_service.listar_descricao(request.user, atividade.descricao)
     tempo_total = 0
     for i in atividades:
         tempo_total = tempo_total + i.tempo

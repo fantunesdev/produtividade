@@ -21,6 +21,7 @@
                     <p>Tempo Total: <b>{{ tempo_total|em_horas }}</b></p>
                     <p>Detalhamento: <br><br>
                     {{ atividade.detalhamento|safe }}</p>
+                    <td><a href="{% url 'listar_sessao' 'descricao' atividade.descricao %}">Ver tabela com todas as ocorrências</a></td>
                 </div>
             <div class="box-footer">
                 <form method="post">

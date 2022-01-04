@@ -66,6 +66,10 @@ def listar_pessoa(usuario, pessoa):
     atividades = Atividade.objects.filter(usuario=usuario, pessoa=pessoa.replace("-", " "))
     return atividades
 
+def listar_descricao(usuario, descricao):
+    atividades = Atividade.objects.filter(usuario=usuario, descricao=descricao)
+    return atividades
+
 def listar_atividade_id(usuario, id):
     atividade = Atividade.objects.get(usuario=usuario, id=id)
     return atividade
