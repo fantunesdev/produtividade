@@ -4,7 +4,6 @@ from ..forms.atividade_form import AtividadeForm, ExclusaoForm
 from ..entidades.atividade import Atividade
 from ..repositorios import atividade_repositorio
 from datetime import date, datetime
-from ..views.usuario_view import logar_usuario
 import json
 from ..encoder import Encoder
 from django.contrib.auth.decorators import login_required
