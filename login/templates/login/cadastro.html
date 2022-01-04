@@ -1,20 +1,21 @@
-{% extends "atividades/usuarios/index.html" %}
+{% extends "login/index.html" %}
 {% load static %}
 {% load  i18n %}
 {% load meus_filtros %}
 
 {% block title %}
-    Login
+    Cadastrar
 {% endblock title %}
 
 {% block content %}
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Login</h3>
+            <h3 class="box-title">Cadastro</h3>
         </div>
         <div class="box-body">
             <form method="post">
                 {% csrf_token %}
+
                 <div class="form-group">
                     {{ form_usuario.username.errors }}
                     <label>Usuário: </label>
@@ -22,16 +23,22 @@
                 </div>
 
                 <div class="form-group">
-                    {{ form_usuario.password.errors }}
+                    {{ form_usuario.password1.errors }}
                     <label>Senha: </label>
-                    {{ form_usuario.password|addclass:'form-control' }}
+                    {{ form_usuario.password1|addclass:'form-control' }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_usuario.password2.errors }}
+                    <label>Confirmação de Senha: </label>
+                    {{ form_usuario.password2|addclass:'form-control' }}
                 </div>
         <div class="box-footer">
             <div class="form-group">
-                <input type="submit" value="Logar" class="btn btn-primary">
-                <a href="{% url 'cadastrar_usuario' %}">Cadastrar usuário</a>
-            </div>
-        </div>
+                <div class="form-group">
+                    <input type="submit" value="Cadastrar" class="btn btn-primary">
+                    <a href="{% url 'logar_usuario' %}" class="btn btn-primary">Voltar</a>
+                </div>
             </form>
         </div>
     </div>

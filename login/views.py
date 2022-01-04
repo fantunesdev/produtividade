@@ -11,7 +11,7 @@ def cadastrar_usuario(request):
             return redirect('listar_semana_atual')
     else:
         form_usuario = UserCreationForm()
-    return render(request, 'atividades/usuarios/cadastro.html', {'form_usuario': form_usuario})
+    return render(request, 'login/cadastro.html', {'form_usuario': form_usuario})
 
 
 def logar_usuario(request):
@@ -27,7 +27,7 @@ def logar_usuario(request):
             form_usuario = AuthenticationForm()
     else:
         form_usuario = AuthenticationForm()
-    return render(request, 'atividades/usuarios/login.html', {'form_usuario': form_usuario})
+    return render(request, 'login/login.html', {'form_usuario': form_usuario})
 
 
 def deslogar_usuario(request):
