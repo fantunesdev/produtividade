@@ -24,6 +24,7 @@ urlpatterns = [
     path('atividades/', include('atividades.urls.atividade_urls')),
     path('atividades/areas/', include('atividades.urls.area_urls')),
     path('atividades/plataformas/', include('atividades.urls.plataforma_urls')),
+    path('usuarios/', include('login.urls')),
     path('login/', logar_usuario, name='logar_usuario'),
     path('logout/', deslogar_usuario, name='deslogar_usuario'),
 ]
