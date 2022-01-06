@@ -148,6 +148,7 @@ def expandir_atividade(request, id):
     for i in atividades:
         tempo_total = tempo_total + i.tempo
     template_tags['atividade'] = atividade
+    template_tags['atividades'] = atividades
     template_tags['tempo_total'] = tempo_total
     return render(request, 'atividades/atividades/expandir_atividade.html', template_tags)
 
