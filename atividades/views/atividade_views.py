@@ -79,6 +79,7 @@ def listar_ano(request, ano):
     atividades = atividade_service.listar_ano(request.user, ano)
     tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
     json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
+    template_tags['ano'] = ano
     template_tags['atividades'] = atividades
     template_tags['tempo_areas'] = tempo_areas
     template_tags['json_tempo_areas'] = json_tempo_areas

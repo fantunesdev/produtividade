@@ -28,7 +28,7 @@
                     </td>
                     <td>
                         <a class="btn" href="{% url 'listar_ano' ano|subtrair1 %}"><<</a>
-                        <a class="btn" href="{% url 'listar_ano' ano %}">Atual</a>
+                        <a class="btn" href="{% url 'listar_ano' ano_atual %}">Atual</a>
                         <a class="btn" href="{% url 'listar_ano' ano|somar1 %}">>></a>
                     </td>
                 </tbody>
@@ -51,7 +51,7 @@
                     {% for area in tempo_areas %}
                         <tr>
                             {% if area.nome != 'Total' %}
-                                <td><a href="/atividades/area/{{ area.nome|slugify }}/">{{ area.nome }}</a></td>
+                                <td><a href="/atividades/listar/area/{{ area.nome|slugify }}/">{{ area.nome }}</a></td>
                                 <td>{{ area.tempo|em_horas }}</td>
                             {% else %}
                                 <td>{{ area.nome }}</td>
