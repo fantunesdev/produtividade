@@ -146,11 +146,13 @@ def expandir_atividade(request, id):
     atividade = atividade_service.listar_atividade_id(request.user, id)
     atividades = atividade_service.listar_descricao(request.user, atividade.descricao)
     tempo_total = 0
+    tempo_atividade = atividade_repositorio.tempo_atividade(atividade.inicio, atividade.fim)
     for i in atividades:
         tempo_total = tempo_total + i.tempo
     template_tags['atividade'] = atividade
     template_tags['atividades'] = atividades
     template_tags['tempo_total'] = tempo_total
+    template_tags['tempo_atividade'] = tempo_atividade
     return render(request, 'atividades/atividades/expandir_atividade.html', template_tags)
 
 
