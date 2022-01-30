@@ -50,11 +50,7 @@
                 <img id="aside-profile-photo" src="{% static 'atividades/img/profile.jpg' %}" alt="">
                 <span id="aside-profile-name">{{ request.user.username }}</span>
             </div>
-            <ul class="menu">
-                {% block menu %}
-                {% include 'includes/menu.html' %}
-                {% endblock menu %}
-            </ul>
+            <ul class="menu">{% include 'frames/_sidebar.html' %}</ul>
         </aside>
 
 

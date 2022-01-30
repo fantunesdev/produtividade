@@ -1,32 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
 {% load meus_filtros %}
-    {% block title %}
-        Listagem de Áreas
-    {% endblock title %}
 
     {% block content %}
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Lista de Áreas</h3>
+                <h3 class="box-title">Lista de Sub-Áreas</h3>
             </div>
             <div class="box-body">
             <table class="table">
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Cor</th>
+                        <th>Área</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for i in areas %}
-                            <td><a href="{% url 'listar_area' i.nome|slugify %}">{{ i.nome }}</a></td>
+                    {% for i in sub_areas %}
+                            <td><a href="{% url 'listar_sub_area_nome' i.nome|slugify %}">{{ i.nome }}</a></td>
+                            <td>{{ i.area }}</td>
                             <td>
-                                <div style="background-color: {{ i.cor }}; width: 20px; height: 20px; border-radius: 10px;"></div>
-                            </td>
-                            <td>
-                                <a href="{% url 'editar_area' i.id %}"><i class="fa fa-edit"></i></a>
+                                <a href="{% url 'editar_sub_area' i.id %}"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                     {% endfor %}

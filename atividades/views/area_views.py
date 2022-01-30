@@ -11,10 +11,9 @@ def cadastrar_area(request):
     if request.method == "POST":
         form_area = AreaForm(request.POST)
         if form_area.is_valid():
-            nome = form_area.cleaned_data['nome']
-            descricao = form_area.cleaned_data['descricao']
-
-            area_nova = Area(nome=nome, descricao=descricao)
+            area_nova = Area(nome=form_area.cleaned_data['nome'],
+                             descricao=form_area.cleaned_data['descricao'],
+                             usuario=request.user)
             area_service.cadastrar_area(area_nova)
             return redirect('listar_areas')
     else:
@@ -49,10 +48,9 @@ def editar_area(request, id):
     area_antiga = area_service.listar_area_id(id)
     form_area = AreaForm(request.POST or None, instance=area_antiga)
     if form_area.is_valid():
-        nome = form_area.cleaned_data['nome']
-        descricao = form_area.cleaned_data['descricao']
-
-        area_nova = Area(nome=nome, descricao=descricao)
+        area_nova = Area(nome=form_area.cleaned_data['nome'],
+                         descricao=form_area.cleaned_data['descricao'],
+                         usuario=request.user)
 
         area_service.editar_area(area_antiga, area_nova)
         return redirect('listar_areas')
