@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+
 {% load meus_filtros %}
+
     {% block title %}
-        PRoDutividade | Expandir atividade
+        Atividade: {{ atividade.descricao }}
     {% endblock title %}
-        {{ atividade.tipo }}
+
     {% block content %}
         <div class="card">
             <div class="box box-primary">

@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from ..services import area_service
 from ..forms.area_form import AreaForm
+from ..forms.general_form import ExclusaoForm
 from ..entidades.area import Area
 from ..views.atividade_views import template_tags
 
@@ -19,28 +20,28 @@ def cadastrar_area(request):
     else:
         form_area = AreaForm()
     template_tags['form_area'] = form_area
-    return render(request, 'atividades/areas/form_area.html', template_tags)
+    return render(request, 'areas/form_area.html', template_tags)
 
 
 @login_required
 def listar_areas(request):
     areas = area_service.listar_areas()
     template_tags['areas'] = areas
-    return render(request, 'atividades/areas/listar_areas.html', template_tags)
+    return render(request, 'areas/listar_areas.html', template_tags)
 
 
 @login_required
 def listar_area_id(request, id):
     area = area_service.listar_area_id(id)
     template_tags['area'] = area
-    return render(request, 'atividades/areas/expandir_area.html', template_tags)
+    return render(request, 'areas/expandir_area.html', template_tags)
 
 
 @login_required
 def listar_area(request, nome):
     area = area_service.listar_area(nome)
     template_tags['area'] = area
-    return render(request, 'atividades/areas/expandir_area.html', template_tags)
+    return render(request, 'areas/expandir_area.html', template_tags)
 
 
 @login_required
@@ -56,14 +57,15 @@ def editar_area(request, id):
         return redirect('listar_areas')
     template_tags['form_area'] = form_area
     template_tags['area_antiga'] = area_antiga
-    return render(request, 'atividades/areas/form_area.html', template_tags)
+    return render(request, 'areas/editar_area.html', template_tags)
 
 
 @login_required
 def remover_area(request, id):
     area = area_service.listar_area_id(id)
-    if request.method == "POST":
+    if request.POST.get('confirmacao'):
         area_service.remover_area(area)
         return redirect('listar_areas')
     template_tags['area'] = area
-    return render(request, 'atividades/areas/confirma_exclusao.html', template_tags)
+    template_tags['form_exclusao'] = ExclusaoForm()
+    return render(request, 'areas/confirma_exclusao.html', template_tags)

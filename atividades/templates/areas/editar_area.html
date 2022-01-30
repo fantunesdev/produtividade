@@ -1,0 +1,9 @@
+{% extends "areas/form_area.html" %}
+{% load meus_filtros %}
+    {% block title %}
+        Editar Área
+    {% endblock %}
+
+{% block excluir %}
+    <a href="{% url 'remover_area' area_antiga.id %}" class="btn btn-danger">Excluir</a>
+{% endblock excluir %}
