@@ -26,11 +26,7 @@ SECRET_KEY = SECRET_DJANGO
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-        'localhost',
-        '192.168.100.2',
-        '127.0.0.1'
-        ]
+ALLOWED_HOSTS = HOSTS
 
 
 # Application definition
