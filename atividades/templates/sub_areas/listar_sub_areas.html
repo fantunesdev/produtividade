@@ -22,7 +22,7 @@
                 <tbody>
                     {% for i in sub_areas %}
                             <td><a href="{% url 'listar_sub_area_nome' i.nome|slugify %}">{{ i.nome }}</a></td>
-                            <td>{{ i.area }}</td>
+                            <td>{{ i.areas.first }}</td>
                             <td>
                                 <a href="{% url 'editar_sub_area' i.id %}"><i class="fa fa-edit"></i></a>
                             </td>

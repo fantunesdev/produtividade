@@ -1,6 +1,6 @@
 class SubArea():
-    def __init__(self, nome, descricao, area, usuario):
+    def __init__(self, nome, descricao, areas, usuario):
         self.nome = nome
         self.descricao = descricao
-        self.area = area
+        self.areas = areas
         self.usuario = usuario

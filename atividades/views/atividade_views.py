@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from ..services import atividade_service
+from ..services import atividade_service, sub_area_service
 from ..forms.atividade_form import AtividadeForm
 from ..forms.general_form import ExclusaoForm
 from ..entidades.atividade import Atividade
@@ -8,6 +8,10 @@ from datetime import date, datetime
 import json
 from ..encoder import Encoder
 from django.contrib.auth.decorators import login_required
+
+# APAGAR INICIO
+from ..entidades.sub_area import SubArea
+# APAGAR FIM
 
 # Create your views here.
 
@@ -61,6 +65,18 @@ def listar_atividades(request):
     template_tags['tempo_areas'] = tempo_areas
     template_tags['json_tempo_areas'] = json_tempo_areas
     template_tags['contador_atividades'] = len(atividades)
+
+    # APAGAR INICIO
+    for i in atividades:
+        nome = i.sub_area
+        if not nome:
+            nome = 'Alterar'
+        sub_area = SubArea(nome=nome,
+                           descricao=None,
+                           usuario=request.user,
+                           areas=i.area)
+        sub_area_service.cadastrar_sub_area(sub_area)
+    # APAGAR FIM
     return render(request, 'atividades/listar_atividades.html', template_tags)
 
 

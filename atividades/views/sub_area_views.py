@@ -14,13 +14,14 @@ def cadastrar_sub_area(request):
         if form_sub_area.is_valid():
             nova_sub_area = SubArea(nome=form_sub_area.cleaned_data['nome'],
                                     descricao=form_sub_area.cleaned_data['descricao'],
-                                    area=form_sub_area.cleaned_data['area'],
-                                    usuario=request.user)
+                                    usuario=request.user,
+                                    areas=form_sub_area.cleaned_data['areas'])
             sub_area_service.cadastrar_sub_area(nova_sub_area)
             return redirect('listar_sub_areas')
     else:
         form_sub_area = SubAreaForm()
     template_tags['form_sub_area'] = form_sub_area
+    template_tags['sub_area_antiga'] = None
     return render(request, 'sub_areas/form_sub_area.html', template_tags)
 
 
@@ -46,7 +47,6 @@ def listar_sub_area_nome(request, nome):
     return render(request, 'sub_areas/expandir_sub_area.html', template_tags)
 
 
-
 @login_required
 def editar_sub_area(request, id):
     sub_area_antiga = sub_area_service.listar_sub_area_id(request.user, id)
@@ -54,7 +54,7 @@ def editar_sub_area(request, id):
     if form_sub_area.is_valid():
         sub_area_nova = SubArea(nome=form_sub_area.cleaned_data['nome'],
                                 descricao=form_sub_area.cleaned_data['descricao'],
-                                area=form_sub_area.cleaned_data['area'],
+                                areas=[form_sub_area.cleaned_data['areas']],
                                 usuario=request.user)
         sub_area_service.editar_sub_area(sub_area_antiga, sub_area_nova)
         return redirect('listar_sub_areas')
