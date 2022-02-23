@@ -18,13 +18,21 @@ def cadastrar_atividade(atividade):
 
 def cadastar_inicio():
     agora = datetime.now()
-    inicio = buscar_inicio()[0]
+    inicio = validar_primeiro_cadastro_data(agora)
     inicio.inicio = agora
     inicio.save(force_update=True)
 
 
+def validar_primeiro_cadastro_data(agora):
+    data = buscar_inicio()
+    if not data:
+        InicioAtividade.objects.create(inicio=agora)
+        data = buscar_inicio()
+    return data
+
+
 def buscar_inicio():
-    inicio = InicioAtividade.objects.filter(id=1)
+    inicio = InicioAtividade.objects.filter(id=1).first()
     return inicio
 
 

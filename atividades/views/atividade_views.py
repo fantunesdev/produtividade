@@ -67,15 +67,17 @@ def listar_atividades(request):
     template_tags['contador_atividades'] = len(atividades)
 
     # APAGAR INICIO
+    contador = 0
     for i in atividades:
-        nome = i.sub_area
-        if not nome:
-            nome = 'Alterar'
-        sub_area = SubArea(nome=nome,
+        sub_area = SubArea(nome=i.sub_area,
                            descricao=None,
                            usuario=request.user,
                            areas=i.area)
-        sub_area_service.cadastrar_sub_area(sub_area)
+        sub_area_db = sub_area_service.listar_sub_area_cadastrada(sub_area)
+        if not sub_area_db:
+            contador += 1
+            sub_area_service.cadastrar_sub_area(sub_area)
+    print(contador)
     # APAGAR FIM
     return render(request, 'atividades/listar_atividades.html', template_tags)
 
@@ -120,6 +122,22 @@ def listar_ano_mes_semana(request, ano, tipo, valor):
     template_tags['tempo_areas'] = tempo_areas
     template_tags['json_tempo_areas'] = json_tempo_areas
     template_tags['contador_atividades'] = len(atividades)
+
+    # APAGAR INICIO
+    contador = 0
+    for i in atividades:
+        sub_area = SubArea(nome=i.sub_area,
+                           descricao=None,
+                           usuario=request.user,
+                           areas=i.area)
+        sub_area_db = sub_area_service.listar_sub_area_cadastrada(sub_area)
+        print(sub_area_db)
+        # if not sub_area_db:
+        #     contador += 1
+        #     print(sub_area.nome)
+        # sub_area_service.cadastrar_sub_area(sub_area)
+    print(contador)
+    # APAGAR FIM
 
     return render(request, 'atividades/listar_atividades.html', template_tags)
 
