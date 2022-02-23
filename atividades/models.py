@@ -22,6 +22,9 @@ class SubArea(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     areas = models.ManyToManyField(Area)
 
+    def __str__(self):
+        return self.nome
+
 
 class InicioAtividade(models.Model):
     inicio = models.DateTimeField(blank=False, null=False)
@@ -29,8 +32,8 @@ class InicioAtividade(models.Model):
 
 class Atividade(models.Model):
     data = models.DateField(default=timezone.localtime(timezone.now()))
-    area = models.ForeignKey(Area, on_delete=models.SET_DEFAULT, default=666)
-    sub_area = models.CharField(max_length=50, blank=True, null=True)
+    area = models.ForeignKey(Area, on_delete=models.PROTECT)
+    sub_area = models.ForeignKey(SubArea, on_delete=models.PROTECT)
     plataforma = models.CharField(max_length=30, blank=True, null=True)
     pessoa = models.CharField(max_length=50, blank=True, null=True)
     descricao = models.CharField(max_length=200, blank=True, null=True)

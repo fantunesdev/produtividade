@@ -6,7 +6,6 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 class AtividadeForm(forms.ModelForm):
-    # sub_area = forms.ModelChoiceField(queryset=Atividade.objects.all())
     class Meta:
         model = Atividade
         fields = ['data', 'area', 'sub_area', 'plataforma', 'pessoa', 'descricao', 'detalhamento', 'tempo']
