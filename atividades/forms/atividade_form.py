@@ -1,23 +1,28 @@
 from django import forms
 from ..models import Atividade
-from ckeditor.widgets import CKEditorWidget
+from django.utils import timezone
+
 
 class DateInput(forms.DateInput):
     input_type = 'date'
 
+
 class AtividadeForm(forms.ModelForm):
     class Meta:
         model = Atividade
+        agora = timezone.localtime(timezone.now()).strftime('%Y-%m-%d')
+
         fields = ['data', 'area', 'sub_area', 'plataforma', 'pessoa', 'descricao', 'detalhamento', 'tempo']
         widgets = {
-            'data': forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'})
+            'data': forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date', 'value': agora})
         }
+
 
 class ExclusaoForm(forms.Form):
     confirmacao = forms.BooleanField(label='')
 
+
 class AtividadeFormVer(forms.ModelForm):
-    # sub_area = forms.ModelChoiceField(queryset=Atividade.objects.all())
     class Meta:
         model = Atividade
         fields = ['data', 'area', 'sub_area', 'plataforma', 'pessoa', 'descricao', 'detalhamento', 'tempo']

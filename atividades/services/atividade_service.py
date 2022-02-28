@@ -1,5 +1,6 @@
 from ..models import Atividade, InicioAtividade
-from datetime import date, datetime
+from datetime import date
+from django.utils import timezone
 
 
 def cadastrar_atividade(atividade):
@@ -17,7 +18,7 @@ def cadastrar_atividade(atividade):
 
 
 def cadastar_inicio():
-    agora = datetime.now()
+    agora = timezone.now()
     inicio = validar_primeiro_cadastro_data(agora)
     inicio.inicio = agora
     inicio.save(force_update=True)

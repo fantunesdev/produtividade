@@ -149,3 +149,5 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
     ]
 }
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
