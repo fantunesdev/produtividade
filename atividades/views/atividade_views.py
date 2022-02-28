@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from ..services import atividade_service, sub_area_service, area_service
+from ..services import atividade_service
 from ..forms.atividade_form import AtividadeForm
 from ..forms.general_form import ExclusaoForm
 from ..entidades.atividade import Atividade
