@@ -31,7 +31,7 @@ class InicioAtividade(models.Model):
 
 
 class Atividade(models.Model):
-    data = models.DateField(default=timezone.localtime(timezone.now()))
+    data = models.DateField(blank=False, null=False)
     area = models.ForeignKey(Area, on_delete=models.PROTECT)
     sub_area = models.ForeignKey(SubArea, on_delete=models.PROTECT)
     plataforma = models.CharField(max_length=30, blank=True, null=True)
