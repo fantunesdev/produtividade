@@ -24,6 +24,9 @@ class SubArea(models.Model):
     def __str__(self):
         return self.nome
 
+    class Meta:
+        ordering = ['nome']
+
 
 class InicioAtividade(models.Model):
     inicio = models.DateTimeField(blank=False, null=False)
@@ -42,11 +45,11 @@ class Atividade(models.Model):
     fim = models.DateTimeField(blank=True, null=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
-    class Meta:
-        ordering = ['-data']
-
     def __str__(self):
         return self.descricao
+
+    class Meta:
+        ordering = ['-data']
 
 
 class Plataforma(models.Model):

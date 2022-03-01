@@ -3,7 +3,7 @@ from ..models import SubArea, Area
 
 
 class SubAreaForm(forms.ModelForm):
-    areas = forms.ModelChoiceField(queryset=Area.objects.all())
+    areas = forms.ModelMultipleChoiceField(queryset=Area.objects.all(), widget=forms.CheckboxSelectMultiple)
 
     class Meta:
         model = SubArea

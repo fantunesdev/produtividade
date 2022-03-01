@@ -30,13 +30,11 @@
                 </div>
 
                 <div class="form-group">
+                    <br>
                     {{ form_sub_area.areas.errors }}
-                    {% if sub_area_antiga %}
-                        <label>Area (Antiga: {{ sub_area_antiga.areas.first }})</label>
-                    {% else %}
-                        <label>Área:</label>
-                    {% endif %}
-                    {{ form_sub_area.areas|addclass:'form-control' }}
+                    <label>Área:</label><br><br>
+                    {{ form_sub_area.areas }}
+                    <br><br>
                 </div>
 
                 <div>
