@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from ..services import atividade_service
 from ..forms.atividade_form import AtividadeForm
 from ..forms.general_form import ExclusaoForm
 from ..entidades.atividade import Atividade
 from ..repositorios import atividade_repositorio
-from datetime import date, datetime
+from datetime import date
 import json
 from ..encoder import Encoder
 from django.contrib.auth.decorators import login_required
@@ -40,7 +41,7 @@ def cadastrar_atividade(request):
                                        detalhamento=form_atividade.cleaned_data['detalhamento'],
                                        tempo=form_atividade.cleaned_data['tempo'],
                                        inicio=atividade_service.buscar_inicio().inicio,
-                                       fim=datetime.now(),
+                                       fim=timezone.now(),
                                        usuario=request.user)
 
             atividade_service.cadastrar_atividade(atividade_nova)
