@@ -8,8 +8,6 @@ from api.services import atividade_service
 
 
 class AtividadesList(APIView):
-    permission_classes = [IsAuthenticated]
-
     def get(self, request):
         atividades = atividade_service.listar_semana_atual(request.user)
         serializer = atividade_serializer.AtividadeSerializer(atividades, many=True)

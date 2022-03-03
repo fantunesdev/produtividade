@@ -10,8 +10,6 @@ from atividades.services import sub_area_service
 
 
 class SubAreaList(APIView):
-    permission_classes = [IsAuthenticated]
-
     def get(self, request):
         sub_areas = sub_area_service.listar_sub_areas(request.user)
         serializer = sub_area_serializer.SubAreaSerializer(sub_areas, many=True)
@@ -30,8 +28,6 @@ class SubAreaList(APIView):
 
 
 class SubAreaDetalhes(APIView):
-    permission_classes = [IsAuthenticated]
-
     def get(self, request, area_id):
         sub_areas = sub_area_service_api.listar_sub_area_area(request.user, area_id)
         serializer = sub_area_serializer.SubAreaSerializer(sub_areas, many=True)

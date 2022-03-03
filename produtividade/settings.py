@@ -133,8 +133,6 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-STATIC_URL = '/static/'
-
 MEDIA_ROOT = (
     BASE_DIR
 )
@@ -146,6 +144,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         # 'rest_framework.authentication.BasicAuthentication'
+    ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
     ],
 
     'DEFAULT_RENDERER_CLASSES': [
