@@ -16,7 +16,7 @@ class Area(models.Model):
 
 
 class SubArea(models.Model):
-    nome = models.CharField(max_length=50, blank=False, null=False)
+    nome = models.CharField(max_length=50, unique=True, blank=False, null=False)
     descricao = models.TextField(blank=True, null=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     areas = models.ManyToManyField(Area)
