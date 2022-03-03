@@ -6,13 +6,15 @@ def cadastrar_sub_area(sub_area):
     if sub_area_db:
         sub_area_relacionada_area = listar_sub_area_nome_area_id(sub_area.usuario, sub_area.nome, sub_area.areas)
         if not sub_area_relacionada_area:
-            sub_area_db.areas.add(sub_area.areas)
+            for i in sub_area.areas:
+                sub_area_db.areas.add(i)
     else:
         nova_sub_area = SubArea.objects.create(nome=sub_area.nome,
                                                descricao=sub_area.descricao,
                                                usuario=sub_area.usuario)
         nova_sub_area.save()
-        nova_sub_area.areas.add(sub_area.areas)
+        for i in sub_area.areas:
+            nova_sub_area.areas.add(i)
 
 
 def listar_sub_areas(usuario):

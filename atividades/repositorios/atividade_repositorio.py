@@ -1,6 +1,7 @@
+from datetime import date
+
 from atividades.services import area_service
 from ..utils import tempo_area
-from datetime import date
 
 
 def tempo_atividade(inicio, fim):
@@ -10,8 +11,8 @@ def tempo_atividade(inicio, fim):
         tempo = tempo + 1
     return tempo
 
-def calcular_tempo_atividade_area(atividades):
-    areas = area_service.listar_areas()
+def calcular_tempo_atividade_area(atividades, usuario):
+    areas = area_service.listar_areas(usuario)
     lista_areas = []
     for area in areas:
         cor = to_rgba(area.cor)

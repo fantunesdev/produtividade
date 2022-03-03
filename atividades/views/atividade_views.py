@@ -1,14 +1,15 @@
+from datetime import date
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.utils import timezone
+import json
+
 from ..services import atividade_service
 from ..forms.atividade_form import AtividadeForm
 from ..forms.general_form import ExclusaoForm
 from ..entidades.atividade import Atividade
 from ..repositorios import atividade_repositorio
-from datetime import date
-import json
 from ..encoder import Encoder
-from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -56,7 +57,7 @@ def cadastrar_atividade(request):
 @login_required
 def listar_atividades(request):
     atividades = atividade_service.listar_atividades(request.user)
-    tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
+    tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades, request.user)
     json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
     template_tags['atividades'] = atividades
     template_tags['tempo_areas'] = tempo_areas
@@ -68,7 +69,7 @@ def listar_atividades(request):
 @login_required
 def listar_ano(request, ano):
     atividades = atividade_service.listar_ano(request.user, ano)
-    tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
+    tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades, request.user)
     json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
     template_tags['ano'] = ano
     template_tags['atividades'] = atividades
@@ -81,7 +82,7 @@ def listar_ano(request, ano):
 @login_required
 def listar_semana_atual(request):
     atividades = atividade_service.listar_semana_atual(request.user)
-    tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
+    tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades, request.user)
     json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
     template_tags['atividades'] = atividades
     template_tags['tempo_areas'] = tempo_areas
@@ -96,7 +97,7 @@ def listar_ano_mes_semana(request, ano, tipo, valor):
         atividades = atividade_service.listar_mes(request.user, ano, valor)
     elif tipo == 'semana':
         atividades = atividade_service.listar_semana(request.user, ano, valor)
-    tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
+    tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades, request.user)
     json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
     template_tags['ano'] = ano
     template_tags['tipo'] = tipo
@@ -122,7 +123,7 @@ def listar_sessao(request, sessao, valor_sessao):
         atividades = atividade_service.listar_pessoa(request.user, valor_sessao)
     elif sessao == 'descricao':
         atividades = atividade_service.listar_descricao(request.user, valor_sessao)
-    tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades)
+    tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades, request.user)
     json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
     template_tags['atividades'] = atividades
     template_tags['tempo_areas'] = tempo_areas

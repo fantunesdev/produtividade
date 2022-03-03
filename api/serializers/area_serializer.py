@@ -5,4 +5,4 @@ from atividades.models import Area
 class AreaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Area
-        fields = ['nome', 'descricao', 'usuario']
+        fields = ['id', 'nome', 'descricao', 'cor', 'usuario']

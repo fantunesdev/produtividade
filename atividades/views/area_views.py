@@ -14,6 +14,7 @@ def cadastrar_area(request):
         if form_area.is_valid():
             area_nova = Area(nome=form_area.cleaned_data['nome'],
                              descricao=form_area.cleaned_data['descricao'],
+                             cor=form_area.cleaned_data['cor'],
                              usuario=request.user)
             area_service.cadastrar_area(area_nova)
             return redirect('listar_areas')
@@ -25,32 +26,33 @@ def cadastrar_area(request):
 
 @login_required
 def listar_areas(request):
-    areas = area_service.listar_areas()
+    areas = area_service.listar_areas(request.user)
     template_tags['areas'] = areas
     return render(request, 'areas/listar_areas.html', template_tags)
 
 
 @login_required
 def listar_area_id(request, id):
-    area = area_service.listar_area_id(id)
+    area = area_service.listar_area_id(request.user, id)
     template_tags['area'] = area
     return render(request, 'areas/expandir_area.html', template_tags)
 
 
 @login_required
 def listar_area(request, nome):
-    area = area_service.listar_area(nome)
+    area = area_service.listar_area(request.user, nome)
     template_tags['area'] = area
     return render(request, 'areas/expandir_area.html', template_tags)
 
 
 @login_required
 def editar_area(request, id):
-    area_antiga = area_service.listar_area_id(id)
+    area_antiga = area_service.listar_area_id(request.user, id)
     form_area = AreaForm(request.POST or None, instance=area_antiga)
     if form_area.is_valid():
         area_nova = Area(nome=form_area.cleaned_data['nome'],
                          descricao=form_area.cleaned_data['descricao'],
+                         cor=form_area.cleaned_data['cor'],
                          usuario=request.user)
 
         area_service.editar_area(area_antiga, area_nova)
@@ -62,7 +64,7 @@ def editar_area(request, id):
 
 @login_required
 def remover_area(request, id):
-    area = area_service.listar_area_id(id)
+    area = area_service.listar_area_id(request.user, id)
     if request.POST.get('confirmacao'):
         area_service.remover_area(area)
         return redirect('listar_areas')
