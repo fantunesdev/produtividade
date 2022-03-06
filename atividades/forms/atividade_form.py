@@ -17,6 +17,12 @@ class AtividadeForm(forms.ModelForm):
             'data': forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date', 'value': agora})
         }
 
+class AtividadeBuscar(forms.ModelForm):
+    class Meta:
+        model = Atividade
+
+        fields = ['detalhamento']
+
 
 class ExclusaoForm(forms.Form):
     confirmacao = forms.BooleanField(label='')

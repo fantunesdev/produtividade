@@ -94,6 +94,12 @@ def listar_descricao(usuario, descricao):
     return atividades
 
 
+def listar_detalhamento(usuario, detalhamento):
+
+    atividades = Atividade.objects.filter(usuario=usuario, detalhamento__contains=detalhamento)
+    return atividades
+
+
 def listar_atividade_id(usuario, id):
     atividade = Atividade.objects.get(usuario=usuario, id=id)
     return atividade

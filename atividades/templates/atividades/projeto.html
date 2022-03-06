@@ -1,0 +1,25 @@
+{% load static %}
+{% load meus_filtros %}
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">{{ atividade.descricao }}</h3>
+            </div>
+            <div class="box-body">
+                <p>Área: <b>{{ atividade.area }}</b></p>
+                <p>Sub-Área: <b>{{ atividade.sub_area }}</b></p>
+                <p>Plataforma: <b>{{ atividade.plataforma }}</b></p>
+                <p>Início: <b>{{ atividade.inicio }}</b></p>
+                <p>Conclusão: <b>{{ atividade.fim }}</b></p>
+                <p>Tempo atividade: <b>{{ tempo_atividade }} min. (Cálculo Automtico)</b></p>
+                <p>Tempo atividade: <b>{{ atividade.tempo }} min. (Cronometrado)</b></p>
+                <p>Tempo Total: <b>{{ tempo_total|em_horas }}</b></p>
+                <p>Detalhamento: <br><br>
+                {{ atividade.detalhamento|safe }}</p>
+                <td><a href="{% url 'listar_sessao' 'descricao' atividade.descricao %}">Ver tabela com todas as ocorrências</a></td>
+            </div>
+            <div class="box-footer">
+                <form method="post">
+                    <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary">Voltar</a>
+                </form>
+            </div>
+        </div>

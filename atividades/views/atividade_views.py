@@ -5,7 +5,7 @@ from django.utils import timezone
 import json
 
 from ..services import atividade_service, area_service, sub_area_service
-from ..forms.atividade_form import AtividadeForm
+from ..forms.atividade_form import AtividadeForm, AtividadeBuscar
 from ..forms.general_form import ExclusaoForm
 from ..entidades.atividade import Atividade
 from ..repositorios import atividade_repositorio
@@ -133,6 +133,22 @@ def listar_sessao(request, sessao, valor_sessao):
 
 
 @login_required
+def buscar(request):
+    if request.method == 'POST':
+        form_atividade = AtividadeBuscar(request.POST)
+        if form_atividade.is_valid():
+            detalhamento = form_atividade.cleaned_data['detalhamento']
+            atividades = atividade_service.listar_detalhamento(request.user, detalhamento)
+            template_tags['atividades'] = atividades
+            template_tags['form_atividade'] = form_atividade
+            return render(request, 'atividades/expandir_atividade.html', template_tags)
+    else:
+        form_atividade = AtividadeBuscar()
+        template_tags['form_atividade'] = form_atividade
+        return render(request, 'atividades/buscar_temporario.html', template_tags)
+
+
+@login_required
 def expandir_atividade(request, id):
     atividade = atividade_service.listar_atividade_id(request.user, id)
     atividades = atividade_service.listar_descricao(request.user, atividade.descricao)
@@ -144,6 +160,7 @@ def expandir_atividade(request, id):
     template_tags['atividades'] = atividades
     template_tags['tempo_total'] = tempo_total
     template_tags['tempo_atividade'] = tempo_atividade
+    template_tags['projeto'] = True
     return render(request, 'atividades/expandir_atividade.html', template_tags)
 
 
@@ -180,7 +197,7 @@ def remover_atividade(request, id):
     return render(request, 'atividades/confirma_exclusao.html', template_tags)
 
 
-def configurar_plataforma(request):
+def settings(request):
     template_tags['areas'] = area_service.listar_areas(request.user)
     template_tags['sub_areas'] = sub_area_service.listar_sub_areas(request.user)
     return render(request, 'atividades/settings.html', template_tags)

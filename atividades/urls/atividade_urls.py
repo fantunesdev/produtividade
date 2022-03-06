@@ -11,5 +11,6 @@ urlpatterns = [
     path('listar/<int:id>', expandir_atividade, name='expandir_atividade'),
     path('listar/<str:sessao>/<str:valor_sessao>/', listar_sessao, name='listar_sessao'),
     path('remover/<int:id>', remover_atividade, name='remover_atividade'),
-    path('settings/', configurar_plataforma, name='configurar_plataforma')
+    path('settings/', settings, name='settings'),
+    path('buscar/', buscar, name='buscar')
 ]
