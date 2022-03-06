@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 import json
 
-from ..services import atividade_service
+from ..services import atividade_service, area_service, sub_area_service
 from ..forms.atividade_form import AtividadeForm
 from ..forms.general_form import ExclusaoForm
 from ..entidades.atividade import Atividade
@@ -178,3 +178,9 @@ def remover_atividade(request, id):
     template_tags['atividade'] = atividade
     template_tags['form_exclusao'] = ExclusaoForm()
     return render(request, 'atividades/confirma_exclusao.html', template_tags)
+
+
+def configurar_plataforma(request):
+    template_tags['areas'] = area_service.listar_areas(request.user)
+    template_tags['sub_areas'] = sub_area_service.listar_sub_areas(request.user)
+    return render(request, 'atividades/settings.html', template_tags)

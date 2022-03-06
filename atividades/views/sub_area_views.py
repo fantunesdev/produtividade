@@ -17,7 +17,7 @@ def cadastrar_sub_area(request):
                                     usuario=request.user,
                                     areas=form_sub_area.cleaned_data['areas'])
             sub_area_service.cadastrar_sub_area(nova_sub_area)
-            return redirect('listar_sub_areas')
+            return redirect('configurar_plataforma')
     else:
         form_sub_area = SubAreaForm()
     template_tags['form_sub_area'] = form_sub_area
@@ -57,7 +57,7 @@ def editar_sub_area(request, id):
                                 areas=[form_sub_area.cleaned_data['areas']],
                                 usuario=request.user)
         sub_area_service.editar_sub_area(sub_area_antiga, sub_area_nova)
-        return redirect('listar_sub_areas')
+        return redirect('configurar_plataforma')
     template_tags['form_sub_area'] = form_sub_area
     template_tags['sub_area_antiga'] = sub_area_antiga
     return render(request, 'sub_areas/editar_sub_area.html', template_tags)
@@ -68,7 +68,7 @@ def remover_sub_area(request, id):
     sub_area = sub_area_service.listar_sub_area_id(request.user, id)
     if request.POST.get('confirmacao'):
         sub_area_service.remover_sub_area(sub_area)
-        return redirect('listar_sub_areas')
+        return redirect('configurar_plataforma')
     template_tags['sub_area'] = sub_area
     template_tags['form_exclusao'] = ExclusaoForm()
     return render(request, 'sub_areas/confirma_exclusao.html', template_tags)
