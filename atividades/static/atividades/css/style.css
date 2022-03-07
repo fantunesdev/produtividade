@@ -33,7 +33,7 @@ body{
 
 /* ### HEADER SESSAO 2 - CENTRAL ### */
 
-#button{
+#sidebar-button{
     height: 50px;
     width: 50px;
     box-sizing: border-box;
@@ -48,7 +48,7 @@ body{
     text-decoration: none;
 }
 
-#button:hover{
+#sidebar-button:hover{
     background-color: #5e0000;
 }
 
