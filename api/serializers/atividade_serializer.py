@@ -6,8 +6,8 @@ from atividades.models import Atividade
 
 
 class AtividadeSerializer(serializers.ModelSerializer):
-    area = AreaSerializer()
-    sub_area = SubAreaSerializer()
+    area = AreaSerializer(fields=('id', 'nome', 'cor'))
+    sub_area = SubAreaSerializer(fields=('id', 'nome', 'areas'))
 
     class Meta:
         model = Atividade
