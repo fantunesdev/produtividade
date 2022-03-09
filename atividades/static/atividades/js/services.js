@@ -2,7 +2,7 @@ let areas = document.querySelector('#id_area'),
     subAreas = document.querySelector('#id_sub_area');
    
 function getSubAreas(area) {
-    let url = `api/areas/${area}/sub_areas/`,
+    let url = `/api/areas/${area}/sub_areas/`,
         subAreaOption,
         i;
 
