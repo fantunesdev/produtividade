@@ -1,3 +1,0 @@
-
-
-console.log('Ola, mundo!');
