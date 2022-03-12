@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 {% load static %}
 {% load meus_filtros %}
     {% block title %}
@@ -19,28 +19,34 @@
             <div class="box-body">
                 <a href="{% url 'cadastrar_area' %}" class="btn btn-primary">Cadastrar</a>
                 <table class="table">
+                    <thead>
                     <tr>
-                        <th>Nome</th>
+                        <th class="center">Nome</th>
                         <th>Cor</th>
-                        <th>Editar</th>
+                        <th class="center">Editar</th>
                     </tr>
-                    {% for area in areas %}
-                    <tr>
-                        <td>{{ area.nome }}</td>
-                        <td>
-                            <div style="background-color: {{ area.cor }}; width: 20px; height: 20px; border-radius: 10px;"></div>
-                        </td>
-                        <td>
-                            <a href="{% url 'editar_area' area.id %}">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                    </thead>
+                    <tbody>
+                    </tbody>
+                        {% for area in areas %}
+                            <tr>
+                                <td class="center">{{ area.nome }}</td>
+                                <td class="center">
+                                    <div class="center-div" style="background-color: {{ area.cor }}; width: 20px; height: 20px; border-radius: 10px;"></div>
+                                </td>
+                                <td class="center">
+                                    <a href="{% url 'editar_area' area.id %}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
                 </table>
             </div>
             <div class="box-footer">
+                <br>
                 <a href="#inicio" class="btn">Voltar</a>
+                <br><br>
             </div>
         </div>
 
@@ -68,7 +74,9 @@
                 </table>
             </div>
             <div class="box-footer">
+                <br>
                 <a href="#inicio" class="btn">Voltar</a>
+                <br><br>
             </div>
         </div>
     {% endblock content %}

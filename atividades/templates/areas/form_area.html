@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "index.html" %}
 {% load meus_filtros %}
 {% block title %}
     Cadastrar Área
@@ -15,19 +15,19 @@
 
                 <div class="form-group">
                     {{ form_area.nome.errors }}
-                    <label>Nome:</label>
+                    <label for="id_nome">Nome:</label>
                     {{ form_area.nome|addclass:'form-control' }}
                 </div>
 
                 <div class="form-group">
                     {{ form_area.descricao.errors }}
-                    <label>Descricao:</label>
+                    <label for="id_descricao">Descricao:</label>
                     {{ form_area.descricao|addclass:'form-control' }}
                 </div>
 
                 <div class="form-group">
                     {{ form_area.cor.errors }}
-                    <label>Cor:</label><br>
+                    <label for="id_cor">Cor:</label><br>
                     {{ form_area.cor }}
                 </div>
 

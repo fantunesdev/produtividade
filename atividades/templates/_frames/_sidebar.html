@@ -1,24 +1,69 @@
-{% load static %}
+        <aside>
+            <ul>
+                <!-- INÍCIO ÍTENS DE MENU -->
 
-<li class="menu-item">
-    <a href="{% url 'cadastrar_atividade' %}" class="menu-item-link"><i class="fas fa-edit icon"></i><span>Cadastrar</span></a>
-</li>
+                <!-- INÍCIO EXEMPLO ÍTEM COMUM -->
+                <li>
+                    <a href="{% url 'cadastrar_atividade' %}">
+                        <div>
+                            <i class="fas fa-edit icon"></i>
+                        </div>
+                        <div class="toggle">
+                            <span>Cadastrar</span>
+                        </div>
+                    </a>
+                </li>
+                <!-- FIM EXEMPLO ÍTEM COMUM -->
+                <li>
+                    <a href="{% url 'listar_atividades' %}">
+                        <div>
+                            <i class="fas fa-list icon"></i>
+                        </div>
+                        <div class="toggle">
+                            <span>Listar</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'listar_semana_atual' %}">
+                        <div>
+                            <i class="fa-solid fa-calendar-week"></i>
+                        </div>
+                        <div class="toggle">
+                            <span>Listar Semana Atual</span>
+                        </div>
+                    </a>
+                </li>
+<!--                &lt;!&ndash; INICIO EXEMPLO ÍTEM COM DROPDOWN &ndash;&gt;-->
+<!--                <li>-->
+<!--                    <a id="categoria-submenu-button" onclick="toggleSubMenu('categoria-submenu')">-->
+<!--                        <div>-->
+<!--                            <i class="bi bi-diagram-3-fill"></i>-->
+<!--                        </div>-->
+<!--                        <div class="toggle">-->
+<!--                            <span>Categoria </span>-->
+<!--                        </div>-->
+<!--                        <div class="align-right">-->
+<!--                            <i class="fa-solid fa-angle-down inverse-toggle"></i>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                    <ul id="categoria-submenu" class="toggled">-->
+<!--                        <li>-->
+<!--                            <a href="">Cadastrar Categoria</a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a href="">Listar Categorias</a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a href="">Listar Categorias de Entradas</a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a href="">Listar Categorias de Saídas</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                &lt;!&ndash; FIM EXEMPLO ÍTEM COM DROPDOWN &ndash;&gt;-->
 
-<li class="menu-item">
-    <a href="{% url 'listar_atividades' %}" class="menu-item-link"><i class="fas fa-list icon"></i><span class="collapse">Listar</span></a>
-</li>
-
-<li class="menu-item">
-    <a href="{% url 'listar_ano_mes_semana' ano_atual 'semana' semana_atual %}" class="menu-item-link"><i class="fas fa-list icon"></i><span class="collapse">Listar Semana Atual</span></a>
-</li>
-
-<br><br><br><br>
-<li>Temporário:</li>
-
-<li class="menu-item">
-    <a href="{% url 'buscar' %}" class="menu-item-link"><i class="fa-solid fa-magnifying-glass"></i><span class="collapse">Buscar</span></a>
-</li>
-
-<li class="menu-item">
-    <a href="{% url 'settings' %}" class="menu-item-link"><i class="fa-solid fa-gear"></i><span class="collapse">Settings</span></a>
-</li>
+                <!-- FIM ÍTENS MENU -->
+            </ul>
+        </aside>

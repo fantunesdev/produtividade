@@ -145,7 +145,7 @@ def buscar(request):
     else:
         form_atividade = AtividadeBuscar()
         template_tags['form_atividade'] = form_atividade
-        return render(request, 'atividades/buscar_temporario.html', template_tags)
+        return render(request, 'atividades/buscar.html', template_tags)
 
 
 @login_required

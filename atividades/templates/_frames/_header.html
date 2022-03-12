@@ -1,0 +1,41 @@
+{% load static %}
+        <header>
+            <!-- INÍCIO BOTÕES BARRA SUPERIOR -->
+            <ul class="flex-v-center">
+                <li>
+                    <a id="sidebar-button"><i class="fa-solid fa-bars"></i></a>
+                </li>
+                <li class="align-right">
+                    <a href="{% url 'buscar' %}" class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></a>
+                </li>
+                <li>
+                    <a href="{% url 'settings' %}"><i class="fa-solid fa-gear"></i></a>
+                </li>
+                <li class="profile-button">
+                    <a onclick="toggleProfile('profile')"><img id="profile-photo-button" src="{% static 'atividades/img/profile.jpg' %}" alt=""></a>
+                </li>
+            </ul>
+            <!-- FIM BOTÕES BARRA SUPERIOR -->
+
+            <!-- INÍCIO PROFILE -->
+            <section id="profile" class="toggled">
+                <div class="photo">
+                    <img id="profile-photo" src="{% static 'atividades/img/profile.jpg' %}" alt="">
+                </div>
+                <div class="nome">
+                </div>
+                <div class="dados">
+                    <p class="bolder font-22">Fernando Antunes</p>
+                    <p>fernando@mail.com</p>
+                    <p class="italic font-14">Desde 10 de Março de 2022 às 17:30</p>
+                </div>
+                <div class="profile">
+                    <a href="" class="btn">Profile</a>
+                </div>
+                <div class="logout">
+                    <a href="{% url 'deslogar_usuario' %}" class="btn">Logout</a>
+                </div>
+            </section>
+            <!-- FIM PROFILE -->
+        </header>
+        <!-- FIM BARRA SUPERIOR -->

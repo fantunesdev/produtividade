@@ -18,8 +18,11 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from login.views import logar_usuario, deslogar_usuario
+from atividades.views.atividade_views import listar_semana_atual
 
 urlpatterns = [
+    path('', listar_semana_atual),
+
     path('admin/', admin.site.urls),
 
     path('api/', include('api.urls')),
