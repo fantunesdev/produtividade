@@ -56,7 +56,7 @@ MIDDLEWARE = [
 ]
 
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/atividades/listar/semana_atual/'
+LOGIN_REDIRECT_URL = '/atividades/'
 
 ROOT_URLCONF = 'produtividade.urls'
 

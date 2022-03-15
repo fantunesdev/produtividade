@@ -567,8 +567,9 @@ label{
     font-weight: bolder;
 }
 
-select {
-	background: red;
+option {
+    background: #202020;
+    font-size: 15px;
 }
 
 /* INÍCIO FORMULÁRIOS */
