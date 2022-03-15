@@ -52,22 +52,22 @@ function toggleSubMenu(id) {
     let subMenu = document.querySelector(`#${id}`),
         subMenuButton = document.querySelector(`#${id}-button`);
 
-    if (subMenu.classList.length === 0) {
-        subMenu.classList.add('toggled');
-        subMenuButton.lastElementChild.lastElementChild.outerHTML = "<i class='fa-solid fa-angle-down'></i>";
-    } else {
+    if (hasToggled(subMenu.classList)) {
         subMenu.classList.remove('toggled');
         subMenuButton.lastElementChild.lastElementChild.outerHTML = "<i class='fa-solid fa-angle-up'></i>";
+    } else {
+        subMenu.classList.add('toggled');
+        subMenuButton.lastElementChild.lastElementChild.outerHTML = "<i class='fa-solid fa-angle-down'></i>";
     }
 }
 
 function toggleProfile(id) {
     let element = document.querySelector(`#${id}`);
 
-    if (element.classList.length === 0) {
-        element.classList.add('toggled');
-    } else {
+    if (hasToggled(element.classList)) {
         element.classList.remove('toggled');
+    } else {
+        element.classList.add('toggled');
     }
 }
 
@@ -77,17 +77,17 @@ function toggleNavegacao(id) {
         i,
         j;
 
-    if (navegacao.classList.length === 1) {
-        navegacao.classList.add('toggled');
-        navegacaoButton.children[0].outerHTML = '<i class="fa-solid fa-angles-down" onclick="toggleNavegacao(\'navegacao\')"></i>';
-        for (i = 0; i < navegacao.children.length; i++) {
-            navegacao.children[i].classList.add('toggled');
-        }
-    } else {
+    if (hasToggled(navegacao.classList)) {
         navegacao.classList.remove('toggled');
         navegacaoButton.children[0].outerHTML = '<i class="fa-solid fa-angles-up" onclick="toggleNavegacao(\'navegacao\')"></i>';
         for (i = 0; i < navegacao.children.length; i++) {
             navegacao.children[i].classList.remove('toggled');
+        }
+    } else {
+        navegacao.classList.add('toggled');
+        navegacaoButton.children[0].outerHTML = '<i class="fa-solid fa-angles-down" onclick="toggleNavegacao(\'navegacao\')"></i>';
+        for (i = 0; i < navegacao.children.length; i++) {
+            navegacao.children[i].classList.add('toggled');
         }
     }
 }
@@ -107,25 +107,39 @@ sidebarButton.addEventListener('click', () => {
         document.getElementById('tempo-area'),
         document.getElementById('graphic')
     ];
-    //console.log(boxes[2].width)
-    //console.log(window.innerWidth)
     
     if (body.clientWidth < 1200) {
         recallSidebar();
         for (box of boxes) {
             if (box) {
-                box.style.width = 'calc(100% - 20px)';
+                box.style.maxWidth = 'calc(100% - 20px)';
             }
         }
     } else {
         expandSidebar();
         for (box of boxes) {
             if (box) {
-                box.style.width = 'calc(55% - 20px)';
+                box.style.maxWidth = 'calc(55% - 20px)';
             }
         }
     }
 })();
+
+function toggle(id) {
+    let box = document.getElementById(id);
+
+        if (hasToggled(box.classList)) {
+            box.classList.remove('toggled');
+        } else {
+            box.classList.add('toggled');
+        }
+}
+
+function hasToggled(classList) {
+    let list = Array.from(classList);
+
+    return list.includes('toggled');
+}
 
 
 // OBSSOLETO

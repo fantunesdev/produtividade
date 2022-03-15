@@ -41,17 +41,72 @@
                     <div class="form-group">
                         {{ form_atividade.area.errors }}
                         <label for="id_area">Área:</label>
-                        <i class="fa-solid fa-plus padding-left-10 cursor-pointer" id=""></i>
-                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer"></i>
-                        <i class="fa-solid fa-arrow-rotate-right padding-left-10 cursor-pointer" id=""></i>
+                        <i class="fa-solid fa-plus padding-left-10 cursor-pointer" onclick="toggle('form-area')"></i>
+                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" id="editar-area-button" onclick="update('id_area', 'area')"></i>
+                        <i class="fa-solid fa-arrow-rotate-right padding-left-10 cursor-pointer" onclick="getAreas()"></i>
+                        <!-- INÍCIO FORMULÁRIO ÁREA -->
+                        <div class="box box-primary box-max-width-920px center-div toggled" id="form-area">
+                            <div class="box-title">
+                                <h3>Cadastrar Área</h3>
+                            </div>
+                            <div class="box-body">
+                                    <input type="hidden" name="Id" id="api-area-id">
+
+                                    <label for="api-area-nome" name="Nome">Nome: </label>
+                                    <input type="text" class="form-control" id="api-area-nome">
+
+                                    <label for="api-area-descricao" name="Descricao">Descrição: </label>
+                                    <input type="text" class="form-control" id="api-area-descricao">
+
+                                    <label for="api-area-cor" name="Cor">Cor: </label>
+                                    <input type="color" class="form-control" id="api-area-cor">
+                                </div>
+                            <div class="box-footer">
+                                    <input type="button" value="Cadastrar" class="btn btn-danger" onclick="createArea()">
+                            </div>
+                        </div>
+                        <!-- FIM FORMULÁRIO ÁREA -->
                         {{ form_atividade.area|addclass:'form-control' }}
                     </div>
                     <div class="form-group">
                         {{ form_atividade.sub_area.errors }}
                         <label for="id_sub_area">Sub-Área:</label>
-                        <i class="fa-solid fa-plus padding-left-10 cursor-pointer" id="cadastro-subarea-button"></i>
-                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer"></i>
-                        <i class="fa-solid fa-arrow-rotate-right padding-left-10 cursor-pointer" id=""></i>
+                        <i class="fa-solid fa-plus padding-left-10 cursor-pointer" onclick="toggle('form-subarea')"></i>
+                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" onclick="update('id_sub_area', 'subarea')"></i>
+                        <i class="fa-solid fa-arrow-rotate-right padding-left-10 cursor-pointer" onclick="getSubAreasRelacionadas()"></i>
+                        <!-- INÍCIO FORMULÁRIO SUB-AREA -->
+                        <div class="box box-primary box-max-width-920px center-div toggled" id="form-subarea">
+                            <div class="box-title">
+                                <h3>Cadastrar Sub-Área</h3>
+                            </div>
+                            <div class="box-body">
+                                    <input type="hidden" name="Id" id="api-subarea-id">
+
+                                    <label for="api-subarea-nome" name="Nome">Nome: </label>
+                                    <input type="text" class="form-control" id="api-subarea-nome">
+
+                                    <label for="api-subarea-descricao" name="Descricao">Descrição: </label>
+                                    <input type="text" class="form-control" id="api-subarea-descricao">
+
+                                    <label for="api-subarea-area" name="Area">Áreas: </label><br>
+                                    <input type="checkbox" name="Conhecimento" id="checkbox-conhecimento" value="1">
+                                    <label for="checkbox-conhecimento">Conhecimento</label><br>
+                                    <input type="checkbox" name="Empreendedorismo" id="checkbox-empreendedorismo" value="2">
+                                    <label for="checkbox-empreendedorismo">Empreendedorismo</label><br>
+                                    <input type="checkbox" name="Saúde" id="checkbox-saude" value="3">
+                                    <label for="checkbox-saude">Saúde</label><br>
+                                    <input type="checkbox" name="Finanças" id="checkbox-financas" value="4">
+                                    <label for="checkbox-financas">Finanças</label><br>
+                                    <input type="checkbox" name="Tecnologia" id="checkbox-tecnologia" value="5">
+                                    <label for="checkbox-tecnologia">Tecnologia</label><br>
+                                    <input type="checkbox" name="Música" id="checkbox-musica" value="6">
+                                    <label for="checkbox-musica">Música</label><br>
+                                </div>
+                            <div class="box-footer">
+                                    <input type="button" value="Cadastrar" class="btn btn-danger">
+                            </div>
+                        </div>
+                        <!-- FIM FORMULÁRIO SUB-AREA -->
                         {{ form_atividade.sub_area|addclass:'form-control' }}
                     </div>
                     <div class="form-group">

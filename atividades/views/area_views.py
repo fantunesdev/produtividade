@@ -17,7 +17,7 @@ def cadastrar_area(request):
                              cor=form_area.cleaned_data['cor'],
                              usuario=request.user)
             area_service.cadastrar_area(area_nova)
-            return redirect('configurar_plataforma')
+            return redirect('settings')
     else:
         form_area = AreaForm()
     template_tags['form_area'] = form_area
@@ -56,7 +56,7 @@ def editar_area(request, id):
                          usuario=request.user)
 
         area_service.editar_area(area_antiga, area_nova)
-        return redirect('configurar_plataforma')
+        return redirect('settings')
     template_tags['form_area'] = form_area
     template_tags['area_antiga'] = area_antiga
     return render(request, 'areas/editar_area.html', template_tags)
@@ -67,7 +67,7 @@ def remover_area(request, id):
     area = area_service.listar_area_id(request.user, id)
     if request.POST.get('confirmacao'):
         area_service.remover_area(area)
-        return redirect('configurar_plataforma')
+        return redirect('settings')
     template_tags['area'] = area
     template_tags['form_exclusao'] = ExclusaoForm()
     return render(request, 'areas/confirma_exclusao.html', template_tags)
