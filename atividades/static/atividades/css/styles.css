@@ -89,8 +89,9 @@ logo > div {
     align-items: center;
 }
 
-logo > div > span {
+logo > div > a {
     margin-left: 10px;
+    text-decoration: none;
 }
 
 header > ul {
