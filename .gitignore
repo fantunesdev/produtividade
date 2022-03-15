@@ -1,3 +1,5 @@
 my_conf.py
 */migrations/*
 /static/
+atividades/views/teste_views.py
+atividades/templates/teste.html
