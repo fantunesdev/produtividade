@@ -119,56 +119,10 @@
 
     </div>
 
-    <!-- Include Chart Js -->
-
-<!--     <script src="{% static 'atividades/js/chartjs.graphic.js' %}">-->
-
+    <input type="hidden" id="json" value='{{ json_tempo_areas | safe }}'>
     {% endblock %}
 
 {% block scripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <script>
-        var ctx = document.getElementsByClassName("line-chart")
-        var lista_json = {{ json_tempo_areas |safe }};
-        let nomes = [];
-        let valores = [];
-        let cores = [];
-        function listas(elemento, indice, array){
-            nomes.push(elemento.nome);
-            valores.push(elemento.tempo);
-            cores.push(elemento.cor);
-        }
-
-        lista_json.forEach(listas);
-        nomes.pop()
-        valores.pop()
-
-        // Type, Data e Options
-        var chartGraph = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: nomes,
-                datasets: [
-                    {
-                    label: "ÁREAS",
-                    data: valores,
-                    borderWidth: 6,
-                    borderColor: cores,
-                    backgroundColor: cores,
-                    <!-- minBarLength: 80,-->
-                    }
-                    ]
-            },
-            options: {
-                title: {
-                    display: true,
-                    fontSize: 20,
-<!--                    text: "PRODUTIVIDADE POR ÁREA"-->
-                }
-            },
-            labels: {
-                fontStyle: "bold"
-            }
-        });
-    </script>
+    <script src="{% static 'atividades/js/chartjs-graphic.js' %}"></script>
 {% endblock %}

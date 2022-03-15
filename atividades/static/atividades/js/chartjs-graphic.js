@@ -1,16 +1,41 @@
-let url;
+var ctx = document.getElementsByClassName("line-chart")
+var lista_json = JSON.parse(document.querySelector('#json').value);
 
+let nomes = [],
+    valores = [],
+    cores = [];
 
-switch (window.location.pathname) {
-    case '/atividades/':
-        url = "/api/atividades/"
-        break;
-
-    default:
-        break;
+for (i of lista_json) {
+    if (i.nome !== 'Total') {
+        nomes.push(i.nome);
+        valores.push(i.tempo);
+        cores.push(i.cor);
+    }
 }
-
-console.log(url)
-fetch(url)
-.then(response => response.json())
-.then(content => console.log(content))
+        // Type, Data e Options
+        var chartGraph = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: nomes,
+                datasets: [
+                    {
+                    label: "ÁREAS",
+                    data: valores,
+                    borderWidth: 6,
+                    borderColor: cores,
+                    backgroundColor: cores,
+                    <!-- minBarLength: 80,-->
+                    }
+                    ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    fontSize: 20,
+//                    text: "PRODUTIVIDADE POR ÁREA"
+                }
+            },
+            labels: {
+                fontStyle: "bold"
+            }
+        });
