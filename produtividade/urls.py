@@ -17,8 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from login.views import logar_usuario, deslogar_usuario
 from atividades.views.atividade_views import listar_semana_atual
+from atividades.views.teste_views import teste
+from login.views import logar_usuario, deslogar_usuario
 
 urlpatterns = [
     path('', listar_semana_atual),
@@ -37,4 +38,6 @@ urlpatterns = [
     path('usuarios/', include('login.urls')),
     path('login/', logar_usuario, name='logar_usuario'),
     path('logout/', deslogar_usuario, name='deslogar_usuario'),
+
+    path('teste/', teste, name='teste')
 ]
