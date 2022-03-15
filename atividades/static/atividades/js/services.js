@@ -1,10 +1,10 @@
 let areas = document.querySelector('#id_area'),
     subAreas = document.querySelector('#id_sub_area');
 
+// CRUD AREAS
+
 function getAreas() {
-    let url = '/api/areas/',
-        areasOption,
-        i;
+    let url = '/api/areas/';
 
     fetch(url)
         .then(response => response.json())
@@ -25,20 +25,19 @@ function createOptions(list, htmlId) {
         option.text = list[i].nome;
         input.add(option, input.options[i]);
     }
+    input.value = null;
 }
 
-function createArea() {
-    let url = '/api/areas/',
+function create(type) {
+    let url = `/api/${type}s/`,
         csrf = document.querySelector('[name=csrfmiddlewaretoken]').value,
-        nome = document.querySelector('#api-area-nome'),
-        descricao = document.querySelector('#api-area-descricao'),
-        cor = document.querySelector('#api-area-cor');
+        nome = document.querySelector(`#api-${type}-nome`),
+        descricao = document.querySelector(`#api-${type}-descricao`),
+        cor = document.querySelector(`#api-${type}-cor`);
 
-        body = JSON.stringify({
-            nome: nome.value,
-            descricao: descricao.value,
-            cor: cor.value
-        });
+        if (type === 'area') {
+            body = jsonArea(nome, descricao, cor);
+        }
 
         headers = {
             'Content-Type': 'application/json',
@@ -57,20 +56,65 @@ function createArea() {
             console.log(data);
         });
 
-    toggle('form-area');
-    getAreas();
+    toggle(`form-${type}`);
     nome.value = null;
     descricao.value = null;
-    cor.value = '#000000';
+
+    if (type === 'area') {  
+        cor.value = '#000000';
+        getAreas();
+    }
 }
 
+function jsonArea(nome, descricao, cor) {
+    return JSON.stringify({
+        nome: nome.value,
+        descricao: descricao.value,
+        cor: cor.value
+    });
+}
 
+function jsonSubArea(nome, descricao, areas) {
+    return JSON.stringify({
+        nome: nome.value,
+        descricao: descricao.value,
+        areas: areas.value
+    });
+}
+
+// CRUD SUB-AREAS
+
+function getSubAreas() {
+    const url = '/api/areas/',
+        areas = document.querySelector('#api-subarea-areas');
+
+    fetch(url)
+        .then(response => response.json())
+        .then(dados => {
+            renderAreas(areas, dados);
+        })
+}
+
+function renderAreas(htmlObj, dados){
+    for ([index, i] of dados.entries()) {
+        const check = document.createElement('input'),
+            label = document.createElement('label'),
+            br = document.createElement('br');
+        check.type = 'checkbox';
+        check.name = i.nome;
+        check.value = i.id;
+        check.id = `check-areas-${index}`;
+        label.htmlFor = `check-areas-${index}`;
+        label.innerHTML = i.nome;
+        htmlObj.appendChild(check);
+        htmlObj.appendChild(label);
+        htmlObj.appendChild(br);
+    }
+}
 
 function getSubAreasRelacionadas() {
     let areaId = document.getElementById('id_area').selectedIndex,
-        url = `/api/areas/${areaId}/subareas/`,
-        subAreaOption,
-        i;
+        url = `/api/areas/${areaId}/subareas/`;
 
     fetch(url)
         .then(response => response.json())
@@ -113,6 +157,12 @@ function update(boxId, type) {
     }
 }
 
+areas.addEventListener('focusout', function(){
+    getSubAreasRelacionadas();
+});
+
+// Resolver com importação
+
 function toggle(id) {
     let box = document.getElementById(id);
 
@@ -128,7 +178,3 @@ function hasToggled(classList) {
 
     return list.includes('toggled');
 }
-
-areas.addEventListener('focusout', function(){
-    getSubAreasRelacionadas();
-});
