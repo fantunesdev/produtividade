@@ -31,9 +31,9 @@ function createOptions(list, htmlId) {
 function create(type) {
     let url = `/api/${type}s/`,
         csrf = document.querySelector('[name=csrfmiddlewaretoken]').value,
-        nome = document.querySelector(`#api-${type}-nome`),
-        descricao = document.querySelector(`#api-${type}-descricao`),
-        cor = document.querySelector(`#api-${type}-cor`);
+        nome = document.querySelector(`#id-${type}-nome`),
+        descricao = document.querySelector(`#id-${type}-descricao`),
+        cor = document.querySelector(`#id-${type}-cor`);
 
         if (type === 'area') {
             body = jsonArea(nome, descricao, cor);
@@ -85,31 +85,34 @@ function jsonSubArea(nome, descricao, areas) {
 // CRUD SUB-AREAS
 
 function getSubAreas() {
-    const url = '/api/areas/',
-        areas = document.querySelector('#api-subarea-areas');
+}
 
+function renderAreas(htmlObj){
+    const url = '/api/areas/',
+        father = htmlObj.appendChild(document.createElement('label')),
+        br = document.createElement('br');
+
+    father.innerHTML = "Áreas:";
+    father.appendChild(br);
+    
     fetch(url)
         .then(response => response.json())
         .then(dados => {
-            renderAreas(areas, dados);
-        })
-}
-
-function renderAreas(htmlObj, dados){
-    for ([index, i] of dados.entries()) {
-        const check = document.createElement('input'),
-            label = document.createElement('label'),
-            br = document.createElement('br');
-        check.type = 'checkbox';
-        check.name = i.nome;
-        check.value = i.id;
-        check.id = `check-areas-${index}`;
-        label.htmlFor = `check-areas-${index}`;
-        label.innerHTML = i.nome;
-        htmlObj.appendChild(check);
-        htmlObj.appendChild(label);
-        htmlObj.appendChild(br);
-    }
+            for ([index, i] of dados.entries()) {
+                const check = document.createElement('input'),
+                    label = document.createElement('label'),
+                    br = document.createElement('br');
+                check.type = 'checkbox';
+                check.name = i.nome;
+                check.value = i.id;
+                check.id = `check-areas-${index}`;
+                label.htmlFor = `check-areas-${index}`;
+                label.innerHTML = i.nome;
+                father.appendChild(check);
+                father.appendChild(label);
+                father.appendChild(br);
+            }
+        });
 }
 
 function getSubAreasRelacionadas() {
@@ -177,4 +180,122 @@ function hasToggled(classList) {
     let list = Array.from(classList);
 
     return list.includes('toggled');
+}
+
+function renderForm(type, action) {
+    const father =  document.querySelector(`#div-${type}`);
+
+    if (father.children[5]) {
+        father.children[5].parentNode.removeChild(father.children[5]);
+    } else {
+        renderBox(type, father);
+        renderBoxTitle(type, father.children[5].children[0]);
+        renderInputs(type, father.children[5].children[1]);
+    
+        if (type === 'subarea') {
+            const divAreasSubArea = document.createElement('div');
+            divAreasSubArea.id = 'div-area-subarea';
+    
+            father.children[5].children[1].appendChild(divAreasSubArea);
+            renderAreas(divAreasSubArea);
+    
+            renderButton(type, father.children[5].children[2], action);
+        
+        }
+    }
+}
+
+function renderBox(type, father) {
+    const box = document.createElement('div');
+    
+    box.classList.add('box');
+    box.classList.add('box-primary', 'box-max-width-920px', 'center-div')
+    box.id = `form-${type}`;
+
+    father.appendChild(box);
+    
+    for (let i = 0; i < 3; i++) {
+        let boxSection = document.createElement('div');
+        
+        switch (i) {
+            case 0:
+                boxSection.classList.add('box-title');
+                boxSection.id = 'id-box-title';
+                break;
+            case 1:
+                boxSection.classList.add('box-body');
+                boxSection.id = 'id-box-body';
+                break;
+            case 2:
+                boxSection.classList.add('box-footer');
+                boxSection.id = 'id-box-footer';
+                break;
+        }
+        box.appendChild(boxSection);
+    }
+}
+
+function renderBoxTitle(type, father) {
+    h3 = document.createElement('h3');
+    switch (type) {
+        case 'area':
+            h3.innerHTML = 'Cadastrar Área';
+            break;
+        case 'subarea':
+            h3.innerHTML = 'Cadastrar Sub-Área';
+    }
+    father.appendChild(h3);
+}
+
+function renderInputs(type, father) {
+    for (let i = 0; i < 3; i++) {
+        let input = document.createElement('input'),
+            label = document.createElement('label');
+        switch (i) {
+            case 0:
+                input.type = 'hidden';
+                input.id = `id-${type}-id`;
+                label.appendChild(input);
+                break;
+            case 1:
+                label.innerHTML = 'Nome:';
+                input.classList.add('form-control');
+                input.id = `id-${type}-nome`;
+                label.htmlFor = `id-${type}-nome`;
+                label.appendChild(input);
+                break;
+            case 2:
+                label.innerHTML = 'Descricao:'
+                input.classList.add('form-control');
+                input.id = `id-${type}-descricao`;
+                label.htmlFor = `id-${type}-descricao`;
+                label.appendChild(input);
+                break;               
+        }
+        father.appendChild(label);
+    }
+}
+
+function renderButton(type, father, action) {
+    const button = document.createElement('input');
+
+    button.type = 'button';
+    button.classList.add('btn', 'btn-primary');
+    button.id = 'form-button'
+    switch (action) {
+        case 'create':
+            button.value = 'Cadastrar';
+            button.onclick = () => {
+                alert('Função não desenvolvida');
+            }
+            break;
+        case 'update':
+            button.value = 'Atualizar';
+            button.onclick = () => {
+                alert('Função não desenvolvida');
+            }
+            break;
+    }
+    father.appendChild(button);
+
 }

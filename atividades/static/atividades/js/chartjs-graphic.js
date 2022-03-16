@@ -24,7 +24,7 @@ for (i of lista_json) {
                     borderWidth: 6,
                     borderColor: cores,
                     backgroundColor: cores,
-                    <!-- minBarLength: 80,-->
+//                    minBarLength: 80,
                     }
                     ]
             },
