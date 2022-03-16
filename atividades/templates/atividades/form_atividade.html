@@ -38,42 +38,19 @@
                         <label for="id_data">Data:</label>
                         {{ form_atividade.data|addclass:'form-control' }}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="div-area">
                         {{ form_atividade.area.errors }}
                         <label for="id_area">Área:</label>
-                        <i class="fa-solid fa-plus padding-left-10 cursor-pointer" onclick="toggle('form-area')"></i>
-                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" id="editar-area-button" onclick="update('id_area', 'area')"></i>
-                        <i class="fa-solid fa-arrow-rotate-right padding-left-10 cursor-pointer" onclick="getAreas()"></i>
-                        <!-- INÍCIO FORMULÁRIO ÁREA -->
-                        <div class="box box-primary box-max-width-920px center-div toggled" id="form-area">
-                            <div class="box-title">
-                                <h3>Cadastrar Área</h3>
-                            </div>
-                            <div class="box-body">
-                                    <input type="hidden" name="Id" id="api-area-id">
-
-                                    <label for="api-area-nome" name="Nome">Nome: </label>
-                                    <input type="text" class="form-control" id="api-area-nome">
-
-                                    <label for="api-area-descricao" name="Descricao">Descrição: </label>
-                                    <input type="text" class="form-control" id="api-area-descricao">
-
-                                    <label for="api-area-cor" name="Cor">Cor: </label>
-                                    <input type="color" class="form-control" id="api-area-cor">
-                                </div>
-                            <div class="box-footer">
-                                    <input type="button" value="Cadastrar" class="btn btn-danger" onclick="create('area')">
-                            </div>
-                        </div>
-                        <!-- FIM FORMULÁRIO ÁREA -->
+                        <i class="fa-solid fa-plus padding-left-10 cursor-pointer" onclick="renderForm('area', 'create')"></i>
+                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" id="editar-area-button" onclick="renderUpdate('area', 'id_area')"></i>
+                        <i class="fa-solid fa-arrow-rotate-right padding-left-10 cursor-pointer" onclick="renderOptionsAreas('id_area')"></i>
                         {{ form_atividade.area|addclass:'form-control' }}
                     </div>
                     <div class="form-group" id="div-subarea">
                         {{ form_atividade.sub_area.errors }}
                         <label for="id_sub_area">Sub-Área:</label>
                         <i class="fa-solid fa-plus padding-left-10 cursor-pointer" onclick="renderForm('subarea', 'create')"></i>
-                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" onclick="renderForm('subarea', 'update')"></i>
-<!--                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" onclick="update('id_sub_area', 'subarea')"></i>-->
+                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" onclick="renderUpdate('subarea', 'id_sub_area')"></i>
                         <i class="fa-solid fa-arrow-rotate-right padding-left-10 cursor-pointer" onclick="getSubAreasRelacionadas()"></i>
                         {{ form_atividade.sub_area|addclass:'form-control' }}
                     </div>

@@ -3,20 +3,20 @@ let areas = document.querySelector('#id_area'),
 
 // CRUD AREAS
 
-function getAreas() {
-    let url = '/api/areas/';
-
+function renderOptionsAreas(htmlId) {
+    const url = '/api/areas/';
+    console.log(htmlId)
     fetch(url)
         .then(response => response.json())
         .then(dados => {
             areas.length = 0;
-            createOptions(dados, 'id_area');
+            renderOptions(dados, htmlId);
         });
 }
 
-function createOptions(list, htmlId) {
-    let input = document.getElementById(htmlId),
-        option,
+function renderOptions(list, htmlId) {
+    const input = document.getElementById(htmlId);
+    let option,
         i;
 
     for (i = 0; i < list.length; i++) {
@@ -29,7 +29,7 @@ function createOptions(list, htmlId) {
 }
 
 function create(type) {
-    let url = `/api/${type}s/`,
+    const url = `/api/${type}s/`,
         csrf = document.querySelector('[name=csrfmiddlewaretoken]').value,
         nome = document.querySelector(`#id-${type}-nome`),
         descricao = document.querySelector(`#id-${type}-descricao`),
@@ -37,6 +37,8 @@ function create(type) {
 
         if (type === 'area') {
             body = jsonArea(nome, descricao, cor);
+        } else if (type === 'subarea') {
+            body = jsonSubArea(nome, descricao, areas); // EDITAR
         }
 
         headers = {
@@ -78,16 +80,14 @@ function jsonSubArea(nome, descricao, areas) {
     return JSON.stringify({
         nome: nome.value,
         descricao: descricao.value,
-        areas: areas.value
+        areas: areas.value // EDITAR
     });
 }
 
 // CRUD SUB-AREAS
 
-function getSubAreas() {
-}
 
-function renderAreas(htmlObj){
+function renderCheckboxAreas(htmlObj){
     const url = '/api/areas/',
         father = htmlObj.appendChild(document.createElement('label')),
         br = document.createElement('br');
@@ -115,46 +115,62 @@ function renderAreas(htmlObj){
         });
 }
 
-function getSubAreasRelacionadas() {
-    let areaId = document.getElementById('id_area').selectedIndex,
+function getSubAreasRelacionadas(id) {
+    const areaId = document.getElementById('id_area').selectedIndex,
         url = `/api/areas/${areaId}/subareas/`;
 
     fetch(url)
         .then(response => response.json())
         .then(dados => {
             subAreas.length = 0;
-            createOptions(dados, 'id_sub_area')
-            subAreas.value = null;
+            renderOptions(dados, 'id_sub_area')
+            if (id) {
+                subAreas.value = id;
+            } else {
+                subAreas.value = null;
+            }
         });
 }
 
-function update(boxId, type) {
-    let typeId = document.getElementById(boxId).selectedIndex;
+(function impedirInconsistenciaUpdate() {
+    const inputSubArea = document.querySelector('#id_sub_area');
 
-    if (type === 'subarea') {
-        typeId += 1;
-    }
+    getSubAreasRelacionadas(inputSubArea.value);
+})()
 
-    let url = `/api/${type}s/${typeId}`;
+function renderUpdate(type, htmlId) {
+    let selected = document.getElementById(htmlId).value;
 
-    if (typeId) {
-        toggle(`form-${type}`);
-        fetch(url)
-            .then(response => response.json())
-            .then(dados => {
-                console.log
-                document.getElementById(`api-${type}-id`).value = dados.id;
-                document.getElementById(`api-${type}-nome`).value = dados.nome;
-                document.getElementById(`api-${type}-descricao`).value = dados.descricao;
-                if (type === 'area') {
-                    document.getElementById('api-area-cor').value = dados.cor;
-                } else if (type === 'subarea') {
-                    for (i of dados.areas) {
-                        document.createElement('input')
-                    }
-                    document.getElementById('api-subarea-area').value = dados.areas;
-                }
-            });
+    let url = `/api/${type}s/${selected}`;
+
+    if (selected) {
+        if (document.getElementById("id_area").selectedIndex){
+            renderForm(type, 'update');
+            fetch(url)
+                .then(response => response.json())
+                .then(dados => {
+                    console.log
+                    document.getElementById(`id-${type}-id`).value = dados.id;
+                    document.getElementById(`id-${type}-nome`).value = dados.nome;
+                    document.getElementById(`id-${type}-descricao`).value = dados.descricao;
+                    if (type === 'area') {
+                        document.getElementById('id-area-cor').value = dados.cor;
+                    } else if (type === 'subarea') {
+                        areasInput = document.querySelector('#div-area-subarea').children[0];
+                            for (area of dados.areas) {
+                                    for (input of areasInput.children){
+                                        if (input.type === 'checkbox'){
+                                            if (area.nome === input.name) {
+                                                input.checked = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+        } else {
+            alert('Selecione uma área antes de selecionar uma sub-área.');
+        }
     } else {
         alert(`Você não selecionou nenhuma ${type} para editar.`);
     }
@@ -167,7 +183,7 @@ areas.addEventListener('focusout', function(){
 // Resolver com importação
 
 function toggle(id) {
-    let box = document.getElementById(id);
+    const box = document.getElementById(id);
 
         if (hasToggled(box.classList)) {
             box.classList.remove('toggled');
@@ -192,16 +208,16 @@ function renderForm(type, action) {
         renderBoxTitle(type, father.children[5].children[0]);
         renderInputs(type, father.children[5].children[1]);
     
-        if (type === 'subarea') {
+        if (type === 'area') {
+            renderColorInput(type, father.children[5].children[1]);
+        } else if (type === 'subarea') {
             const divAreasSubArea = document.createElement('div');
             divAreasSubArea.id = 'div-area-subarea';
     
             father.children[5].children[1].appendChild(divAreasSubArea);
-            renderAreas(divAreasSubArea);
-    
-            renderButton(type, father.children[5].children[2], action);
-        
+            renderCheckboxAreas(divAreasSubArea);    
         }
+        renderButton(type, father.children[5].children[2], action);
     }
 }
 
@@ -249,7 +265,7 @@ function renderBoxTitle(type, father) {
 
 function renderInputs(type, father) {
     for (let i = 0; i < 3; i++) {
-        let input = document.createElement('input'),
+        const input = document.createElement('input'),
             label = document.createElement('label');
         switch (i) {
             case 0:
@@ -276,6 +292,19 @@ function renderInputs(type, father) {
     }
 }
 
+function renderColorInput(type, father) {
+    const input = document.createElement('input'),
+        label = document.createElement('label');
+    
+    label.innerHTML = 'Cor:';
+    input.type = 'color';
+    input.id = `id-${type}-cor`;
+    input.classList.add('form-control');
+    label.htmlFor = `id-${type}-cor`;
+    label.appendChild(input);
+    father.appendChild(label);
+}
+
 function renderButton(type, father, action) {
     const button = document.createElement('input');
 
@@ -285,15 +314,9 @@ function renderButton(type, father, action) {
     switch (action) {
         case 'create':
             button.value = 'Cadastrar';
-            button.onclick = () => {
-                alert('Função não desenvolvida');
-            }
             break;
         case 'update':
             button.value = 'Atualizar';
-            button.onclick = () => {
-                alert('Função não desenvolvida');
-            }
             break;
     }
     father.appendChild(button);
