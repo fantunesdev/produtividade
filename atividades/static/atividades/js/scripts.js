@@ -49,7 +49,7 @@ function expandSidebar() {
 }
 
 function toggleSubMenu(id) {
-    let subMenu = document.querySelector(`#${id}`),
+    const subMenu = document.querySelector(`#${id}`),
         subMenuButton = document.querySelector(`#${id}-button`);
 
     if (hasToggled(subMenu.classList)) {
@@ -99,6 +99,15 @@ let sidebarButton = document.querySelector('#sidebar-button'),
 
 sidebarButton.addEventListener('click', () => {
     toggleSidebar();
+});
+
+body.addEventListener('click', event => {
+    const toggledables = body.getElementsByClassName('toggler'),
+        profile = document.getElementById('profile');
+    
+    if (event.target.id !== 'profile-photo-button') {
+        profile.classList.add('toggled');
+    }
 });
 
 

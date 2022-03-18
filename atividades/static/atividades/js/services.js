@@ -5,7 +5,7 @@ let areas = document.querySelector('#id_area'),
 
 function renderOptionsAreas(htmlId) {
     const url = '/api/areas/';
-    console.log(htmlId)
+
     fetch(url)
         .then(response => response.json())
         .then(dados => {
@@ -36,9 +36,9 @@ function create(type) {
         cor = document.querySelector(`#id-${type}-cor`);
 
         if (type === 'area') {
-            body = jsonArea(nome, descricao, cor);
+            bodyRequest = jsonArea(nome, descricao, cor);
         } else if (type === 'subarea') {
-            body = jsonSubArea(nome, descricao, areas); // EDITAR
+            bodyRequest = jsonSubArea(nome, descricao, areas); // EDITAR
         }
 
         headers = {
@@ -49,23 +49,19 @@ function create(type) {
         requestOptions = {
             method: 'POST',
             headers: headers,
-            body: body,
+            body: bodyRequest,
         };
 
     fetch(url, requestOptions)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            toggle(`form-${type}`);
+            if (type === 'area') {
+                renderOptionsAreas('id_area');
+                alert(`Área ${data.nome} criada com sucesso.`)
+            }
         });
 
-    toggle(`form-${type}`);
-    nome.value = null;
-    descricao.value = null;
-
-    if (type === 'area') {
-        cor.value = '#000000';
-        getAreas();
-    }
 }
 
 function jsonArea(nome, descricao, cor) {
@@ -310,15 +306,22 @@ function renderButton(type, father, action) {
 
     button.type = 'button';
     button.classList.add('btn', 'btn-primary');
-    button.id = 'form-button'
+    button.id = `post-${type}-button`
     switch (action) {
         case 'create':
             button.value = 'Cadastrar';
+            button.addEventListener('click', event => {
+                create(type);
+            });
             break;
         case 'update':
             button.value = 'Atualizar';
             break;
     }
-    father.appendChild(button);
+    father.appendChild(button);  
+}
 
+
+function ola() {
+    alert('Ola')
 }

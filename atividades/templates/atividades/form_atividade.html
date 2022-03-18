@@ -41,8 +41,8 @@
                     <div class="form-group" id="div-area">
                         {{ form_atividade.area.errors }}
                         <label for="id_area">Área:</label>
-                        <i class="fa-solid fa-plus padding-left-10 cursor-pointer" onclick="renderForm('area', 'create')"></i>
-                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" id="editar-area-button" onclick="renderUpdate('area', 'id_area')"></i>
+                        <i class="fa-solid fa-plus padding-left-10 cursor-pointer" id="render-create-area-button" onclick="renderForm('area', 'create')"></i>
+                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" id="render-update-area-button" onclick="renderUpdate('area', 'id_area')"></i>
                         <i class="fa-solid fa-arrow-rotate-right padding-left-10 cursor-pointer" onclick="renderOptionsAreas('id_area')"></i>
                         {{ form_atividade.area|addclass:'form-control' }}
                     </div>

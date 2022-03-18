@@ -12,13 +12,13 @@
                     <a href="{% url 'settings' %}"><i class="fa-solid fa-gear"></i></a>
                 </li>
                 <li class="profile-button">
-                    <a onclick="toggleProfile('profile')"><img id="profile-photo-button" src="{% static 'atividades/img/profile.jpg' %}" alt=""></a>
+                    <a class="toggler" onclick="toggleProfile('profile')"><img id="profile-photo-button" src="{% static 'atividades/img/profile.jpg' %}" alt=""></a>
                 </li>
             </ul>
             <!-- FIM BOTÕES BARRA SUPERIOR -->
 
             <!-- INÍCIO PROFILE -->
-            <section id="profile" class="toggled">
+            <section id="profile" class="toggledable toggled">
                 <div class="photo">
                     <img id="profile-photo" src="{% static 'atividades/img/profile.jpg' %}" alt="">
                 </div>
