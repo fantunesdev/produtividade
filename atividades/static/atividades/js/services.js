@@ -145,7 +145,6 @@ function renderUpdate(type, htmlId) {
             fetch(url)
                 .then(response => response.json())
                 .then(dados => {
-                    console.log
                     document.getElementById(`id-${type}-id`).value = dados.id;
                     document.getElementById(`id-${type}-nome`).value = dados.nome;
                     document.getElementById(`id-${type}-descricao`).value = dados.descricao;
@@ -154,16 +153,20 @@ function renderUpdate(type, htmlId) {
                     } else if (type === 'subarea') {
                         areasInput = document.querySelector('#div-area-subarea').children[0];
                             for (area of dados.areas) {
-                                    for (input of areasInput.children){
-                                        if (input.type === 'checkbox'){
-                                            if (area.nome === input.name) {
-                                                input.checked = true;
-                                            }
+                                for (input of areasInput.children){
+                                    if (input.type === 'checkbox'){
+                                        if (area.nome === input.name) {
+                                            input.checked = true;
                                         }
                                     }
                                 }
                             }
-                        });
+                    }
+                })
+                .catch(error => {
+                    console.log(Object.getOwnPropertyNames(error))
+                    console.log(error.values)
+                });
         } else {
             alert('Selecione uma área antes de selecionar uma sub-área.');
         }
@@ -193,6 +196,8 @@ function hasToggled(classList) {
 
     return list.includes('toggled');
 }
+
+// FUNÇÕES DE RENDERIZAÇÃO DE FORMULÁRIO
 
 function renderForm(type, action) {
     const father =  document.querySelector(`#div-${type}`);
