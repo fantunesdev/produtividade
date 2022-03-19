@@ -163,9 +163,10 @@ function renderUpdate(type, htmlId) {
                             }
                     }
                 })
-                .catch(error => {
-                    console.log(Object.getOwnPropertyNames(error))
-                    console.log(error.values)
+                .catch(erro => {
+                    if (erro === 'TypeError') {
+                        null
+                    }
                 });
         } else {
             alert('Selecione uma área antes de selecionar uma sub-área.');
