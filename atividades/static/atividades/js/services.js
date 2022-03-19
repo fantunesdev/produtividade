@@ -145,27 +145,30 @@ function renderUpdate(type, htmlId) {
             fetch(url)
                 .then(response => response.json())
                 .then(dados => {
-                    document.getElementById(`id-${type}-id`).value = dados.id;
-                    document.getElementById(`id-${type}-nome`).value = dados.nome;
-                    document.getElementById(`id-${type}-descricao`).value = dados.descricao;
-                    if (type === 'area') {
-                        document.getElementById('id-area-cor').value = dados.cor;
-                    } else if (type === 'subarea') {
-                        areasInput = document.querySelector('#div-area-subarea').children[0];
-                            for (area of dados.areas) {
-                                for (input of areasInput.children){
-                                    if (input.type === 'checkbox'){
-                                        if (area.nome === input.name) {
-                                            input.checked = true;
+                    if (document.getElementById(`id-${type}-id`)) {
+                        document.getElementById(`id-${type}-id`).value = dados.id;
+                        document.getElementById(`id-${type}-nome`).value = dados.nome;
+                        document.getElementById(`id-${type}-descricao`).value = dados.descricao;
+                        if (type === 'area') {
+                            document.getElementById('id-area-cor').value = dados.cor;
+                        } else if (type === 'subarea') {
+                            areasInput = document.querySelector('#div-area-subarea').children[0];
+                                for (area of dados.areas) {
+                                    for (input of areasInput.children){
+                                        if (input.type === 'checkbox'){
+                                            if (area.nome === input.name) {
+                                                input.checked = true;
+                                            }
                                         }
                                     }
                                 }
-                            }
+                        }
                     }
                 })
                 .catch(erro => {
-                    if (erro === 'TypeError') {
-                        null
+                    // console.log(erro.name);
+                    if (erro.name === 'TypeError') {
+                        alert('Atenção! Você não digitou os dados')
                     }
                 });
         } else {
