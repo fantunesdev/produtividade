@@ -29,15 +29,13 @@
                         {{ form_exclusao }}
                         Sim, desejo excluir e estou ciente de que esta operação é irreversível.
                     </div>
-                    <br><br>
-                    <div class="box-footer">
-                        <form method="post">
-                            {% csrf_token %}
-                            <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary">Voltar</a>
-                            <button class="btn btn-danger" type="submit">Remover</button>
-                        </form>
-                    </div>
-
+                </div>
+                <div class="box-footer">
+                    <form method="post">
+                        {% csrf_token %}
+                        <a href="{{request.META.HTTP_REFERER}}"><input type="button" value="Voltar" class="btn btn-primary"></a>
+                        <input type="submit" value="Excluir" class="btn btn-danger">
+                    </form>
                 </div>
             </form>
 

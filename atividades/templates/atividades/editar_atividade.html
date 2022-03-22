@@ -2,5 +2,5 @@
 {% load meus_filtros %}
 
 {% block excluir %}
-    <a href="{% url 'remover_atividade' atividade_antiga.id %}" class="btn btn-danger">Excluir</a>
+    <a href="{% url 'remover_atividade' atividade_antiga.id %}"><input type="button" value="Excluir" class="btn btn-danger"></a>
 {% endblock excluir %}

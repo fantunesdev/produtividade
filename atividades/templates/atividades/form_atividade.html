@@ -12,15 +12,13 @@
             </div>
             <div class="box-body">
                 <span id="counter">00:00</span>
-                <a class="btn btn-info btn-cronometro" onclick="plus()">+</a>
-                <a class="btn btn-info btn-cronometro" onclick="minus()">-</a>
+                <input type="button" class="btn btn-info" value="+" onclick="plus()">
+                <input type="button" class="btn btn-info" value="-" onclick="minus()">
             </div>
             <div class="box-footer">
-                <br>
-                <a class="btn btn-primary" id="start" onclick="start()">Iniciar</a>
-                <a class="btn btn-info" onclick="registrar()">Registrar</a>
-                <a class="btn btn-danger" onclick="zerar()">Zerar</a>
-                <br><br>
+                <input type="button" value="Iniciar" class="btn btn-primary" onclick="start()">
+                <input type="button" value="Registar" class="btn btn-info" onclick="registrar()">
+                <input type="button" value="Zerar" class="btn btn-danger" onclick="zerar()">
             </div>
         </div>
         <!-- FIM CRONÔMETRO -->
@@ -80,9 +78,11 @@
                         <label for="id_tempo">Tempo:</label>
                         {{ form_atividade.tempo|addclass:'form-control' }}
                     </div>
+                </div>
+                <div class="box-footer">
                     <div>
                         <input class="btn btn-primary" type="submit" name="Cadastrar">
-                        <a href="{{request.META.HTTP_REFERER}}" class="btn btn-info">Voltar</a>
+                        <a href="{{request.META.HTTP_REFERER}}"><input type="button" value="Voltar" class="btn btn-info"></a>
                         {% block excluir %}
                         {% endblock excluir %}
                     </div>

@@ -28,8 +28,8 @@
                     <br>
                     <form method="post">
                         {% csrf_token %}
-                        <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary">Voltar</a>
-                        <button class="btn btn-danger" type="submit">Remover</button>
+                        <a href="{{request.META.HTTP_REFERER}}"><input type="button" value="Voltar" class="btn btn-primary"></a>
+                        <input type="submit" value="Excluir" class="btn btn-danger">
                     </form>
                 </div>
             </form>

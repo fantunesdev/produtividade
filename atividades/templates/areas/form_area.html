@@ -31,13 +31,16 @@
                     {{ form_area.cor }}
                 </div>
 
-                <div>
-                    <input class="btn btn-primary" type="submit" name="Cadastrar">
-                    <a href="{{request.META.HTTP_REFERER}}" class="btn btn-info">Voltar</a>
-                    {% block excluir %}
-                    {% endblock excluir %}
-                </div>
-            </form>
+            </div>
+            <div class="box-footer">
+            <div>
+                <input class="btn btn-primary" type="submit" name="Cadastrar">
+                <a href="{{request.META.HTTP_REFERER}}"><input type="button" value="Voltar" class="btn"></a>
+                {% block excluir %}
+                {% endblock excluir %}
+            </div>
+        </form>
+
         </div>
     </div>
 {% endblock content %}
