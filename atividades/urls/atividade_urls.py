@@ -1,5 +1,6 @@
 from django.urls import path
 from atividades.views.atividade_views import *
+from atividades.views.relatorio_views import *
 
 urlpatterns = [
     path('', listar_semana_atual, name='listar_semana_atual'),
@@ -11,7 +12,10 @@ urlpatterns = [
     path('listar/<int:id>', expandir_atividade, name='expandir_atividade'),
     path('listar/<str:sessao>/<str:valor_sessao>/', listar_sessao, name='listar_sessao'),
     path('remover/<int:id>', remover_atividade, name='remover_atividade'),
+
     path('settings/', settings, name='settings'),
-    path('buscar/', buscar, name='buscar')
+    path('buscar/', buscar, name='buscar'),
+
+    path('relatorio/', relatorio, name='relatorio')
 ]
 
