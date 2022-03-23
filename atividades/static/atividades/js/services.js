@@ -29,28 +29,8 @@ function renderOptions(list, htmlId) {
 }
 
 function create(type) {
-    const url = `/api/${type}s/`,
-        csrf = document.querySelector('[name=csrfmiddlewaretoken]').value,
-        nome = document.querySelector(`#id-${type}-nome`),
-        descricao = document.querySelector(`#id-${type}-descricao`),
-        cor = document.querySelector(`#id-${type}-cor`);
-
-        if (type === 'area') {
-            bodyRequest = jsonArea(nome, descricao, cor);
-        } else if (type === 'subarea') {
-            bodyRequest = jsonSubArea(nome, descricao, areas); // EDITAR
-        }
-
-        headers = {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrf
-        };
-
-        requestOptions = {
-            method: 'POST',
-            headers: headers,
-            body: bodyRequest,
-        };
+    let url = `/api/${type}s/`,
+        requestOptions = mountRequestOptions(type, 'POST');
 
     fetch(url, requestOptions)
         .then(response => response.json())
@@ -59,9 +39,54 @@ function create(type) {
             if (type === 'area') {
                 renderOptionsAreas('id_area');
                 alert(`Área ${data.nome} criada com sucesso.`)
+            } else if (type ==='subarea') {
+                
             }
         });
 
+}
+
+function update(type) {
+    let selected = document.getElementById(`id_${type}`).value,
+        url = `/api/${type}s/${selected}/`,
+        requestOptions = mountRequestOptions(type, 'PUT');
+
+    fetch(url, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            renderOptionsAreas('id_area');
+            alert(`Área ${data.nome} atualizada com sucesso.`)
+        })
+        .catch(response => {
+            console.log(requestOptions)
+        })
+}
+
+function mountRequestOptions(type, method) {
+    const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value,
+        nome = document.querySelector(`#id-${type}-nome`),
+        descricao = document.querySelector(`#id-${type}-descricao`),
+        cor = document.querySelector(`#id-${type}-cor`),
+        areas = document.querySelector('#div-area-subarea');
+
+        if (type === 'area') {
+            bodyRequest = jsonArea(nome, descricao, cor);
+        } else if (type === 'subarea') {
+            bodyRequest = jsonSubArea(nome, descricao, areas);
+        }
+
+        headers = {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrf
+        };
+
+        requestOptions = {
+            method: method,
+            headers: headers,
+            body: bodyRequest,
+        };
+
+        return requestOptions
 }
 
 function jsonArea(nome, descricao, cor) {
@@ -72,11 +97,35 @@ function jsonArea(nome, descricao, cor) {
     });
 }
 
-function jsonSubArea(nome, descricao, areas) {
+async function jsonSubArea(nome, descricao, areas) {
+    let areasList = [];
+
+    function teste() {
+        fetch(url)
+            .then(response => response.json())
+            .then(dados => {
+                return dados;
+            })
+    }
+
+    for (i of areas.children[0].children) {
+        if (i.type === 'checkbox') {
+            if (i.checked === true) {
+                areasList.push(i.id);
+            }
+        }
+    }
+
+    
+    for (i of areasList) {
+        let url = `/api/areas/${i}`;
+        console.log(teste(url))
+    }
+
     return JSON.stringify({
         nome: nome.value,
         descricao: descricao.value,
-        areas: areas.value // EDITAR
+        areas: areasList
     });
 }
 
@@ -135,9 +184,8 @@ function getSubAreasRelacionadas(id) {
 })()
 
 function renderUpdate(type, htmlId) {
-    let selected = document.getElementById(htmlId).value;
-
-    let url = `/api/${type}s/${selected}`;
+    let selected = document.getElementById(htmlId).value,
+        url = `/api/${type}s/${selected}`;
 
     if (selected) {
         if (document.getElementById("id_area").selectedIndex){
@@ -325,6 +373,9 @@ function renderButton(type, father, action) {
             break;
         case 'update':
             button.value = 'Atualizar';
+            button.addEventListener('click', event => {
+                update(type);
+            })
             break;
     }
     father.appendChild(button);  
