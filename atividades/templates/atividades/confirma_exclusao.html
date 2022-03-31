@@ -24,7 +24,7 @@
                     <p>Tempo: <b>{{ atividade.tempo }}</b></p>
                     <p>Id: <b>{{ atividade.id }}</b></p>
                     <br>
-                    <div class="card-header btn btn-danger">
+                    <div class="btn-danger">
                         {% csrf_token %}
                         {{ form_exclusao }}
                         Sim, desejo excluir e estou ciente de que esta operação é irreversível.

@@ -84,6 +84,7 @@ def listar_semana_atual(request):
     atividades = atividade_service.listar_semana_atual(request.user)
     tempo_areas = atividade_repositorio.calcular_tempo_atividade_area(atividades, request.user)
     json_tempo_areas = json.dumps(tempo_areas, cls=Encoder)
+    template_tags['valor'] = date.today().isocalendar()[1]
     template_tags['atividades'] = atividades
     template_tags['tempo_areas'] = tempo_areas
     template_tags['json_tempo_areas'] = json_tempo_areas
