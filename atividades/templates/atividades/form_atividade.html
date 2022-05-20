@@ -11,14 +11,14 @@
                 <h3 class="box-title">Cronômetro</h3>
             </div>
             <div class="box-body">
-                <span id="counter">00:00</span>
-                <input type="button" class="btn btn-info" value="+" onclick="plus()">
-                <input type="button" class="btn btn-info" value="-" onclick="minus()">
+                <span id="counter-display">00:00</span>
+                <input type="button" class="btn btn-info" value="+" onclick="addMinute()">
+                <input type="button" class="btn btn-info" value="-" onclick="subtractMinute()">
             </div>
             <div class="box-footer">
-                <input type="button" value="Iniciar" class="btn btn-primary" onclick="start()">
-                <input type="button" value="Registar" class="btn btn-info" onclick="registrar()">
-                <input type="button" value="Zerar" class="btn btn-danger" onclick="zerar()">
+                <input type="button" value="Iniciar" class="btn btn-primary" id="start-button" onclick="runCounter()">
+                <input type="button" value="Registar" class="btn btn-info" onclick="registerOnInput()">
+                <input type="button" value="Zerar" class="btn btn-danger" onclick="resetCounter()">
             </div>
         </div>
         <!-- FIM CRONÔMETRO -->
