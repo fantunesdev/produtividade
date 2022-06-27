@@ -45,13 +45,24 @@ class InicioAtividade(models.Model):
     inicio = models.DateTimeField(blank=False, null=False)
 
 
+class Pessoa(models.Model):
+    nome = models.CharField(max_length=50, unique=True, blank=False, null=False)
+    descricao = models.TextField(blank=True, null=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    areas = models.ManyToManyField(Area)
+
+    def __str__(self):
+        return self.nome
+
+
 class Atividade(models.Model):
     data = models.DateField(blank=False, null=False)
     area = models.ForeignKey(Area, blank=False, null=False, on_delete=models.PROTECT)
     sub_area = models.ForeignKey(SubArea, blank=False, null=False, on_delete=models.PROTECT)
     # plataforma = models.CharField(max_length=30, blank=True, null=True)
     plataforma = models.ForeignKey(Plataforma, on_delete=models.PROTECT)
-    pessoa = models.CharField(max_length=50, blank=True, null=True)
+    # pessoa = models.CharField(max_length=50, blank=True, null=True)
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
     descricao = models.CharField(max_length=200, blank=True, null=True)
     detalhamento = RichTextField(blank=True, null=True)
     tempo = models.IntegerField(blank=False, null=False)
@@ -63,10 +74,5 @@ class Atividade(models.Model):
         return self.descricao
 
     class Meta:
-        ordering = ['-data']
-
-
-class Pessoa(models.Model):
-    nome = models.CharField(max_length=50, unique=True, blank=False, null=False)
-    descricao = models.TextField(blank=True, null=True)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+        # ordering = ['-data']
+        ordering = ['data']

@@ -99,8 +99,8 @@
                     <td><a href="{% url 'listar_sessao' 'data' i.data %}">{{ i.data | date:"d/m" }}</a></td>
                     <td><a href="{% url 'listar_sessao' 'area' i.area|slugify %}">{{ i.area }}</a></td>
                     <td><a href="{% url 'listar_sessao' 'sub-area' i.sub_area.id %}">{{ i.sub_area }}</a></td>
-                    <td><a href="{% url 'listar_sessao' 'plataforma' i.plataforma.id|slugify %}">{{ i.plataforma }}</a></td>
-                    <td><a href="{% url 'listar_sessao' 'pessoa' i.pessoa|slugify %}">{{ i.pessoa }}</a></td>
+                    <td><a href="{% url 'listar_sessao' 'plataforma' i.plataforma.id %}">{{ i.plataforma }}</a></td>
+                    <td><a href="{% url 'listar_sessao' 'pessoa' i.pessoa.id %}">{{ i.pessoa }}</a></td>
                     <td><a href="{% url 'expandir_atividade' i.id %}">{{ i.descricao }}</a></td>
                     <td>{{ i.tempo }}</td>
                     <td>

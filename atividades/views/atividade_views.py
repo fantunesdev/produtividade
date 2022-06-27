@@ -65,6 +65,7 @@ def listar_atividades(request):
     template_tags['json_tempo_areas'] = json_tempo_areas
     template_tags['contador_atividades'] = len(atividades)
     # FuncoesTemporarias().cadastrar_plataformas(atividades)
+    FuncoesTemporarias().cadastrar_pessoas(atividades)
     return render(request, 'atividades/listar_atividades.html', template_tags)
 
 

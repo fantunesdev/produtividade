@@ -2,8 +2,9 @@ from datetime import date
 
 from django.core.exceptions import ObjectDoesNotExist
 
-from atividades.services import area_service, plataforma_service, atividade_service
+from atividades.services import area_service, plataforma_service, atividade_service, pessoa_service
 from ..entidades.atividade import Atividade
+from ..entidades.pessoa import Pessoa
 from ..entidades.plataforma import Plataforma
 from ..utils import tempo_area
 
@@ -82,6 +83,35 @@ class FuncoesTemporarias:
                 sub_area=i.sub_area,
                 plataforma=plataforma_db.id,
                 pessoa=i.pessoa,
+                descricao=i.descricao,
+                detalhamento=i.detalhamento,
+                tempo=i.tempo,
+                inicio=i.inicio,
+                fim=i.fim,
+                usuario=i.usuario
+            )
+            atividade_service.editar_atividade(i, nova_atividade)
+
+    def cadastrar_pessoas(self, atividades):
+        for i in atividades:
+            nova_pessoa = Pessoa(
+                nome=i.pessoa,
+                descricao=None,
+                usuario=1,
+                areas=1
+            )
+
+            try:
+                pessoa_db = pessoa_service.listar_pessoa_nome(nova_pessoa.nome)
+            except ObjectDoesNotExist:
+                pessoa_db = pessoa_service.cadastrar_pessoa(nova_pessoa)
+
+            nova_atividade = Atividade(
+                data=i.data,
+                area=i.area,
+                sub_area=i.sub_area,
+                plataforma=i.plataforma,
+                pessoa=pessoa_db.id,
                 descricao=i.descricao,
                 detalhamento=i.detalhamento,
                 tempo=i.tempo,

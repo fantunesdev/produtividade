@@ -85,7 +85,7 @@ def listar_plataforma(usuario, plataforma):
 
 
 def listar_pessoa(usuario, pessoa):
-    atividades = Atividade.objects.filter(usuario=usuario, pessoa=pessoa.replace("-", " "))
+    atividades = Atividade.objects.filter(usuario=usuario, pessoa=pessoa)
     return atividades
 
 
