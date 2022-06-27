@@ -2,7 +2,7 @@ from ..models import Plataforma
 
 
 def cadastrar_plataforma(plataforma):
-    Plataforma.objects.create(nome=plataforma.nome, descricao=plataforma.descricao)
+    return Plataforma.objects.create(nome=plataforma.nome, descricao=plataforma.descricao)
 
 
 def listar_plataformas():

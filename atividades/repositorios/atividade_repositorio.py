@@ -1,6 +1,10 @@
 from datetime import date
 
-from atividades.services import area_service
+from django.core.exceptions import ObjectDoesNotExist
+
+from atividades.services import area_service, plataforma_service, atividade_service
+from ..entidades.atividade import Atividade
+from ..entidades.plataforma import Plataforma
 from ..utils import tempo_area
 
 
@@ -10,6 +14,7 @@ def tempo_atividade(inicio, fim):
     if resto <= 10:
         tempo = tempo + 1
     return tempo
+
 
 def calcular_tempo_atividade_area(atividades, usuario):
     areas = area_service.listar_areas(usuario)
@@ -53,3 +58,35 @@ def criar_dicionario(numero, tipo):
         '>>': numero + 1
     }
     return dicionario
+
+
+# Funções temporárias
+
+class FuncoesTemporarias:
+    def cadastrar_plataformas(self, atividades):
+        for i in atividades:
+            nova_plataforma = Plataforma(
+                nome=i.plataforma,
+                descricao=None,
+                usuario=1,
+                areas=1
+            )
+            try:
+                plataforma_db = plataforma_service.listar_plataforma_nome(nova_plataforma.nome)
+            except ObjectDoesNotExist:
+                plataforma_db = plataforma_service.cadastrar_plataforma(nova_plataforma)
+
+            nova_atividade = Atividade(
+                data=i.data,
+                area=i.area,
+                sub_area=i.sub_area,
+                plataforma=plataforma_db.id,
+                pessoa=i.pessoa,
+                descricao=i.descricao,
+                detalhamento=i.detalhamento,
+                tempo=i.tempo,
+                inicio=i.inicio,
+                fim=i.fim,
+                usuario=i.usuario
+            )
+            atividade_service.editar_atividade(i, nova_atividade)

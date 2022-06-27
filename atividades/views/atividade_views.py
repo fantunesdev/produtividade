@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 import json
 
+from ..repositorios.atividade_repositorio import FuncoesTemporarias
 from ..services import atividade_service, area_service, sub_area_service
 from ..forms.atividade_form import AtividadeForm, AtividadeBuscar
 from ..forms.general_form import ExclusaoForm
@@ -63,6 +64,7 @@ def listar_atividades(request):
     template_tags['tempo_areas'] = tempo_areas
     template_tags['json_tempo_areas'] = json_tempo_areas
     template_tags['contador_atividades'] = len(atividades)
+    # FuncoesTemporarias().cadastrar_plataformas(atividades)
     return render(request, 'atividades/listar_atividades.html', template_tags)
 
 

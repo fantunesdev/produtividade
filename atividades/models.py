@@ -34,6 +34,12 @@ class Plataforma(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     areas = models.ManyToManyField(Area)
 
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        ordering = ['nome']
+
 
 class InicioAtividade(models.Model):
     inicio = models.DateTimeField(blank=False, null=False)
@@ -43,7 +49,8 @@ class Atividade(models.Model):
     data = models.DateField(blank=False, null=False)
     area = models.ForeignKey(Area, blank=False, null=False, on_delete=models.PROTECT)
     sub_area = models.ForeignKey(SubArea, blank=False, null=False, on_delete=models.PROTECT)
-    plataforma = models.CharField(max_length=30, blank=True, null=True)
+    # plataforma = models.CharField(max_length=30, blank=True, null=True)
+    plataforma = models.ForeignKey(Plataforma, on_delete=models.PROTECT)
     pessoa = models.CharField(max_length=50, blank=True, null=True)
     descricao = models.CharField(max_length=200, blank=True, null=True)
     detalhamento = RichTextField(blank=True, null=True)
