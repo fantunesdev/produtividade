@@ -28,6 +28,13 @@ class SubArea(models.Model):
         ordering = ['nome']
 
 
+class Plataforma(models.Model):
+    nome = models.CharField(max_length=30, unique=True, blank=False, null=False)
+    descricao = models.TextField(blank=True, null=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    areas = models.ManyToManyField(Area)
+
+
 class InicioAtividade(models.Model):
     inicio = models.DateTimeField(blank=False, null=False)
 
@@ -50,12 +57,6 @@ class Atividade(models.Model):
 
     class Meta:
         ordering = ['-data']
-
-
-class Plataforma(models.Model):
-    nome = models.CharField(max_length=30, unique=True, blank=False, null=False)
-    descricao = models.TextField(blank=True, null=True)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
 
 class Pessoa(models.Model):
