@@ -41,11 +41,8 @@ class Plataforma(models.Model):
         ordering = ['nome']
 
 
-class InicioAtividade(models.Model):
-    inicio = models.DateTimeField(blank=False, null=False)
-
-
 class Pessoa(models.Model):
+    objects = None
     nome = models.CharField(max_length=50, unique=True, blank=False, null=False)
     descricao = models.TextField(blank=True, null=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
@@ -53,6 +50,10 @@ class Pessoa(models.Model):
 
     def __str__(self):
         return self.nome
+
+
+class InicioAtividade(models.Model):
+    inicio = models.DateTimeField(blank=False, null=False)
 
 
 class Atividade(models.Model):

@@ -11,6 +11,8 @@
         <ul>
             <li><a href="#areas">Áreas</a></li>
             <li><a href="#sub_areas">Sub-Áreas</a></li>
+            <li><a href="#plataformas">Plataformas</a></li>
+            <li><a href="#pessoas">Pessoas</a></li>
         </ul>
         <div class="box box-primary" id="areas">
             <div class="box-title">
@@ -69,6 +71,66 @@
                         </td>
                     </tr>
                     {% endfor %}
+                </table>
+            </div>
+            <div class="box-footer">
+                <a href="#inicio"><input type="button" value="Voltar" class="btn"></a>
+            </div>
+        </div>
+
+        <div class="box box-primary" id="plataformas">
+            <div class="box-title">
+                <h3>Plataformas</h3>
+            </div>
+            <div class="box-body">
+                <a href="{% url 'cadastrar_plataforma' %}"><input type="button" value="Cadastrar" class="btn btn-primary"></a>
+                <table class="table">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Editar</th>
+                    </tr>
+                    {% for plataforma in plataformas %}
+                    <tr>
+                        <td>{{ plataforma.nome }}</td>
+                        <td>
+                            <a href="{% url 'editar_plataforma' plataforma.id %}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="box-footer">
+                <a href="#inicio"><input type="button" value="Voltar" class="btn"></a>
+            </div>
+        </div>
+
+        <div class="box box-primary" id="pessoas">
+            <div class="box-title">
+                <h3>Pessoas</h3>
+            </div>
+            <div class="box-body">
+                <a href="{% url 'cadastrar_pessoa' %}"><input type="button" value="Cadastrar" class="btn btn-primary"></a>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pessoa in pessoas %}
+                        <tr>
+                            <td>{{ pessoa.nome }}</td>
+                            <td>
+                                <a href="{% url 'editar_pessoa' pessoa.id %}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
             <div class="box-footer">

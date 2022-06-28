@@ -15,6 +15,7 @@ def cadastrar_sub_area(sub_area):
         nova_sub_area.save()
         for i in sub_area.areas:
             nova_sub_area.areas.add(i)
+        return nova_sub_area
 
 
 def listar_sub_areas(usuario):
@@ -40,6 +41,7 @@ def editar_sub_area(sub_area, sub_area_nova):
     for area in sub_area_nova.areas:
         sub_area.areas.set(area)
     sub_area.save(force_update=True)
+    return sub_area
 
 
 def remover_sub_area(sub_area):

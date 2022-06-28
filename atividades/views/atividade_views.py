@@ -5,7 +5,7 @@ from django.utils import timezone
 import json
 
 from ..repositorios.atividade_repositorio import FuncoesTemporarias
-from ..services import atividade_service, area_service, sub_area_service
+from ..services import atividade_service, area_service, sub_area_service, plataforma_service, pessoa_service
 from ..forms.atividade_form import AtividadeForm, AtividadeBuscar
 from ..forms.general_form import ExclusaoForm
 from ..entidades.atividade import Atividade
@@ -65,7 +65,7 @@ def listar_atividades(request):
     template_tags['json_tempo_areas'] = json_tempo_areas
     template_tags['contador_atividades'] = len(atividades)
     # FuncoesTemporarias().cadastrar_plataformas(atividades)
-    FuncoesTemporarias().cadastrar_pessoas(atividades)
+    # FuncoesTemporarias().cadastrar_pessoas(atividades)
     return render(request, 'atividades/listar_atividades.html', template_tags)
 
 
@@ -204,4 +204,6 @@ def remover_atividade(request, id):
 def settings(request):
     template_tags['areas'] = area_service.listar_areas(request.user)
     template_tags['sub_areas'] = sub_area_service.listar_sub_areas(request.user)
+    template_tags['plataformas'] = plataforma_service.listar_plataformas(request.user)
+    template_tags['pessoas'] = pessoa_service.listar_pessoas(request.user)
     return render(request, 'atividades/settings.html', template_tags)

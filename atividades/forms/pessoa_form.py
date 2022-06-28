@@ -1,11 +1,11 @@
 from django import forms
 
-from ..models import SubArea, Area
+from atividades.models import Pessoa, Area
 
 
-class SubAreaForm(forms.ModelForm):
+class PessoaForm(forms.ModelForm):
     areas = forms.ModelMultipleChoiceField(queryset=Area.objects.all(), widget=forms.CheckboxSelectMultiple)
 
     class Meta:
-        model = SubArea
+        model = Pessoa
         fields = ['nome', 'descricao', 'areas']

@@ -4,17 +4,20 @@ from django.utils import timezone
 
 
 def cadastrar_atividade(atividade):
-    Atividade.objects.create(data=atividade.data,
-                             area=atividade.area,
-                             sub_area=atividade.sub_area,
-                             plataforma=atividade.plataforma,
-                             pessoa=atividade.pessoa,
-                             descricao=atividade.descricao,
-                             detalhamento=atividade.detalhamento,
-                             tempo=atividade.tempo,
-                             inicio=atividade.inicio,
-                             fim=atividade.fim,
-                             usuario=atividade.usuario)
+    nova_atividade = Atividade.objects.create(
+        data=atividade.data,
+        area=atividade.area,
+        sub_area=atividade.sub_area,
+        plataforma=atividade.plataforma,
+        pessoa=atividade.pessoa,
+        descricao=atividade.descricao,
+        detalhamento=atividade.detalhamento,
+        tempo=atividade.tempo,
+        inicio=atividade.inicio,
+        fim=atividade.fim,
+        usuario=atividade.usuario
+    )
+    return nova_atividade
 
 
 def cadastar_inicio():
@@ -75,12 +78,12 @@ def listar_area(usuario, area):
 
 
 def listar_sub_area(usuario, sub_area):
-    atividades = Atividade.objects.filter(usuario=usuario, sub_area=sub_area.replace("-"," "))
+    atividades = Atividade.objects.filter(usuario=usuario, sub_area=sub_area.replace("-", " "))
     return atividades
 
 
 def listar_plataforma(usuario, plataforma):
-    atividades = Atividade.objects.filter(usuario=usuario, plataforma=plataforma.replace("-"," "))
+    atividades = Atividade.objects.filter(usuario=usuario, plataforma=plataforma.replace("-", " "))
     return atividades
 
 
@@ -95,7 +98,6 @@ def listar_descricao(usuario, descricao):
 
 
 def listar_detalhamento(usuario, detalhamento):
-
     atividades = Atividade.objects.filter(usuario=usuario, detalhamento__contains=detalhamento)
     return atividades
 
@@ -115,6 +117,7 @@ def editar_atividade(atividade, atividade_nova):
     atividade.detalhamento = atividade_nova.detalhamento
     atividade.tempo = atividade_nova.tempo
     atividade.save(force_update=True)
+    return atividade
 
 
 def remover_atividade(atividade):

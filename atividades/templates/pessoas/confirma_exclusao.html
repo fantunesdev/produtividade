@@ -1,26 +1,26 @@
 {% extends "index.html" %}
     {% block title %}
-        Exclusão de Plataforma
+        Exclusão de Pessoa
     {% endblock %}
     {% block content %}
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">
-                    Atenção! Você está prestes a deletar a plataforma {{ plataforma.nome }}. Essa ação excluirá todas
+                    Atenção! Você está prestes a deletar a pessoa {{ plataforma.nome }}. Essa ação excluirá todas
                     as atividades ligadas a ela.
                 </h3>
             </div>
             <form method="post">
                 <div class="box-body">
-                    <p>Nome: <b>{{ plataforma.nome }}</b></p>
-                    <p>Descricao: <b>{{ plataforma.descricao }}</b></p>
+                    <p>Nome: <b>{{ pessoa.nome }}</b></p>
+                    <p>Descricao: <b>{{ pessoa.descricao }}</b></p>
                     <br>
                     <div class="card-header btn btn-danger">
                         {% csrf_token %}
                         {{ form_exclusao.confirmacao.errors }}
                         <h4>
                             {{ form_exclusao }}
-                            Estou ciente de que irei excluir todas as atividades relacionadas a esta plataforma junto com
+                            Estou ciente de que irei excluir todas as atividades relacionadas a esta pessoa junto com
                             a mesma e que esta operação é irreversível.
                         </h4>
                     </div>
