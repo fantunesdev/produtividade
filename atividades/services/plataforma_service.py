@@ -8,8 +8,8 @@ def cadastrar_plataforma(plataforma):
         usuario=plataforma.usuario
     )
     nova_plataforma.save()
-    # for i in plataforma.areas:
-    #     nova_plataforma.areas.add(i)
+    for i in plataforma.areas:
+        nova_plataforma.areas.add(i)
     return nova_plataforma
 
 
