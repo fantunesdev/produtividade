@@ -14,9 +14,6 @@ class Area(models.Model):
     def __str__(self):
         return self.nome
 
-    class Meta:
-        ordering = ['nome']
-
 
 class SubArea(models.Model):
     nome = models.CharField(max_length=50, unique=True, blank=False, null=False)
