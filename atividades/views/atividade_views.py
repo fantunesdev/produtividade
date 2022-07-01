@@ -12,8 +12,6 @@ from atividades.forms.general_form import ExclusaoForm
 from atividades.repositorios import atividade_repositorio
 from atividades.services import atividade_service, area_service, subarea_service, plataforma_service, pessoa_service
 
-from atividades.repositorios.atividade_repositorio import FuncoesTemporarias
-
 # Create your views here.
 
 
@@ -70,8 +68,6 @@ def listar_atividades(request):
     template_tags['tempo_areas'] = tempo_areas
     template_tags['json_tempo_areas'] = json_tempo_areas
     template_tags['contador_atividades'] = len(atividades)
-    # FuncoesTemporarias().cadastrar_plataformas(atividades)
-    # FuncoesTemporarias().cadastrar_pessoas(atividades)
     return render(request, 'atividades/listar_atividades.html', template_tags)
 
 

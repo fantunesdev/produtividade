@@ -1,1 +1,27 @@
 {% extends 'index.html' %}
+
+{% block title %}
+Testes
+{% endblock %}
+
+{% block content %}
+<h2>Migração de dados</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Data</th>
+            <th>Descricao</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in atividades %}
+        <tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.data }}</td>
+            <td>{{ i.descricao }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

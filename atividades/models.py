@@ -51,6 +51,9 @@ class Pessoa(models.Model):
     def __str__(self):
         return self.nome
 
+    class Meta:
+        ordering = ['nome']
+
 
 class InicioAtividade(models.Model):
     inicio = models.DateTimeField(blank=False, null=False)

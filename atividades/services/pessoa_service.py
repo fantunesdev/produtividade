@@ -8,8 +8,8 @@ def cadastrar_pessoa(pessoa):
         usuario=pessoa.usuario
     )
     nova_pessoa.save()
-    for i in pessoa.areas:
-        nova_pessoa.areas.set(i)
+    # for i in pessoa.areas:
+    #     nova_pessoa.areas.set(i)
     return nova_pessoa
 
 
@@ -19,6 +19,10 @@ def listar_pessoas(usuario):
 
 def listar_pessoa_id(id, usuario):
     return Pessoa.objects.filter(id=id, usuario=usuario).first()
+
+
+def listar_pessoa_nome(nome, usuario):
+    return Pessoa.objects.get(nome=nome, usuario=usuario)
 
 
 def editar_pessoa(pessoa, pessoa_nova):
