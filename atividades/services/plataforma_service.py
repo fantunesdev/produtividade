@@ -9,23 +9,20 @@ def cadastrar_plataforma(plataforma):
     )
     nova_plataforma.save()
     for i in plataforma.areas:
-        nova_plataforma.areas.set(i)
+        nova_plataforma.areas.add(i)
     return nova_plataforma
 
 
 def listar_plataformas(usuario):
-    plataformas = Plataforma.objects.filter(usuario=usuario)
-    return plataformas
+    return Plataforma.objects.filter(usuario=usuario)
 
 
 def listar_plataforma_id(id, usuario):
-    plataforma = Plataforma.objects.filter(id=id, usuario=usuario).first()
-    return plataforma
+    return Plataforma.objects.filter(id=id, usuario=usuario).first()
 
 
 def listar_plataforma_nome(nome, usuario):
-    plataforma = Plataforma.objects.get(nome=nome, usuario=usuario).first()
-    return plataforma
+    return Plataforma.objects.get(nome=nome, usuario=usuario).first()
 
 
 def editar_plataforma(plataforma, plataforma_nova):

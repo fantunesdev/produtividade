@@ -12,18 +12,15 @@ def cadastrar_area(area):
 
 
 def listar_areas(usuario):
-    areas = Area.objects.filter(usuario=usuario)
-    return areas
+    return Area.objects.filter(usuario=usuario)
 
 
-def listar_area_id(usuario, id):
-    area = Area.objects.filter(usuario=usuario, id=id).first()
-    return area
+def listar_area_id(id, usuario):
+    return Area.objects.filter(usuario=usuario, id=id).first()
 
 
 def listar_area(usuario, nome):
-    area = Area.objects.filter(usuario=usuario, nome=nome).first()
-    return area
+    return Area.objects.filter(usuario=usuario, nome=nome).first()
 
 
 def editar_area(area, area_nova):

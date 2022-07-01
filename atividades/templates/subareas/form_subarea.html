@@ -7,8 +7,8 @@
 {% block content %}
     <div class="box box-primary">
         <div class="box-header">
-            {% if sub_area_antiga %}
-                <h3 class="box-title">Editando sub-área: {{ sub_area_antiga.nome }}</h3>
+            {% if subarea_antiga %}
+                <h3 class="box-title">Editando sub-área: {{ subarea_antiga.nome }}</h3>
             {% else %}
                 <h3 class="box-title">Cadastro de Sub-Area</h3>
             {% endif %}
@@ -18,22 +18,22 @@
                 {% csrf_token %}
 
                 <div class="form-group">
-                    {{ form_sub_area.nome.errors }}
+                    {{ form_subarea.nome.errors }}
                     <label>Nome:</label>
-                    {{ form_sub_area.nome|addclass:'form-control' }}
+                    {{ form_subarea.nome|addclass:'form-control' }}
                 </div>
 
                 <div class="form-group">
-                    {{ form_sub_area.descricao.errors }}
+                    {{ form_subarea.descricao.errors }}
                     <label>Descricao:</label>
-                    {{ form_sub_area.descricao|addclass:'form-control' }}
+                    {{ form_subarea.descricao|addclass:'form-control' }}
                 </div>
 
                 <div class="form-group">
                     <br>
-                    {{ form_sub_area.areas.errors }}
+                    {{ form_subarea.areas.errors }}
                     <label>Área:</label><br><br>
-                    {{ form_sub_area.areas }}
+                    {{ form_subarea.areas }}
                 </div>
 
             </div>
@@ -41,8 +41,9 @@
             <div>
                 <input class="btn btn-primary" type="submit" name="Cadastrar">
                 <a href="{{request.META.HTTP_REFERER}}"><input type="button" value="Voltar" class="btn"></a>
-                {% block excluir %}
-                {% endblock excluir %}
+                {% if 'editar' in request.path %}
+                <a href="{% url 'remover_subarea' subarea_antiga.id %}"><input type="button" value="Excluir" class="btn btn-danger"></a>
+                {% endif %}
             </div>
         </form>
 

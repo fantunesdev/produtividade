@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 
 from api.serializers import sub_area_serializer
 from api.services import sub_area_service as sub_area_service_api
-from atividades.entidades.sub_area import SubArea
-from atividades.services import sub_area_service
+from atividades.entidades.subarea import SubArea
+from atividades.services import subarea_service
 
 
 class SubAreaList(APIView):

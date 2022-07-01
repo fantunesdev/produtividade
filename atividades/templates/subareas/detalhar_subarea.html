@@ -6,15 +6,15 @@
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">
-                    Atenção! Você está prestes a deletar a sub-área {{ sub_area.nome }}. Essa ação excluirá todas
+                    Atenção! Você está prestes a deletar a sub-área {{ subarea.nome }}. Essa ação excluirá todas
                     as atividades ligadas a ela.
                 </h3>
             </div>
             <form method="post">
                 <div class="box-body">
-                    <p>Nome: <b>{{ sub_area.nome }}</b></p>
-                    <p>Área: <b>{{ sub_area.descricao }}</b></p>
-                    <p>Sub-Área: <b>{{ sub_area.area }}</b></p>
+                    <p>Nome: <b>{{ subarea.nome }}</b></p>
+                    <p>Área: <b>{{ subarea.descricao }}</b></p>
+                    <p>Sub-Área: <b>{{ subarea.area }}</b></p>
                     <br>
                     <div class="card-header btn btn-danger">
                         {% csrf_token %}

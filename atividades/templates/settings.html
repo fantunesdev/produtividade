@@ -8,12 +8,16 @@
 
     {% block content %}
         <i id="inicio"></i>
+        {% if 'settings' in request.path %}
         <ul>
             <li><a href="#areas">Áreas</a></li>
-            <li><a href="#sub_areas">Sub-Áreas</a></li>
+            <li><a href="#subareas">Sub-Áreas</a></li>
             <li><a href="#plataformas">Plataformas</a></li>
             <li><a href="#pessoas">Pessoas</a></li>
         </ul>
+        {% endif %}
+
+        {% if areas %}
         <div class="box box-primary" id="areas">
             <div class="box-title">
                 <h3>Áreas</h3>
@@ -49,23 +53,25 @@
                 <a href="#inicio"><input type="button" value="Voltar" class="btn"></a>
             </div>
         </div>
+        {% endif %}
 
-        <div class="box box-primary" id="sub_areas">
+        {% if subareas %}
+        <div class="box box-primary" id="subareas">
             <div class="box-title">
                 <h3>Sub-Áreas</h3>
             </div>
             <div class="box-body">
-                <a href="{% url 'cadastrar_sub_area' %}"><input type="button" value="Cadastrar" class="btn btn-primary"></a>
+                <a href="{% url 'cadastrar_subarea' %}"><input type="button" value="Cadastrar" class="btn btn-primary"></a>
                 <table class="table">
                     <tr>
                         <th>Nome</th>
                         <th>Editar</th>
                     </tr>
-                    {% for sub_area in sub_areas %}
+                    {% for subarea in subareas %}
                     <tr>
-                        <td>{{ sub_area.nome }}</td>
+                        <td>{{ subarea.nome }}</td>
                         <td>
-                            <a href="{% url 'editar_sub_area' sub_area.id %}">
+                            <a href="{% url 'editar_subarea' subarea.id %}">
                                 <i class="fa fa-edit"></i>
                             </a>
                         </td>
@@ -77,7 +83,9 @@
                 <a href="#inicio"><input type="button" value="Voltar" class="btn"></a>
             </div>
         </div>
+        {% endif %}
 
+        {% if plataformas %}
         <div class="box box-primary" id="plataformas">
             <div class="box-title">
                 <h3>Plataformas</h3>
@@ -105,7 +113,9 @@
                 <a href="#inicio"><input type="button" value="Voltar" class="btn"></a>
             </div>
         </div>
+        {% endif %}
 
+        {% if pessoas %}
         <div class="box box-primary" id="pessoas">
             <div class="box-title">
                 <h3>Pessoas</h3>
@@ -137,4 +147,5 @@
                 <a href="#inicio"><input type="button" value="Voltar" class="btn"></a>
             </div>
         </div>
+        {% endif %}
     {% endblock content %}

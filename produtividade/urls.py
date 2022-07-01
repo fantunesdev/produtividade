@@ -31,10 +31,10 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view()),
 
     path('atividades/', include('atividades.urls.atividade_urls')),
-    path('atividades/areas/', include('atividades.urls.area_urls')),
-    path('atividades/sub_areas/', include('atividades.urls.sub_area_urls')),
-    path('atividades/plataformas/', include('atividades.urls.plataforma_urls')),
-    path('atividades/pessoas/', include('atividades.urls.pessoa_urls')),
+    path('areas/', include('atividades.urls.area_urls')),
+    path('subareas/', include('atividades.urls.subarea_urls')),
+    path('plataformas/', include('atividades.urls.plataforma_urls')),
+    path('pessoas/', include('atividades.urls.pessoa_urls')),
 
     path('usuarios/', include('login.urls')),
     path('login/', logar_usuario, name='logar_usuario'),

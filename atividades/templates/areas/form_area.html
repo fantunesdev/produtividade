@@ -1,13 +1,24 @@
 {% extends "index.html" %}
 {% load meus_filtros %}
+
 {% block title %}
-    Cadastrar Área
+{% if 'cadastrar' in request.path %}
+Cadastrar Área
+{% else %}
+Editar Área
+{% endif %}
 {% endblock title %}
 
 {% block content %}
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title">Cadastro de Area</h3>
+            <h3 class="box-title">
+                {% if 'cadastrar' in request.path %}
+                Cadastrar Área
+                {% else %}
+                Editar Área
+                {% endif %}
+            </h3>
         </div>
         <div class="box-body">
             <form method="post">
@@ -36,8 +47,9 @@
             <div>
                 <input class="btn btn-primary" type="submit" name="Cadastrar">
                 <a href="{{request.META.HTTP_REFERER}}"><input type="button" value="Voltar" class="btn"></a>
-                {% block excluir %}
-                {% endblock excluir %}
+                {% if 'editar' in request.path %}
+                <a href="{% url 'remover_area' area_antiga.id %}"><input type="button" value="Excluir" class="btn btn-danger"></a>
+                {% endif %}
             </div>
         </form>
 

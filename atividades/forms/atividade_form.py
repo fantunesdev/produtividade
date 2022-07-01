@@ -25,10 +25,6 @@ class AtividadeBuscar(forms.ModelForm):
         fields = ['detalhamento']
 
 
-class ExclusaoForm(forms.Form):
-    confirmacao = forms.BooleanField(label='')
-
-
 class AtividadeFormVer(forms.ModelForm):
     class Meta:
         model = Atividade

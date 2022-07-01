@@ -1,7 +1,12 @@
 {% extends "index.html" %}
 {% load meus_filtros %}
+
 {% block title %}
-    Cadastro de Pessoa
+{% if 'cadastrar' in request.path %}
+Cadastro de Pessoa
+{% else %}
+Editar Pessoa
+{% endif %}
 {% endblock title %}
 
 {% block content %}

@@ -1,32 +1,36 @@
+import json
+
 from datetime import date
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.utils import timezone
-import json
 
-from ..repositorios.atividade_repositorio import FuncoesTemporarias
-from ..services import atividade_service, area_service, sub_area_service, plataforma_service, pessoa_service
-from ..forms.atividade_form import AtividadeForm, AtividadeBuscar
-from ..forms.general_form import ExclusaoForm
-from ..entidades.atividade import Atividade
-from ..repositorios import atividade_repositorio
-from ..encoder import Encoder
+from atividades.encoder import Encoder
+from atividades.entidades.atividade import Atividade
+from atividades.forms.atividade_form import AtividadeForm, AtividadeBuscar
+from atividades.forms.general_form import ExclusaoForm
+from atividades.repositorios import atividade_repositorio
+from atividades.services import atividade_service, area_service, subarea_service, plataforma_service, pessoa_service
+
+from atividades.repositorios.atividade_repositorio import FuncoesTemporarias
 
 # Create your views here.
 
 
-template_tags = {'semana_atual': date.today().isocalendar()[1],
-                 'mes_atual': date.today().month,
-                 'ano_atual': date.today().year,
-                 'semana': date.today().isocalendar()[1],
-                 'mes': date.today().month,
-                 'ano': date.today().year,
-                 'tipo': 'semana',
-                 'valor': 1,
-                 'atividades': None,
-                 'tempo_areas': 0,
-                 'json_tempo_areas': None,
-                 'contador_atividades': 0}
+template_tags = {
+    'semana_atual': date.today().isocalendar()[1],
+    'mes_atual': date.today().month,
+    'ano_atual': date.today().year,
+    'semana': date.today().isocalendar()[1],
+    'mes': date.today().month,
+    'ano': date.today().year,
+    'tipo': 'semana',
+    'valor': 1,
+    'atividades': None,
+    'tempo_areas': 0,
+    'json_tempo_areas': None,
+    'contador_atividades': 0
+}
 
 
 @login_required
@@ -34,17 +38,19 @@ def cadastrar_atividade(request):
     if request.method == "POST":
         form_atividade = AtividadeForm(request.POST)
         if form_atividade.is_valid():
-            atividade_nova = Atividade(data=form_atividade.cleaned_data['data'],
-                                       area=form_atividade.cleaned_data['area'],
-                                       sub_area=form_atividade.cleaned_data['sub_area'],
-                                       plataforma=form_atividade.cleaned_data['plataforma'],
-                                       pessoa=form_atividade.cleaned_data['pessoa'],
-                                       descricao=form_atividade.cleaned_data['descricao'],
-                                       detalhamento=form_atividade.cleaned_data['detalhamento'],
-                                       tempo=form_atividade.cleaned_data['tempo'],
-                                       inicio=atividade_service.buscar_inicio().inicio,
-                                       fim=timezone.now(),
-                                       usuario=request.user)
+            atividade_nova = Atividade(
+                data=form_atividade.cleaned_data['data'],
+                area=form_atividade.cleaned_data['area'],
+                sub_area=form_atividade.cleaned_data['sub_area'],
+                plataforma=form_atividade.cleaned_data['plataforma'],
+                pessoa=form_atividade.cleaned_data['pessoa'],
+                descricao=form_atividade.cleaned_data['descricao'],
+                detalhamento=form_atividade.cleaned_data['detalhamento'],
+                tempo=form_atividade.cleaned_data['tempo'],
+                inicio=atividade_service.buscar_inicio().inicio,
+                fim=timezone.now(),
+                usuario=request.user
+            )
 
             atividade_service.cadastrar_atividade(atividade_nova)
             return redirect('listar_semana_atual')
@@ -117,13 +123,13 @@ def listar_ano_mes_semana(request, ano, tipo, valor):
 def listar_sessao(request, sessao, valor_sessao):
     if sessao == 'data':
         atividades = atividade_service.listar_data(request.user, valor_sessao)
-    elif sessao == 'area':
+    elif sessao == 'areas':
         atividades = atividade_service.listar_area(request.user, valor_sessao)
-    elif sessao == 'sub-area':
+    elif sessao == 'subareas':
         atividades = atividade_service.listar_sub_area(request.user, valor_sessao)
-    elif sessao == 'plataforma':
+    elif sessao == 'plataformas':
         atividades = atividade_service.listar_plataforma(request.user, valor_sessao)
-    elif sessao == 'pessoa':
+    elif sessao == 'pessoas':
         atividades = atividade_service.listar_pessoa(request.user, valor_sessao)
     elif sessao == 'descricao':
         atividades = atividade_service.listar_descricao(request.user, valor_sessao)
@@ -145,7 +151,7 @@ def buscar(request):
             atividades = atividade_service.listar_detalhamento(request.user, detalhamento)
             template_tags['atividades'] = atividades
             template_tags['form_atividade'] = form_atividade
-            return render(request, 'atividades/expandir_atividade.html', template_tags)
+            return render(request, 'atividades/detalhar_atividade.html', template_tags)
     else:
         form_atividade = AtividadeBuscar()
         template_tags['form_atividade'] = form_atividade
@@ -153,7 +159,7 @@ def buscar(request):
 
 
 @login_required
-def expandir_atividade(request, id):
+def detalhar_atividade(request, id):
     atividade = atividade_service.listar_atividade_id(request.user, id)
     atividades = atividade_service.listar_descricao(request.user, atividade.descricao)
     tempo_total = 0
@@ -165,7 +171,7 @@ def expandir_atividade(request, id):
     template_tags['tempo_total'] = tempo_total
     template_tags['tempo_atividade'] = tempo_atividade
     template_tags['projeto'] = True
-    return render(request, 'atividades/expandir_atividade.html', template_tags)
+    return render(request, 'atividades/detalhar_atividade.html', template_tags)
 
 
 @login_required
@@ -173,22 +179,24 @@ def editar_atividade(request, id):
     atividade_antiga = atividade_service.listar_atividade_id(request.user, id)
     form_atividade = AtividadeForm(request.POST or None, instance=atividade_antiga)
     if form_atividade.is_valid():
-        atividade_nova = Atividade(data=form_atividade.cleaned_data['data'],
-                                   area=form_atividade.cleaned_data['area'],
-                                   sub_area=form_atividade.cleaned_data['sub_area'],
-                                   plataforma=form_atividade.cleaned_data['plataforma'],
-                                   pessoa=form_atividade.cleaned_data['pessoa'],
-                                   descricao=form_atividade.cleaned_data['descricao'],
-                                   detalhamento=form_atividade.cleaned_data['detalhamento'],
-                                   tempo=form_atividade.cleaned_data['tempo'],
-                                   inicio=atividade_antiga.inicio,
-                                   fim=atividade_antiga.fim,
-                                   usuario=request.user)
+        atividade_nova = Atividade(
+            data=form_atividade.cleaned_data['data'],
+            area=form_atividade.cleaned_data['area'],
+            sub_area=form_atividade.cleaned_data['sub_area'],
+            plataforma=form_atividade.cleaned_data['plataforma'],
+            pessoa=form_atividade.cleaned_data['pessoa'],
+            descricao=form_atividade.cleaned_data['descricao'],
+            detalhamento=form_atividade.cleaned_data['detalhamento'],
+            tempo=form_atividade.cleaned_data['tempo'],
+            inicio=atividade_antiga.inicio,
+            fim=atividade_antiga.fim,
+            usuario=request.user
+        )
         atividade_service.editar_atividade(atividade_antiga, atividade_nova)
         return redirect('listar_semana_atual')
     template_tags['atividade_antiga'] = atividade_antiga
     template_tags['form_atividade'] = form_atividade
-    return render(request, 'atividades/editar_atividade.html', template_tags)
+    return render(request, 'atividades/form_atividade.html', template_tags)
 
 
 def remover_atividade(request, id):
@@ -198,12 +206,13 @@ def remover_atividade(request, id):
         return redirect('listar_semana_atual')
     template_tags['atividade'] = atividade
     template_tags['form_exclusao'] = ExclusaoForm()
-    return render(request, 'atividades/confirma_exclusao.html', template_tags)
+    template_tags['tempo_total'] = 0
+    return render(request, 'atividades/detalhar_atividade.html', template_tags)
 
 
 def settings(request):
     template_tags['areas'] = area_service.listar_areas(request.user)
-    template_tags['sub_areas'] = sub_area_service.listar_sub_areas(request.user)
+    template_tags['subareas'] = subarea_service.listar_subareas(request.user)
     template_tags['plataformas'] = plataforma_service.listar_plataformas(request.user)
     template_tags['pessoas'] = pessoa_service.listar_pessoas(request.user)
-    return render(request, 'atividades/settings.html', template_tags)
+    return render(request, 'settings.html', template_tags)

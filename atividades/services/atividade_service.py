@@ -36,75 +36,61 @@ def validar_primeiro_cadastro_data(agora):
 
 
 def buscar_inicio():
-    inicio = InicioAtividade.objects.filter(id=1).first()
-    return inicio
+    return InicioAtividade.objects.filter(id=1).first()
 
 
 def listar_atividades(usuario):
-    atividades = Atividade.objects.filter(usuario=usuario)
-    return atividades
+    return Atividade.objects.filter(usuario=usuario)
 
 
 def listar_ano(usuario, ano):
-    atividades = Atividade.objects.filter(usuario=usuario, data__year=ano)
-    return atividades
+    return Atividade.objects.filter(usuario=usuario, data__year=ano)
 
 
 def listar_mes(usuario, ano, mes):
-    atividades = Atividade.objects.filter(usuario=usuario, data__month=mes, data__year=ano)
-    return atividades
+    return Atividade.objects.filter(usuario=usuario, data__month=mes, data__year=ano)
 
 
 def listar_semana_atual(usuario):
     semana = date.today().isocalendar()[1]
     ano = date.today().year
-    atividades = Atividade.objects.filter(usuario=usuario, data__week=semana, data__year=ano)
-    return atividades
+    return Atividade.objects.filter(usuario=usuario, data__week=semana, data__year=ano)
 
 
 def listar_semana(usuario, ano, semana):
-    atividades = Atividade.objects.filter(usuario=usuario, data__week=semana, data__year=ano)
-    return atividades
+    return Atividade.objects.filter(usuario=usuario, data__week=semana, data__year=ano)
 
 
 def listar_data(usuario, data):
-    atividades = Atividade.objects.filter(usuario=usuario, data=data)
-    return atividades
+    return Atividade.objects.filter(usuario=usuario, data=data)
 
 
 def listar_area(usuario, area):
-    atividades = Atividade.objects.filter(usuario=usuario, area__nome=area)
-    return atividades
+    return Atividade.objects.filter(usuario=usuario, area=area)
 
 
 def listar_sub_area(usuario, sub_area):
-    atividades = Atividade.objects.filter(usuario=usuario, sub_area=sub_area.replace("-", " "))
-    return atividades
+    return Atividade.objects.filter(usuario=usuario, sub_area=sub_area)
 
 
 def listar_plataforma(usuario, plataforma):
-    atividades = Atividade.objects.filter(usuario=usuario, plataforma=plataforma.replace("-", " "))
-    return atividades
+    return Atividade.objects.filter(usuario=usuario, plataforma=plataforma)
 
 
 def listar_pessoa(usuario, pessoa):
-    atividades = Atividade.objects.filter(usuario=usuario, pessoa=pessoa)
-    return atividades
+    return Atividade.objects.filter(usuario=usuario, pessoa=pessoa)
 
 
 def listar_descricao(usuario, descricao):
-    atividades = Atividade.objects.filter(usuario=usuario, descricao=descricao)
-    return atividades
+    return Atividade.objects.filter(usuario=usuario, descricao=descricao)
 
 
 def listar_detalhamento(usuario, detalhamento):
-    atividades = Atividade.objects.filter(usuario=usuario, detalhamento__contains=detalhamento)
-    return atividades
+    return Atividade.objects.filter(usuario=usuario, detalhamento__contains=detalhamento)
 
 
 def listar_atividade_id(usuario, id):
-    atividade = Atividade.objects.get(usuario=usuario, id=id)
-    return atividade
+    return Atividade.objects.get(usuario=usuario, id=id)
 
 
 def editar_atividade(atividade, atividade_nova):

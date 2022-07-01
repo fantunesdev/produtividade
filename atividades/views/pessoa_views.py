@@ -25,6 +25,15 @@ def cadastrar_pessoa(request):
     return render(request, 'pessoas/form_pessoa.html', template_tags)
 
 
+def listar_pessoas(request):
+    template_tags['pessoas'] = pessoa_service.listar_pessoas(request.user)
+    chaves_a_remover = ['areas', 'subareas', 'plataforma']
+    for chave in chaves_a_remover:
+        if chave in template_tags:
+            del template_tags[chave]
+    return render(request, 'settings.html', template_tags)
+
+
 def editar_pessoa(request, id):
     pessoa_antiga = pessoa_service.listar_pessoa_id(id, request.user)
     form_pessoa = PessoaForm(request.POST or None, instance=pessoa_antiga)
@@ -49,4 +58,4 @@ def remover_pessoa(request, id):
         return redirect('settings')
     template_tags['pessoa'] = pessoa
     template_tags['form_exclusao'] = ExclusaoForm()
-    return render(request, 'pessoas/confirma_exclusao.html', template_tags)
+    return render(request, 'pessoas/detalhar_pessoa.html', template_tags)
