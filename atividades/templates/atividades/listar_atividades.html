@@ -114,7 +114,7 @@
         </table>
         </div>
         <div class="box-footer">
-            <span>Total de {{ contador_atividades }} itens listados.</span>
+            <span>Total de {{ atividades.count }} ite{{ atividades.count|pluralize:"m,ns" }} listado{{ atividades.count|pluralize }}.</span>
         </div>
 
     </div>

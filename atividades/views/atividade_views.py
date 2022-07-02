@@ -26,8 +26,7 @@ template_tags = {
     'valor': 1,
     'atividades': None,
     'tempo_areas': 0,
-    'json_tempo_areas': None,
-    'contador_atividades': 0
+    'json_tempo_areas': None
 }
 
 
@@ -67,7 +66,6 @@ def listar_atividades(request):
     template_tags['atividades'] = atividades
     template_tags['tempo_areas'] = tempo_areas
     template_tags['json_tempo_areas'] = json_tempo_areas
-    template_tags['contador_atividades'] = len(atividades)
     return render(request, 'atividades/listar_atividades.html', template_tags)
 
 
@@ -80,7 +78,6 @@ def listar_ano(request, ano):
     template_tags['atividades'] = atividades
     template_tags['tempo_areas'] = tempo_areas
     template_tags['json_tempo_areas'] = json_tempo_areas
-    template_tags['contador_atividades'] = len(atividades)
     return render(request, 'atividades/listar_atividades.html', template_tags)
 
 
@@ -93,7 +90,6 @@ def listar_semana_atual(request):
     template_tags['atividades'] = atividades
     template_tags['tempo_areas'] = tempo_areas
     template_tags['json_tempo_areas'] = json_tempo_areas
-    template_tags['contador_atividades'] = len(atividades)
     return render(request, 'atividades/listar_atividades.html', template_tags)
 
 
@@ -111,7 +107,6 @@ def listar_ano_mes_semana(request, ano, tipo, valor):
     template_tags['atividades'] = atividades
     template_tags['tempo_areas'] = tempo_areas
     template_tags['json_tempo_areas'] = json_tempo_areas
-    template_tags['contador_atividades'] = len(atividades)
     return render(request, 'atividades/listar_atividades.html', template_tags)
 
 
@@ -134,7 +129,6 @@ def listar_sessao(request, sessao, valor_sessao):
     template_tags['atividades'] = atividades
     template_tags['tempo_areas'] = tempo_areas
     template_tags['json_tempo_areas'] = json_tempo_areas
-    template_tags['contador_atividades'] = len(atividades)
     return render(request, 'atividades/listar_atividades.html', template_tags)
 
 
