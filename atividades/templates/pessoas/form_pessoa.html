@@ -28,7 +28,8 @@ Editar Pessoa
                 </div>
                 <div class="form-group">
                     {{ form_pessoa.descricao.errors }}
-                    <label>Descricao:</label>
+                    <label>Descricao:</label><br><br>
+                    {{ form_area.media }}
                     {{ form_pessoa.descricao|addclass:'form-control' }}
                 </div>
                 <div class="form-group">

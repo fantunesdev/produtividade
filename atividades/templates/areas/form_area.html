@@ -32,7 +32,8 @@ Editar Área
 
                 <div class="form-group">
                     {{ form_area.descricao.errors }}
-                    <label for="id_descricao">Descricao:</label>
+                    <label for="ckeditor-init-script">Detalhamento:</label><br><br>
+                    {{ form_area.media }}
                     {{ form_area.descricao|addclass:'form-control' }}
                 </div>
 
