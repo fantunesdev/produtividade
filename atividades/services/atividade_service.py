@@ -7,7 +7,7 @@ def cadastrar_atividade(atividade):
     nova_atividade = Atividade.objects.create(
         data=atividade.data,
         area=atividade.area,
-        sub_area=atividade.sub_area,
+        subarea=atividade.subarea,
         plataforma=atividade.plataforma,
         pessoa=atividade.pessoa,
         descricao=atividade.descricao,
@@ -69,8 +69,8 @@ def listar_area(usuario, area):
     return Atividade.objects.filter(usuario=usuario, area=area)
 
 
-def listar_sub_area(usuario, sub_area):
-    return Atividade.objects.filter(usuario=usuario, sub_area=sub_area)
+def listar_subarea(usuario, subarea):
+    return Atividade.objects.filter(usuario=usuario, subarea=subarea)
 
 
 def listar_plataforma(usuario, plataforma):
@@ -96,7 +96,7 @@ def listar_atividade_id(usuario, id):
 def editar_atividade(atividade, atividade_nova):
     atividade.data = atividade_nova.data
     atividade.area = atividade_nova.area
-    atividade.sub_area = atividade_nova.sub_area
+    atividade.subarea = atividade_nova.subarea
     atividade.plataforma = atividade_nova.plataforma
     atividade.pessoa = atividade_nova.pessoa
     atividade.descricao = atividade_nova.descricao

@@ -38,7 +38,7 @@ def cadastrar_atividade(request):
             atividade_nova = Atividade(
                 data=form_atividade.cleaned_data['data'],
                 area=form_atividade.cleaned_data['area'],
-                sub_area=form_atividade.cleaned_data['sub_area'],
+                subarea=form_atividade.cleaned_data['subarea'],
                 plataforma=form_atividade.cleaned_data['plataforma'],
                 pessoa=form_atividade.cleaned_data['pessoa'],
                 descricao=form_atividade.cleaned_data['descricao'],
@@ -117,7 +117,7 @@ def listar_sessao(request, sessao, valor_sessao):
     elif sessao == 'areas':
         atividades = atividade_service.listar_area(request.user, valor_sessao)
     elif sessao == 'subareas':
-        atividades = atividade_service.listar_sub_area(request.user, valor_sessao)
+        atividades = atividade_service.listar_subarea(request.user, valor_sessao)
     elif sessao == 'plataformas':
         atividades = atividade_service.listar_plataforma(request.user, valor_sessao)
     elif sessao == 'pessoas':
@@ -172,7 +172,7 @@ def editar_atividade(request, id):
         atividade_nova = Atividade(
             data=form_atividade.cleaned_data['data'],
             area=form_atividade.cleaned_data['area'],
-            sub_area=form_atividade.cleaned_data['sub_area'],
+            subarea=form_atividade.cleaned_data['subarea'],
             plataforma=form_atividade.cleaned_data['plataforma'],
             pessoa=form_atividade.cleaned_data['pessoa'],
             descricao=form_atividade.cleaned_data['descricao'],

@@ -45,12 +45,12 @@
                         {{ form_atividade.area|addclass:'form-control' }}
                     </div>
                     <div class="form-group" id="div-subarea">
-                        {{ form_atividade.sub_area.errors }}
-                        <label for="id_sub_area">Sub-Área:</label>
+                        {{ form_atividade.subarea.errors }}
+                        <label for="id_subarea">Sub-Área:</label>
                         <i class="fa-solid fa-plus padding-left-10 cursor-pointer" onclick="renderForm('subarea', 'create')"></i>
-<!--                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" onclick="renderUpdate('subarea', 'id_sub_area')"></i>-->
+<!--                        <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" onclick="renderUpdate('subarea', 'id_subarea')"></i>-->
                         <i class="fa-solid fa-arrow-rotate-right padding-left-10 cursor-pointer" onclick="getSubAreasRelacionadas()"></i>
-                        {{ form_atividade.sub_area|addclass:'form-control' }}
+                        {{ form_atividade.subarea|addclass:'form-control' }}
                     </div>
                     <div class="form-group">
                         {{ form_atividade.plataforma.errors }}

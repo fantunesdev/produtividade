@@ -12,7 +12,7 @@ class AtividadeForm(forms.ModelForm):
         model = Atividade
         agora = timezone.localtime(timezone.now()).strftime('%Y-%m-%d')
 
-        fields = ['data', 'area', 'sub_area', 'plataforma', 'pessoa', 'descricao', 'detalhamento', 'tempo']
+        fields = ['data', 'area', 'subarea', 'plataforma', 'pessoa', 'descricao', 'detalhamento', 'tempo']
         widgets = {
             'data': forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date', 'value': agora})
         }

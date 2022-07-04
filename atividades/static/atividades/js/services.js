@@ -1,5 +1,5 @@
 let areas = document.querySelector('#id_area'),
-    subAreas = document.querySelector('#id_sub_area');
+    subAreas = document.querySelector('#id_subarea');
 
 // CRUD AREAS
 
@@ -168,7 +168,7 @@ function getSubAreasRelacionadas(id) {
         .then(response => response.json())
         .then(dados => {
             subAreas.length = 0;
-            renderOptions(dados, 'id_sub_area')
+            renderOptions(dados, 'id_subarea')
             if (id) {
                 subAreas.value = id;
             } else {
@@ -178,7 +178,7 @@ function getSubAreasRelacionadas(id) {
 }
 
 (function impedirInconsistenciaUpdate() {
-    const inputSubArea = document.querySelector('#id_sub_area');
+    const inputSubArea = document.querySelector('#id_subarea');
 
     getSubAreasRelacionadas(inputSubArea.value);
 })()

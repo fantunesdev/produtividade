@@ -16,9 +16,9 @@ def atividade_encoder(atividades):
                            f'"id": {i.area.id},' \
                            f'"nome": "{i.area.nome}"' \
                            f'}}, ' \
-                           f'"sub_area": {{' \
-                           f'"id": {i.sub_area.id}, ' \
-                           f'"nome": "{i.sub_area.nome}"' \
+                           f'"subarea": {{' \
+                           f'"id": {i.subarea.id}, ' \
+                           f'"nome": "{i.subarea.nome}"' \
                            f'}}, ' \
                            f'"plataforma": "{i.plataforma}", ' \
                            f'"descricao": "{i.descricao}",' \

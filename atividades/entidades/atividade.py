@@ -1,8 +1,8 @@
 class Atividade():
-    def __init__(self, data, area, sub_area, plataforma, pessoa, descricao, detalhamento, tempo, inicio, fim, usuario):
+    def __init__(self, data, area, subarea, plataforma, pessoa, descricao, detalhamento, tempo, inicio, fim, usuario):
         self.__data = data
         self.__area = area
-        self.__sub_area = sub_area
+        self.__subarea = subarea
         self.__plataforma = plataforma
         self.__pessoa = pessoa
         self.__descricao = descricao
@@ -29,12 +29,12 @@ class Atividade():
         self.__area = area
 
     @property
-    def sub_area(self):
-        return self.__sub_area
+    def subarea(self):
+        return self.__subarea
 
-    @sub_area.setter
-    def sub_area(self, sub_area):
-        self.__sub_area = sub_area
+    @subarea.setter
+    def subarea(self, subarea):
+        self.__subarea = subarea
 
     @property
     def plataforma(self):
@@ -101,7 +101,7 @@ class Atividade():
         self.__usuario = usuario
 
 ### BUILDING LIST ###
-# list = ['data', 'area', 'sub_area', 'plataforma', 'pessoa', 'descricao', 'detalhamento', 'tempo', 'inicio', 'fim', 'usuario']
+# list = ['data', 'area', 'subarea', 'plataforma', 'pessoa', 'descricao', 'detalhamento', 'tempo', 'inicio', 'fim', 'usuario']
 
 class Area():
     def __init__(self, conhecimento, empreendedorismo, saude, financas, tecnologia, musica, tempo_total, contagem):

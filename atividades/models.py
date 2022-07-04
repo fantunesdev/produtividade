@@ -62,7 +62,7 @@ class InicioAtividade(models.Model):
 class Atividade(models.Model):
     data = models.DateField()
     area = models.ForeignKey(Area, on_delete=models.PROTECT)
-    sub_area = models.ForeignKey(SubArea, on_delete=models.PROTECT)
+    subarea = models.ForeignKey(SubArea, on_delete=models.PROTECT)
     plataforma = models.ForeignKey(Plataforma, on_delete=models.PROTECT)
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
     descricao = models.CharField(max_length=200, blank=True, null=True)
