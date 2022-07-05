@@ -19,7 +19,7 @@ async function renderAreasSelect() {
 }
 
 async function renderSubareasSelect() {
-    let areaId = areaSelect.selectedIndex;
+    let areaId = areaSelect.value;
     const subareas = await services.getSubareasArea(areaId);
 
     subareaSelect.length = 0;
@@ -27,7 +27,7 @@ async function renderSubareasSelect() {
 }
 
 async function renderPlataformasSelect() {
-    let areaId = areaSelect.selectedIndex;
+    let areaId = areaSelect.value;
     const plataformas = await services.getPlataformasArea(areaId);
     
     plataformaSelect.length = 0;
@@ -36,7 +36,7 @@ async function renderPlataformasSelect() {
 
 
 async function renderPessoasSelect() {
-    let areaId = areaSelect.selectedIndex;
+    let areaId = areaSelect.value;
     const pessoas = await services.getPessoasArea(areaId);
 
     pessoaSelect.length = 0;

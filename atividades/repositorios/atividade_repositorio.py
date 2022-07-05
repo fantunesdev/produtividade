@@ -22,13 +22,13 @@ def calcular_tempo_atividade_area(atividades, usuario):
     lista_areas = []
     for area in areas:
         cor = to_rgba(area.cor)
-        area_tempo = tempo_area.TempoArea(area.nome, 0, cor)
+        area_tempo = tempo_area.TempoArea(area.id, area.nome, 0, cor)
         lista_areas.append(area_tempo)
     for atividade in atividades:
         for area in lista_areas:
             if atividade.area.nome == area.nome:
                 area.tempo += atividade.tempo
-    tempo_total = tempo_area.TempoArea('Total', 0, None)
+    tempo_total = tempo_area.TempoArea(0, 'Total', 0, None)
     for area in lista_areas:
         tempo_total.tempo += area.tempo
     lista_areas.append(tempo_total)

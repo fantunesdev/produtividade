@@ -48,7 +48,7 @@
                             {% for area in tempo_areas %}
                             <tr>
                             {% if area.nome != 'Total' %}
-                                <td class="center"><a href="/atividades/listar/area/{{ area.nome|slugify }}/">{{ area.nome }}</a></td>
+                                <td class="center"><a href="{% url 'listar_sessao' 'area' area.id %}">{{ area.nome }}</a></td>
                                 <td class="center">{{ area.tempo|em_horas }}</td>
                             {% else %}
                                 <td class="center">{{ area.nome }}</td>
