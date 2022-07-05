@@ -56,6 +56,6 @@ class SubAreaDetalhes(APIView):
 
 class SubAreaArea(APIView):
     def get(self, request, area_id):
-        subareas = subarea_service_api.listar_subarea_area(request.user, area_id)
+        subareas = subarea_service_api.listar_subareas_area(request.user, area_id)
         serializer = subarea_serializer.SubAreaSerializer(subareas, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

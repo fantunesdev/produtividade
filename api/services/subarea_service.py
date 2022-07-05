@@ -1,7 +1,7 @@
 from atividades.models import SubArea
 
 
-def listar_subarea_area(usuario, area):
+def listar_subareas_area(usuario, area):
     return SubArea.objects.prefetch_related('areas').filter(usuario=usuario, areas=area)
 
 
