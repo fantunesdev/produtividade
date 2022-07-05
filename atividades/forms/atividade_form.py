@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import ValidationError
+
 from ..models import Atividade
 from django.utils import timezone
 
@@ -16,6 +18,34 @@ class AtividadeForm(forms.ModelForm):
         widgets = {
             'data': forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date', 'value': agora})
         }
+
+    def clean_area(self):
+        area = self.cleaned_data['area']
+        if area == 0:
+            raise ValidationError('Selecione um item da lista.')
+        else:
+            return area
+
+    def clean_subarea(self):
+        subarea = self.cleaned_data['subarea']
+        if subarea == 0:
+            raise ValidationError('Selecione um item da lista.')
+        else:
+            return subarea
+
+    def clean_plataforma(self):
+        plataforma = self.cleaned_data['plataforma']
+        if plataforma == 0:
+            raise ValidationError('Selecione um item da lista.')
+        else:
+            return plataforma
+
+    def clean_pessoa(self):
+        pessoa = self.cleaned_data['pessoa']
+        if pessoa == 0:
+            raise ValidationError('Selecione um item da lista.')
+        else:
+            return pessoa
 
 
 class AtividadeBuscar(forms.ModelForm):
