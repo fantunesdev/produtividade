@@ -1,63 +1,76 @@
 import * as services from './services.js';
-import * as components from './components.js';
+import * as htmlElements from './html-elements.js';
 
-const areaSelect = document.querySelector('#id_area'),
-    areaUpdate = document.querySelector('#update-area'),
-    subareaSelect = document.querySelector('#id_subarea'),
-    subareaUpdate = document.querySelector('#update-subarea'),
-    plataformaSelect = document.querySelector('#id_plataforma'),
-    plataformaUpdate = document.querySelector('#update-plataforma'),
-    pessoaSelect = document.querySelector('#id_pessoa'),
-    pessoaUpdate = document.querySelector('#update-pessoa');
+const area = {
+    select: document.querySelector('#id_area'),
+    update: document.querySelector('#update-area'),
 
+    async renderSelect() {
+        const areas = await services.getAreas();
+        
+        this.select.length = 0;
+        htmlElements.renderOptions(areas, this.select.id);
+    },
+}
 
-async function renderAreasSelect() {
-    const areas = await services.getAreas();
+const subarea = {
+    select: document.querySelector('#id_subarea'),
+    update: document.querySelector('#update-subarea'),
     
-    areaSelect.length = 0;
-    components.renderOptions(areas, areaSelect.id);
+    async renderSelect() {
+        this.select.length = 0;
+        htmlElements.renderDefaultOption(this.select.id);
+        if (area.select.value) {
+            let areaId = area.select.value;
+            const subareas = await services.getSubareasArea(areaId);
+        
+            htmlElements.renderOptions(subareas, this.select.id);
+        }
+    }
 }
 
-async function renderSubareasSelect() {
-    let areaId = areaSelect.value;
-    const subareas = await services.getSubareasArea(areaId);
+const plataforma = {
+    select: document.querySelector('#id_plataforma'),
+    update: document.querySelector('#update-plataforma'),
 
-    subareaSelect.length = 0;
-    components.renderOptions(subareas, subareaSelect.id);
+    async rendersSelect() {
+        this.select.length = 0;
+        htmlElements.renderDefaultOption(this.select.id);
+        if (area.select.value) {
+            let areaId = area.select.value;
+            const plataformas = await services.getPlataformasArea(areaId);
+            
+            htmlElements.renderOptions(plataformas, this.select.id);
+        }
+    },
 }
 
-async function renderPlataformasSelect() {
-    let areaId = areaSelect.value;
-    const plataformas = await services.getPlataformasArea(areaId);
-    
-    plataformaSelect.length = 0;
-    components.renderOptions(plataformas, plataformaSelect.id);
+const pessoa = {
+    select: document.querySelector('#id_pessoa'),
+    update: document.querySelector('#update-pessoa'),
+
+    async renderSelect() {
+        this.select.length = 0;
+        htmlElements.renderDefaultOption(this.select.id);
+        if (area.select.value) {
+            let areaId = area.select.value;
+            const pessoas = await services.getPessoasArea(areaId);
+        
+            htmlElements.renderOptions(pessoas, this.select.id);
+        }
+    }
 }
 
 
-async function renderPessoasSelect() {
-    let areaId = areaSelect.value;
-    const pessoas = await services.getPessoasArea(areaId);
-
-    pessoaSelect.length = 0;
-    components.renderOptions(pessoas, pessoaSelect.id);
-}
-
-
-areaSelect.addEventListener('focusout', () => {
-    renderSubareasSelect();
-    renderPlataformasSelect();
-    renderPessoasSelect();
+area.update.addEventListener('click', () => area.renderSelect());
+area.select.addEventListener('focusout', () => {
+    subarea.renderSelect();
+    plataforma.rendersSelect();
+    pessoa.renderSelect();
 });
 
+subarea.update.addEventListener('click', () => subarea.renderSelect());
 
-areaUpdate.addEventListener('click', () => renderAreasSelect());
+plataforma.update.addEventListener('click', () => plataforma.rendersSelect());
 
-
-subareaUpdate.addEventListener('click', () => renderSubareasSelect());
-
-
-plataformaUpdate.addEventListener('click', () => renderPlataformasSelect());
-
-
-pessoaUpdate.addEventListener('click', () => renderPessoasSelect());
+pessoa.update.addEventListener('click', () => pessoa.renderSelect());
