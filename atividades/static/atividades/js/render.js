@@ -221,19 +221,29 @@ async function create(type) {
             areas = await services.getAreas();
 
         father.removeChild(box);
-        alert(`A área ${area.nome} foi criada com sucesso`);
+        alert(`A área ${area.nome} foi criada com sucesso.`);
         options(areas, classes.area.select);
     } else if (type === 'subarea') {
         const subarea = await services.createSubarea(object, csrf),
             subareas = await services.getSubareasArea(classes.area.select.selectedIndex);
 
         father.removeChild(box);
-        alert(`A sub-área ${subarea.nome} foi criada com sucesso`);
-        options(subareas, classes.subarea.select)
+        alert(`A sub-área ${subarea.nome} foi criada com sucesso.`);
+        options(subareas, classes.subarea.select);
     } else if (type === 'plataforma') {
-        console.log(object)
+        const plataforma = await services.createPlataforma(object, csrf),
+            plataformas = await services.getPlataformasArea(classes.area.select.selectedIndex);
+
+        father.removeChild(box);
+        alert(`A plataforma ${plataforma.nome} foi criada com sucesso.`);
+        options(plataformas, classes.plataforma.select);
     } else if (type === 'pessoa') {
-        console.log(object)
+        const pessoa = await services.createPessoa(object, csrf),
+            pessoas = await services.getPessoasArea(classes.area.select.selectedIndex);
+
+        father.removeChild(box);
+        alert(`A pessoa ${pessoa.nome} foi criada com sucesso.`);
+        options(pessoas, classes.pessoa.select);
     }
 }
 

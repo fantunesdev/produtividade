@@ -10,7 +10,6 @@ export async function createArea(area, csrf) {
         };
     let response = await fetch('/api/areas/', requestOptions),
         data = await response.json();
-    console.log(data.headers);
     return data;
 }
 
@@ -50,9 +49,52 @@ export async function getSubareasArea(areaId) {
     return await response.json();
 }
 
+export async function getSubareaId(subarea_id) {
+    let response = await fetch(`/api/subareas/${subarea_id}/`)
+    return await response.json();
+}
+
+
+export async function createPlataforma(plataforma, csrf) {
+    const headers = {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrf
+        },
+        requestOptions = {
+            "method": "POST",
+            "headers": headers,
+            "body": plataforma
+        };
+
+    const response = await fetch(`/api/plataformas/`, requestOptions);
+    return await response.json();
+}
+
 export async function getPlataformasArea(areaId) {
     let response = await fetch(`/api/areas/${areaId}/plataformas/`);
     return await response.json();
+}
+
+export async function getPlataformaId(platforma_id) {
+    const response = await fetch(`/api/plataformas/${platforma_id}/`);
+    return await response.json();
+}
+
+
+export async function createPessoa(pessoa, csrf) {
+    const headers = {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrf
+        },
+        requestOptions = {
+            "method": "POST",
+            "headers": headers,
+            "body": pessoa
+        };
+
+    const response = await fetch('/api/pessoas/', requestOptions);
+    return await response.json();
+
 }
 
 export async function getPessoasArea(areaId) {
