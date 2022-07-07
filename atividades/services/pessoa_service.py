@@ -9,7 +9,7 @@ def cadastrar_pessoa(pessoa):
     )
     nova_pessoa.save()
     for i in pessoa.areas:
-        nova_pessoa.areas.set(i)
+        nova_pessoa.areas.add(i)
     return nova_pessoa
 
 

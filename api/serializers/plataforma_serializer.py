@@ -5,22 +5,19 @@ from atividades.models import Plataforma
 
 
 class PlataformaSerializer(serializers.ModelSerializer):
-    areas = AreaSerializer(many=True, fields=('id', 'nome'))
+    # areas = AreaSerializer(many=True, fields=('id', 'nome'))
 
     class Meta:
         model = Plataforma
         fields = ['id', 'nome', 'descricao', 'areas', 'usuario']
 
-    def __init__(self, *args, **kwargs):
-        fields = kwargs.pop('fields', None)
-
-        super().__init__(*args, **kwargs)
-
-        if fields is not None:
-            allowed = set(fields)
-            existing = set(self.fields)
-            for field_name in existing - allowed:
-                self.fields.pop(field_name)
-
-
-
+    # def __init__(self, *args, **kwargs):
+    #     fields = kwargs.pop('fields', None)
+    #
+    #     super().__init__(*args, **kwargs)
+    #
+    #     if fields is not None:
+    #         allowed = set(fields)
+    #         existing = set(self.fields)
+    #         for field_name in existing - allowed:
+    #             self.fields.pop(field_name)
