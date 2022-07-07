@@ -2,7 +2,7 @@ import * as services from './services.js';
 import * as render from './render.js';
 
 
-const area = {
+export const area = {
     button: {
         create: document.querySelector('#create-area'),
         list: document.querySelector('#list-area'),
@@ -13,8 +13,6 @@ const area = {
     async renderSelect() {
         const areasList = await services.getAreas();
         
-        this.select.length = 0;
-        render.defaultOption(this.select);
         render.options(areasList, this.select);
     },
 
@@ -43,7 +41,7 @@ area.select.addEventListener('focusout', () => {
 });
 
 
-const subarea = {
+export const subarea = {
     button: {
         create: document.querySelector('#create-subarea'),
         list: document.querySelector('#list-subarea'),
@@ -52,8 +50,6 @@ const subarea = {
     div: document.querySelector('#div-subarea'),
     
     async renderSelect() {
-        this.select.length = 0;
-        render.defaultOption(this.select);
         if (area.select.value) {
             let areaId = area.select.value;
             const subareas = await services.getSubareasArea(areaId);
@@ -83,7 +79,7 @@ subarea.button.create.addEventListener('click', () => subarea.renderForm('create
 subarea.button.list.addEventListener('click', () => subarea.renderSelect());
 
 
-const plataforma = {
+export const plataforma = {
     button: {
         create: document.querySelector('#create-plataforma'),
         list: document.querySelector('#list-plataforma'),
@@ -92,8 +88,6 @@ const plataforma = {
     div: document.querySelector('#div-plataforma'),
 
     async renderSelect() {
-        this.select.length = 0;
-        render.defaultOption(this.select);
         if (area.select.value) {
             let areaId = area.select.value;
             const plataformas = await services.getPlataformasArea(areaId);
@@ -122,7 +116,7 @@ const plataforma = {
 plataforma.button.create.addEventListener('click', () => plataforma.renderForm('create'));
 plataforma.button.list.addEventListener('click', () => plataforma.renderSelect());
 
-const pessoa = {
+export const pessoa = {
     button: {
         create: document.querySelector('#create-pessoa'),
         list: document.querySelector('#list-pessoa'),
@@ -132,8 +126,6 @@ const pessoa = {
     div: document.querySelector('#div-pessoa'),
 
     async renderSelect() {
-        this.select.length = 0;
-        render.defaultOption(this.select);
         if (area.select.value) {
             let areaId = area.select.value;
             const pessoas = await services.getPessoasArea(areaId);

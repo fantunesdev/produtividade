@@ -1,8 +1,9 @@
-import * as services from './services.js'
-import * as general from './general.js'
+import * as services from './services.js';
+import * as general from './general.js';
+import * as classes from './classes.js'
 
 
-export function defaultOption(input) {
+export function renderDefaultOption(input) {
     let option;
 
     option = document.createElement('option');
@@ -16,13 +17,16 @@ export function options(objectList, input) {
     let option,
         item;
 
+    input.length = 0;
+    renderDefaultOption(input);
+
     for (item of objectList) {
         option = document.createElement('option');
         option.value = item.id;
         option.text = item.nome;
         input.add(option, input.options[item.id]);
     }
-    input.value = 0;
+    input.selectedIndex = 0;
 }
 
 
@@ -44,28 +48,33 @@ export function select(father, areasList, type) {
 
 
 export function checkbox(father, areasList, type) {
-    let item, check, label, br, idCheck;
+    let div, item, check, label, br, idCheck;
 
-    label = document.createElement('label'),
+    div = document.createElement('div');
+    label = document.createElement('label');
     br = document.createElement('br');
 
+    div.id = `${type}-areas-checkbox-list`;
+
+    father.appendChild(div);
+
     label.innerHTML = 'Áreas:'
-    father.appendChild(label);
-    father.appendChild(br);
+    div.appendChild(label);
+    div.appendChild(br);
 
     for (item of areasList) {
         label = document.createElement('label'),
         check = document.createElement('input'),
         br = document.createElement('br'),
-        idCheck = `id-subarea-area-${general.slugify(item.nome)}`;
-
+        idCheck = `id-${type}-area-${general.slugify(item.nome)}`;
         label.innerHTML = item.nome;
         label.htmlFor = idCheck;
         check.type = 'checkbox';
         check.id = idCheck;
-        father.appendChild(check);
-        father.appendChild(label)
-        father.appendChild(br);
+        check.value = item.id;
+        div.appendChild(check);
+        div.appendChild(label)
+        div.appendChild(br);
     }
 }
 
@@ -196,4 +205,68 @@ export function submit(father, type, action) {
             break;
     }
     father.appendChild(button);  
+}
+
+
+async function create(type) {
+    const object = readInputs(type),
+        csrf = document.querySelector('[name=csrfmiddlewaretoken]').value,
+        father = document.querySelector(`#div-${type}`),
+        box = document.querySelector(`#form-${type}`);
+
+    // fazer validação dos inputs dos formulários
+
+    if (type === 'area') {
+        const area = await services.createArea(object, csrf),
+            areas = await services.getAreas();
+
+        father.removeChild(box);
+        alert(`A área ${area.nome} foi criada com sucesso`);
+        options(areas, classes.area.select);
+    } else if (type === 'subarea') {
+        const subarea = await services.createSubarea(object, csrf),
+            subareas = await services.getSubareasArea(classes.area.select.selectedIndex);
+
+        father.removeChild(box);
+        alert(`A sub-área ${subarea.nome} foi criada com sucesso`);
+        options(subareas, classes.subarea.select)
+    } else if (type === 'plataforma') {
+        console.log(object)
+    } else if (type === 'pessoa') {
+        console.log(object)
+    }
+}
+
+
+function readInputs(type) {
+    const nomeInput = document.querySelector(`#id-${type}-nome`),
+        descricaoInput = document.querySelector(`#id-${type}-descricao`),
+        corInput = document.querySelector(`#id-${type}-cor`),
+        areasDiv = document.querySelector(`#${type}-areas-checkbox-list`);
+    let areasList = [];
+
+    if (areasDiv) {
+        for (let item of areasDiv.children) {
+            if (item.checked) {
+    
+                areasList.push(parseInt(item.value))
+            }
+        }
+    }
+
+    if (type === 'area') {
+        let object = {
+            nome: nomeInput.value,
+            descricao: descricaoInput.value,
+            cor: corInput.value
+        };
+        return JSON.stringify(object);
+    } else {
+        let object = {
+            nome: nomeInput.value,
+            descricao: descricaoInput.value,
+            areas: areasList
+        };
+        return JSON.stringify(object);
+    }
 }
