@@ -32,17 +32,17 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="form-group">
-                        {{ form_atividade.data.errors }}
                         <label for="id_data">Data:</label>
                         {{ form_atividade.data|addclass:'form-control' }}
+                        {{ form_atividade.data.errors }}
                     </div>
                     <div class="form-group" id="div-area">
-                        {{ form_atividade.area.errors }}
                         <label for="id_area">Área:</label>
                         <i class="fa-solid fa-plus padding-left-10 cursor-pointer" id="create-area"></i>
                         <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" id="update-area"></i>
                         <i class="fa-solid fa-arrow-rotate-right padding-left-10 cursor-pointer" id="list-area"></i>
                         {{ form_atividade.area|addclass:'form-control' }}
+                        {{ form_atividade.area.errors }}
                     </div>
                     <div class="form-group" id="div-subarea">
                         {{ form_atividade.subarea.errors }}
@@ -53,20 +53,20 @@
                         {{ form_atividade.subarea|addclass:'form-control' }}
                     </div>
                     <div class="form-group" id="div-plataforma">
-                        {{ form_atividade.plataforma.errors }}
                         <label for="id_plataforma">Plataforma:</label>
                         <i class="fa-solid fa-plus padding-left-10 cursor-pointer" id="create-plataforma"></i>
                         <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" id="update-plataforma"></i>
                         <i class="fa-solid fa-arrow-rotate-right padding-left-10 cursor-pointer" id="list-plataforma"></i>
                         {{ form_atividade.plataforma|addclass:'form-control' }}
+                        {{ form_atividade.plataforma.errors }}
                     </div>
                     <div class="form-group" id="div-pessoa">
-                        {{ form_atividade.pessoa.errors }}
                         <label for="id_pessoa">Pessoa:</label>
                         <i class="fa-solid fa-plus padding-left-10 cursor-pointer" id="create-pessoa"></i>
                         <i class="fa-solid fa-pen-to-square padding-left-10 cursor-pointer" id="update-pessoa"></i>
                         <i class="fa-solid fa-arrow-rotate-right padding-left-10 cursor-pointer" id="list-pessoa"></i>
                         {{ form_atividade.pessoa|addclass:'form-control' }}
+                        {{ form_atividade.pessoa.errors }}
                     </div>
                     <div class="form-group">
                         {{ form_atividade.descricao.errors }}
