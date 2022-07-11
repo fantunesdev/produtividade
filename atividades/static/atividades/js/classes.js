@@ -5,6 +5,7 @@ import * as render from './render.js';
 export const area = {
     button: {
         create: document.querySelector('#create-area'),
+        update: document.querySelector('#update-area'),
         list: document.querySelector('#list-area'),
     },
     select: document.querySelector('#id_area'),
@@ -16,7 +17,7 @@ export const area = {
         render.options(areasList, this.select);
     },
 
-    async renderForm(action) {
+    renderForm(action) {
         const type = 'area',
             box = render.box(this.div, type);
 
@@ -27,34 +28,49 @@ export const area = {
             render.boxTitle(boxTitle, 'Cadastrar Área');
             render.inputs(boxBody, type);
             render.colorInput(boxBody, type);
-            render.submit(boxFooter, type, action)
+            render.submit(boxFooter, type, action);
+            if (action === 'update') {
+                render.instanceInputs(type, this.select);
+            }
         }
     }
+    
 }
 
 area.button.create.addEventListener('click', () => area.renderForm('create'));
+area.button.update.addEventListener('click', () => area.renderForm('update'))
 area.button.list.addEventListener('click', () => area.renderSelect());
 area.select.addEventListener('focusout', () => {
-    subarea.renderSelect();
-    plataforma.renderSelect();
-    pessoa.renderSelect();
+    if (area.select.value !== '') {
+        subarea.renderSelect();
+        plataforma.renderSelect();
+        pessoa.renderSelect();
+    } else {
+        render.options([], subarea.select);
+        render.options([], plataforma.select);
+        render.options([], pessoa.select);
+    }
 });
 
 
 export const subarea = {
     button: {
         create: document.querySelector('#create-subarea'),
+        update: document.querySelector('#update-subarea'),
         list: document.querySelector('#list-subarea'),
     },
     select: document.querySelector('#id_subarea'),
     div: document.querySelector('#div-subarea'),
     
     async renderSelect() {
-        if (area.select.value) {
+        if (area.select.value !== '') {
             let areaId = area.select.value;
             const subareas = await services.getSubareasArea(areaId);
         
             render.options(subareas, this.select);
+        } else {
+            render.options([], this.select)
+            alert('Selecione uma área válida e tente novamente.')
         }
     },
 
@@ -71,17 +87,22 @@ export const subarea = {
             render.inputs(boxBody, type);
             render.checkbox(boxBody, areasList, type);
             render.submit(boxFooter, type, action)
+            if (action === 'update') {
+                render.instanceInputs(type, this.select);
+            }
         }
-    }
+    },
 }
 
 subarea.button.create.addEventListener('click', () => subarea.renderForm('create'));
+subarea.button.update.addEventListener('click', () => subarea.renderForm('update'));
 subarea.button.list.addEventListener('click', () => subarea.renderSelect());
 
 
 export const plataforma = {
     button: {
         create: document.querySelector('#create-plataforma'),
+        update: document.querySelector('#update-plataforma'),
         list: document.querySelector('#list-plataforma'),
     },
     select: document.querySelector('#id_plataforma'),
@@ -93,6 +114,9 @@ export const plataforma = {
             const plataformas = await services.getPlataformasArea(areaId);
             
             render.options(plataformas, this.select);
+        } else {
+            render.options([], this.select)
+            alert('Selecione uma área válida e tente novamente.')
         }
     },
 
@@ -109,16 +133,21 @@ export const plataforma = {
             render.inputs(boxBody, type);
             render.checkbox(boxBody, areasList, type);
             render.submit(boxFooter, type, action)
+            if (action === 'update') {
+                render.instanceInputs(type, this.select);
+            }
         }
     }
 }
 
 plataforma.button.create.addEventListener('click', () => plataforma.renderForm('create'));
+plataforma.button.update.addEventListener('click', () => plataforma.renderForm('update'));
 plataforma.button.list.addEventListener('click', () => plataforma.renderSelect());
 
 export const pessoa = {
     button: {
         create: document.querySelector('#create-pessoa'),
+        update: document.querySelector('#update-pessoa'),
         list: document.querySelector('#list-pessoa'),
     },
     select: document.querySelector('#id_pessoa'),
@@ -131,6 +160,9 @@ export const pessoa = {
             const pessoas = await services.getPessoasArea(areaId);
         
             render.options(pessoas, this.select);
+        } else {
+            render.options([], this.select)
+            alert('Selecione uma área válida e tente novamente.')
         }
     },
 
@@ -147,9 +179,13 @@ export const pessoa = {
             render.inputs(boxBody, type);
             render.checkbox(boxBody, areasList, type);
             render.submit(boxFooter, type, action)
+            if (action === 'update') {
+                render.instanceInputs(type, this.select);
+            }
         }
     }
 }
 
 pessoa.button.create.addEventListener('click', () => pessoa.renderForm('create'));
+pessoa.button.update.addEventListener('click', () => pessoa.renderForm('update'));
 pessoa.button.list.addEventListener('click', () => pessoa.renderSelect());

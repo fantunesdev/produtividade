@@ -551,9 +551,9 @@ td a:hover {
 
 /* INÍCIO FORMULÁRIOS */
 
-.form-control{
+.form-control {
     display: block;
-    width: 99%;
+    width: 100%;
     height: 30px;
     margin: 10px 10px 10px 0;
     background: #303030;
@@ -561,7 +561,10 @@ td a:hover {
     border: 1px solid #404040;
     color: #ccc;
     font-family: Ubuntu;
-    
+}
+
+.textarea {
+    height: 150px;
 }
 
 label{

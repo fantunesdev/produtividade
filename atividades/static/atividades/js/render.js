@@ -127,11 +127,13 @@ export function boxTitle(father, value) {
 export function inputs(father, type) {
     for (let i = 0; i < 3; i++) {
         const input = document.createElement('input'),
-            label = document.createElement('label');
+            label = document.createElement('label'),
+            textArea = document.createElement('textarea');
         switch (i) {
             case 0:
                 input.type = 'hidden';
                 input.id = `id-${type}-id`;
+                input.value = null;
                 label.appendChild(input);
                 break;
             case 1:
@@ -143,10 +145,11 @@ export function inputs(father, type) {
                 break;
             case 2:
                 label.innerHTML = 'Descrição:'
-                input.classList.add('form-control');
-                input.id = `id-${type}-descricao`;
+                textArea.classList.add('form-control');
+                textArea.classList.add('textarea')
+                textArea.id = `id-${type}-descricao`;
                 label.htmlFor = `id-${type}-descricao`;
-                label.appendChild(input);
+                label.appendChild(textArea);
                 break;               
         }
         father.appendChild(label);
@@ -185,7 +188,9 @@ export function colorInput(father, type) {
 
 
 export function submit(father, type, action) {
-    const button = document.createElement('input');
+    const button = document.createElement('input'),
+        input = document.querySelector(`#id_${type}`);
+    
 
     button.type = 'button';
     button.classList.add('btn', 'btn-primary');
@@ -248,8 +253,108 @@ async function create(type) {
 }
 
 
+async function update(type) {
+    const object = readInputs(type),
+        csrf = document.querySelector('[name=csrfmiddlewaretoken]').value,
+        father = document.querySelector(`#div-${type}`),
+        box = document.querySelector(`#form-${type}`);
+
+    // fazer validação dos inputs dos formulários
+
+    if (type === 'area') {
+        const area = await services.updateArea(object, csrf),
+            areas = await services.getAreas();
+
+        father.removeChild(box);
+        alert(`A área ${area.nome} foi atualizada com sucesso.`);
+        options(areas, classes.area.select);
+
+    } else if (type === 'subarea') {
+        const subarea = await services.updateSubarea(object, csrf),
+            idArea = classes.area.select.value;
+
+        alert(`A sub-área ${subarea.nome} foi atualizada com sucesso.`);
+        if (idArea) {
+            var subareas = await services.getSubareasArea(classes.area.select.value);
+        }
+        father.removeChild(box);
+        options(subareas, classes.subarea.select);
+
+    } else if (type === 'plataforma') {
+        const plataforma = await services.updatePlataforma(object, csrf),
+            idArea = classes.area.select.value;
+            
+        alert(`A plataforma ${plataforma.nome} foi atualizada com sucesso.`);
+        if (idArea) {
+            var plataformas = await services.getPlataformasArea(classes.area.select.value);
+        }
+        father.removeChild(box);
+        options(plataformas, classes.plataforma.select);
+
+    } else if (type === 'pessoa') {
+        const pessoa = await services.updatePessoa(object, csrf),
+            idArea = classes.area.select.value;
+
+        alert(`A pessoa ${pessoa.nome} foi atualizada com sucesso.`);
+        if (idArea) {
+            var pessoas = await services.getPessoasArea(classes.area.select.value);
+        }
+        father.removeChild(box);
+        options(pessoas, classes.pessoa.select);
+
+    }
+}
+
+
+export async function instanceInputs(type, input) {
+    const idInput = document.querySelector(`#id-${type}-id`),
+        nomeInput = document.querySelector(`#id-${type}-nome`),
+        descricaoInput = document.querySelector(`#id-${type}-descricao`),
+        corInput = document.querySelector(`#id-${type}-cor`),
+        areasDiv = document.querySelector(`#${type}-areas-checkbox-list`),
+        father = document.querySelector(`#div-${type}`),
+        box = document.querySelector(`#form-${type}`);
+
+    if (input.value) {
+        if (type === 'area') {
+            var object = await services.getAreaId(input.value);
+        } else if (type === 'subarea') {
+            var object = await services.getSubareaId(input.value);
+        } else if (type === 'plataforma') {
+            var object = await services.getPlataformaId(input.value);
+        } else if (type === 'pessoa') {
+            var object = await services.getPessoaId(input.value);
+        }
+    
+        idInput.value = object.id;
+        nomeInput.value = object.nome;
+        descricaoInput.value = object.descricao;
+
+        if (corInput) {
+            corInput.value = object.cor;
+        }
+
+        if (areasDiv) {
+            for (let item of areasDiv.children) {
+                if (item.type === 'checkbox') {
+                    for (let i = 0; i < object.areas.length; i++) {
+                        if (object.areas[i] === parseInt(item.value)) {
+                            item.checked = true;
+                        }
+                    }
+                }                
+            }
+        }
+    } else {
+        alert(`Selecione uma ${type}.`)
+        father.removeChild(box);
+    }
+}
+
+
 function readInputs(type) {
-    const nomeInput = document.querySelector(`#id-${type}-nome`),
+    const idInput = document.querySelector(`#id-${type}-id`),
+        nomeInput = document.querySelector(`#id-${type}-nome`),
         descricaoInput = document.querySelector(`#id-${type}-descricao`),
         corInput = document.querySelector(`#id-${type}-cor`),
         areasDiv = document.querySelector(`#${type}-areas-checkbox-list`);
@@ -258,25 +363,27 @@ function readInputs(type) {
     if (areasDiv) {
         for (let item of areasDiv.children) {
             if (item.checked) {
-    
                 areasList.push(parseInt(item.value))
             }
         }
     }
 
     if (type === 'area') {
-        let object = {
+        var object = {
             nome: nomeInput.value,
             descricao: descricaoInput.value,
             cor: corInput.value
         };
-        return JSON.stringify(object);
     } else {
-        let object = {
+        var object = {
             nome: nomeInput.value,
             descricao: descricaoInput.value,
             areas: areasList
         };
-        return JSON.stringify(object);
     }
+    if (idInput.value) {
+        object.id = idInput.value;
+    }
+    
+    return JSON.stringify(object);
 }
