@@ -1,11 +1,16 @@
 {% extends 'index.html' %}
 {% load static %}
 
+{% block title %}
+Relatórios
+{% endblock %}
+
 {% block content %}
-<input type="hidden" name="atividades" value='{{ json_atividades | safe }}'>
+
+
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'atividades/js/teste.js' %}"></script>
+<script src="{% static 'atividades/js/relatorios/script.js' %}" type="module"></script>
 {% endblock %}
 

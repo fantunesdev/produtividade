@@ -15,8 +15,6 @@ urlpatterns = [
     path('remover/<int:id>', remover_atividade, name='remover_atividade'),
 
     path('settings/', settings, name='settings'),
-    path('buscar/', buscar, name='buscar'),
-
-    path('relatorio/', relatorio, name='relatorio')
+    path('buscar/', buscar, name='buscar')
 ]
 

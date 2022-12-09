@@ -40,7 +40,7 @@ export const area = {
 area.button.create.addEventListener('click', () => area.renderForm('create'));
 area.button.update.addEventListener('click', () => area.renderForm('update'))
 area.button.list.addEventListener('click', () => area.renderSelect());
-area.select.addEventListener('focusout', () => {
+area.select.addEventListener('change', () => {
     if (area.select.value !== '') {
         subarea.renderSelect();
         plataforma.renderSelect();

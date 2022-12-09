@@ -77,20 +77,38 @@ function toggleNavegacao(id) {
         i,
         j;
 
+        
     if (hasToggled(navegacao.classList)) {
         navegacao.classList.remove('toggled');
         navegacaoButton.children[0].outerHTML = '<i class="fa-solid fa-angles-up" onclick="toggleNavegacao(\'navegacao\')"></i>';
         for (i = 0; i < navegacao.children.length; i++) {
             navegacao.children[i].classList.remove('toggled');
         }
+        localStorage.setItem('time-navigation-bar-status', 'show');
     } else {
         navegacao.classList.add('toggled');
         navegacaoButton.children[0].outerHTML = '<i class="fa-solid fa-angles-down" onclick="toggleNavegacao(\'navegacao\')"></i>';
         for (i = 0; i < navegacao.children.length; i++) {
             navegacao.children[i].classList.add('toggled');
         }
+        localStorage.setItem('time-navigation-bar-status', 'hide');
     }
 }
+
+(function showTimeNavigationBar() {
+    let id = 'navegacao';
+        navigation = document.querySelector(`#${id}`),
+        navigationButton = document.querySelector(`#${id}-button`),
+        menu = localStorage.getItem('time-navigation-bar-status');
+    
+    if (menu === 'show') {
+        navigation.classList.remove('toggled');
+        navigationButton.children[0].outerHTML = '<i class="fa-solid fa-angles-up" onclick="toggleNavegacao(\'navegacao\')"></i>';
+        for (let i = 0; i < navigation.children.length; i++) {
+            navigation.children[i].classList.remove('toggled');
+        }
+    }
+})();
 
 let sidebarButton = document.querySelector('#sidebar-button'),
     searchButton = document.querySelector('#search-button'),

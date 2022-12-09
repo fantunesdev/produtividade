@@ -8,6 +8,8 @@ from api.views.subarea_views import *
 
 urlpatterns = [
     path('atividades/', AtividadesList.as_view(), name='atividades-list'),
+    path('atividades/ano/<int:ano>/', AtividadeAno.as_view()),
+
     path('areas/', AreaList.as_view(), name='areas-list'),
     path('areas/<int:area_id>/', AreaDetalhes.as_view(), name='area-detalhes'),
     path('areas/<int:area_id>/subareas/', SubAreaArea.as_view(), name='area_subareas-detalhes'),
