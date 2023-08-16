@@ -1,0 +1,2 @@
+Copiar o arquivo nginx/prod.my-server.com para /etc/nginx/sites-avaliable.
+Copiar o arquivo supervisor/produtividade.conf para /etc/supervisor/conf.d/produtividade.conf
