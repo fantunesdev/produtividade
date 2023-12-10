@@ -5,6 +5,7 @@
 {% block title %} Cadastrar Atividade {% endblock title %}
 
 {% block content %}
+        {% if not 'cadastrar_lote' in request.path_info %}
         <!-- INÍCIO CRONÔMETRO -->
         <div class="box box-primary box-450px" id="cronometro">
             <div class="box-header">
@@ -22,6 +23,7 @@
             </div>
         </div>
         <!-- FIM CRONÔMETRO -->
+        {% endif %}
 
         <!-- INÍCIO FORMULÁRIO DE ATIVIDADES -->
         <div class="box box-primary center-div" id="formulario">
@@ -32,10 +34,31 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="form-group">
+                        {% if 'cadastrar_lote' in request.path_info %}
+                        <label for="id_data">Data Inicial:</label>
+                        {% else %}
                         <label for="id_data">Data:</label>
-                        {{ form_atividade.data|addclass:'form-control' }}
+                        {% endif %}
+                        {{ form_atividade.data|addclass:'form-control form-control-data' }}
                         {{ form_atividade.data.errors }}
                     </div>
+                    {% if 'cadastrar_lote' in request.path_info %}
+                    <div class="form-group">
+                        <label for="id_data_final">Data final:</label>
+                        {{ form_atividade.data_final|addclass:'form-control form-control-data' }}
+                        {{ form_atividade.data_final.errors }}
+                    </div>
+                    {% endif %}
+                    {% if 'cadastrar_lote' in request.path_info %}
+                    <div class="form-group">
+                        <label for="id_dias_da_semana">Dias da Semana:</label>
+                        <div class="dias-da-semana">
+                            {{ form_atividade.dias_da_semana }}
+                            {{ form_atividade.dias_da_semana.errors }}
+                            <span class="mini-btn margin-left-10" id="selecionar-todos-btn">Selecionar todos</span>
+                        </div>
+                    </div>
+                    {% endif %}
                     <div class="form-group" id="div-area">
                         <label for="id_area">Área:</label>
                         <i class="fa-solid fa-plus padding-left-10 cursor-pointer" id="create-area"></i>

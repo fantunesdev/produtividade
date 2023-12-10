@@ -25,6 +25,16 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{% url 'cadastrar_atividade_em_lote' %}">
+                        <div>
+                            <i class="fas fa-list-ol icon"></i>
+                        </div>
+                        <div class="toggle">
+                            <span>Cadastrar em Lote</span>
+                        </div>
+                    </a>
+                </li>
+                {% comment %} <li>
                     <a href="{% url 'relatorios' %}">
                         <div>
                             <i class="fa-solid fa-chart-line icon"></i>
@@ -33,7 +43,7 @@
                             <span>Relatórios</span>
                         </div>
                     </a>
-                </li>
+                </li> {% endcomment %}
                 <!-- INICIO EXEMPLO ÍTEM COM DROPDOWN -->
                 <li>
                     <a id="listar-submenu-button" onclick="toggleSubMenu('listar-submenu')">

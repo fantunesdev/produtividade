@@ -1,13 +1,13 @@
 import json
 
-from datetime import date
+from datetime import date, timedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
 from atividades.encoder import Encoder
 from atividades.entidades.atividade import Atividade
-from atividades.forms.atividade_form import AtividadeForm, AtividadeBuscar
+from atividades.forms.atividade_form import AtividadeForm, AtividadeBuscar, AtividadeEmLoteForm
 from atividades.forms.general_form import ExclusaoForm
 from atividades.repositorios import atividade_repositorio
 from atividades.services import atividade_service, area_service, subarea_service, plataforma_service, pessoa_service
@@ -53,6 +53,45 @@ def cadastrar_atividade(request):
             return redirect('listar_semana_atual')
     else:
         form_atividade = AtividadeForm()
+        atividade_service.cadastar_inicio()
+    template_tags['form_atividade'] = form_atividade
+    return render(request, 'atividades/form_atividade.html', template_tags)
+
+
+@login_required
+def cadastrar_atividade_em_lote(request):
+    if request.method == "POST":
+        form_atividade = AtividadeEmLoteForm(request.POST)
+        if form_atividade.is_valid():
+            data_inicial = form_atividade.cleaned_data['data']
+            data_final = form_atividade.cleaned_data['data_final']
+            dias = (data_final - data_inicial).days
+            dias_da_semana_selecionados = form_atividade.cleaned_data['dias_da_semana']
+            print(dias_da_semana_selecionados)
+            for i in range(dias + 1):
+                dia = data_inicial + timedelta(days=i)
+                print(dia.weekday())
+                print(f'{dia.weekday()}' in dias_da_semana_selecionados)
+                if f'{dia.weekday()}' in dias_da_semana_selecionados:
+                    print('entrou')
+                    atividade_nova = Atividade(
+                        data=dia,
+                        area=form_atividade.cleaned_data['area'],
+                        subarea=form_atividade.cleaned_data['subarea'],
+                        plataforma=form_atividade.cleaned_data['plataforma'],
+                        pessoa=form_atividade.cleaned_data['pessoa'],
+                        descricao=form_atividade.cleaned_data['descricao'],
+                        detalhamento=form_atividade.cleaned_data['detalhamento'],
+                        tempo=form_atividade.cleaned_data['tempo'],
+                        inicio=atividade_service.buscar_inicio().inicio,
+                        fim=timezone.now(),
+                        usuario=request.user
+                    )
+
+                    atividade_service.cadastrar_atividade(atividade_nova)
+            return redirect('listar_semana_atual')
+    else:
+        form_atividade = AtividadeEmLoteForm()
         atividade_service.cadastar_inicio()
     template_tags['form_atividade'] = form_atividade
     return render(request, 'atividades/form_atividade.html', template_tags)

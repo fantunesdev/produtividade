@@ -168,6 +168,41 @@ function hasToggled(classList) {
     return list.includes('toggled');
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    var checkboxes = document.querySelectorAll('input[name="dias_da_semana"]');
+    
+    checkboxes.forEach(function (checkbox) {
+      checkbox.addEventListener("change", function () {
+        if (this.checked) {
+          this.parentNode.classList.add("dias-da-semana-checkbox-checked");
+        } else {
+          this.parentNode.classList.remove("dias-da-semana-checkbox-checked");
+        }
+      });
+    });
+  });
+
+
+const divDiasDaSemana = document.getElementsByClassName('dias-da-semana')[0].children;
+const selecionarTodosBtn = document.getElementById('selecionar-todos-btn');
+const diasDaSemanaCheckboxes = document.querySelectorAll('[id^="id_dias_da_semana_"]');
+let diasDaSemanaChecked = false;
+
+selecionarTodosBtn.addEventListener('click', () => {
+    for (let checkbox of diasDaSemanaCheckboxes) {
+        if (diasDaSemanaChecked) {
+            checkbox.checked = false;
+            checkbox.parentNode.classList.remove('dias-da-semana-checkbox-checked')  ;          
+            selecionarTodosBtn.innerHTML = 'Selecionar todos';
+        } else {
+            checkbox.checked = true;
+            checkbox.parentNode.classList.add('dias-da-semana-checkbox-checked');
+            selecionarTodosBtn.innerHTML = 'Desmarcar todos';
+        }
+    }
+    diasDaSemanaChecked = !diasDaSemanaChecked;
+});
+
 
 // OBSSOLETO
 

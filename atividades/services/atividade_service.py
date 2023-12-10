@@ -4,20 +4,24 @@ from django.utils import timezone
 
 
 def cadastrar_atividade(atividade):
-    nova_atividade = Atividade.objects.create(
-        data=atividade.data,
-        area=atividade.area,
-        subarea=atividade.subarea,
-        plataforma=atividade.plataforma,
-        pessoa=atividade.pessoa,
-        descricao=atividade.descricao,
-        detalhamento=atividade.detalhamento,
-        tempo=atividade.tempo,
-        inicio=atividade.inicio,
-        fim=atividade.fim,
-        usuario=atividade.usuario
-    )
-    return nova_atividade
+    try:
+        nova_atividade = Atividade.objects.create(
+            data=atividade.data,
+            area=atividade.area,
+            subarea=atividade.subarea,
+            plataforma=atividade.plataforma,
+            pessoa=atividade.pessoa,
+            descricao=atividade.descricao,
+            detalhamento=atividade.detalhamento,
+            tempo=atividade.tempo,
+            inicio=atividade.inicio,
+            fim=atividade.fim,
+            usuario=atividade.usuario
+        )
+        print('cadastrou')
+        return nova_atividade
+    except:
+        print('nao cadastrou')
 
 
 def cadastar_inicio():

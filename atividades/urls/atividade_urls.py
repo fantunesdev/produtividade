@@ -6,6 +6,7 @@ from atividades.views.relatorio_views import *
 urlpatterns = [
     path('', listar_semana_atual, name='listar_semana_atual'),
     path('cadastrar/', cadastrar_atividade, name='cadastrar_atividade'),
+    path('cadastrar_lote/', cadastrar_atividade_em_lote, name='cadastrar_atividade_em_lote'),
     path('editar/<int:id>/', editar_atividade, name='editar_atividade'),
     path('todas/', listar_atividades, name='listar_atividades'),
     path('ano/<int:ano>/<str:tipo>/<int:valor>/', listar_ano_mes_semana, name='listar_ano_mes_semana'),

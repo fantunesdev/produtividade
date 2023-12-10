@@ -546,6 +546,16 @@ td a:hover {
     width: 920px;
 }
 
+.mini-btn {
+    padding: 5px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    border: #404040 2px solid;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 /* FIM BOTÕES */
 
 
@@ -558,9 +568,13 @@ td a:hover {
     margin: 10px 10px 10px 0;
     background: #303030;
     border-radius: 3px;
-    border: 1px solid #404040;
+    border: none;
     color: #ccc;
     font-family: Ubuntu;
+}
+
+.form-control-data {
+    max-width: 100px;
 }
 
 .textarea {
@@ -606,9 +620,55 @@ a {
     padding-left: 10px;
 }
 
+.margin-left-10 {
+    margin-left: 10px;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
+
+.dias-da-semana {
+    display: flex;
+    align-items: center;
+}
+
+.dias-da-semana div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 0px;
+}
+
+.dias-da-semana label {
+    position: relative;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: #404040 2px solid;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dias-da-semana input[type=checkbox] {
+    display: none;
+}
+
+.dias-da-semana-checkbox-checked {
+    background-color: darkred;
+    /* color: #131313; */
+    font-weight: bold;
+}
+
+.errorlist {
+    padding: 15px 0;
+    background-color: darkred;
+    border-radius: 5px;
+}
+
+.errorlist li {
+    margin-left: 30px;
+}
+
 
 /* FIM FORMATADORES */
 
