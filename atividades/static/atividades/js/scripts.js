@@ -101,11 +101,14 @@ function toggleNavegacao(id) {
         navigationButton = document.querySelector(`#${id}-button`),
         menu = localStorage.getItem('time-navigation-bar-status');
     
-    if (menu === 'show') {
-        navigation.classList.remove('toggled');
-        navigationButton.children[0].outerHTML = '<i class="fa-solid fa-angles-up" onclick="toggleNavegacao(\'navegacao\')"></i>';
-        for (let i = 0; i < navigation.children.length; i++) {
-            navigation.children[i].classList.remove('toggled');
+    if (navigation) {
+        if (menu === 'show') {
+            navigation.classList.remove('toggled');
+            navigationButton.children[0].outerHTML = '<i class="fa-solid fa-angles-up" onclick="toggleNavegacao(\'navegacao\')"></i>';
+            for (let i = 0; i < navigation.children.length; i++) {
+                navigation.children[i].classList.remove('toggled');
+            }
+
         }
     }
 })();
