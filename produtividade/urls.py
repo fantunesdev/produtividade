@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from atividades.views.atividade_views import listar_semana_atual
+from atividades.views.teste_views import teste
 from login.views import logar_usuario, deslogar_usuario
 
 urlpatterns = [
+    path('', listar_semana_atual),
+
     path('admin/', admin.site.urls),
 
     path('api/', include('api.urls')),
@@ -27,11 +31,16 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view()),
 
     path('atividades/', include('atividades.urls.atividade_urls')),
-    path('atividades/areas/', include('atividades.urls.area_urls')),
-    path('atividades/sub_areas/', include('atividades.urls.sub_area_urls')),
-    path('atividades/plataformas/', include('atividades.urls.plataforma_urls')),
+    path('areas/', include('atividades.urls.area_urls')),
+    path('subareas/', include('atividades.urls.subarea_urls')),
+    path('plataformas/', include('atividades.urls.plataforma_urls')),
+    path('pessoas/', include('atividades.urls.pessoa_urls')),
+
+    path('relatorios/', include('atividades.urls.relatorio_urls')),
 
     path('usuarios/', include('login.urls')),
     path('login/', logar_usuario, name='logar_usuario'),
     path('logout/', deslogar_usuario, name='deslogar_usuario'),
+
+    path('teste/', teste, name='teste')
 ]

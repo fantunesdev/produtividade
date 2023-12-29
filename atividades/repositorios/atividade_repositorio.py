@@ -1,6 +1,11 @@
 from datetime import date
 
-from atividades.services import area_service
+from django.core.exceptions import ObjectDoesNotExist
+
+from atividades.services import area_service, plataforma_service, atividade_service, pessoa_service
+from ..entidades.atividade import Atividade
+from ..entidades.pessoa import Pessoa
+from ..entidades.plataforma import Plataforma
 from ..utils import tempo_area
 
 
@@ -11,18 +16,19 @@ def tempo_atividade(inicio, fim):
         tempo = tempo + 1
     return tempo
 
+
 def calcular_tempo_atividade_area(atividades, usuario):
     areas = area_service.listar_areas(usuario)
     lista_areas = []
     for area in areas:
         cor = to_rgba(area.cor)
-        area_tempo = tempo_area.TempoArea(area.nome, 0, cor)
+        area_tempo = tempo_area.TempoArea(area.id, area.nome, 0, cor)
         lista_areas.append(area_tempo)
     for atividade in atividades:
         for area in lista_areas:
             if atividade.area.nome == area.nome:
                 area.tempo += atividade.tempo
-    tempo_total = tempo_area.TempoArea('Total', 0, None)
+    tempo_total = tempo_area.TempoArea(0, 'Total', 0, None)
     for area in lista_areas:
         tempo_total.tempo += area.tempo
     lista_areas.append(tempo_total)
@@ -53,3 +59,4 @@ def criar_dicionario(numero, tipo):
         '>>': numero + 1
     }
     return dicionario
+

@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+{% load meus_filtros %}
+
+    {% block title %}
+    Buscar
+    {% endblock %}
+
+    {% block content %}
+        <div class="box box-primary center-div box-450px">
+            <div class="box-title">
+                <h3>Buscar</h3>
+            </div>
+            <div class="box-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form_atividade.errors }}
+                    {{ form_atividade.detalhamento | addclass:'form-control' }}<br>
+                    <input type="submit" class="btn btn-primary" name="Buscar">
+                </form>
+            </div>
+            <div class="box-footer">
+
+            </div>
+        </div>
+    {% endblock content %}

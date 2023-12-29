@@ -1,24 +1,68 @@
-{% load static %}
+        <aside>
+            <ul>
+                <!-- INÍCIO ÍTENS DE MENU -->
 
-<li class="menu-item">
-    <a href="{% url 'cadastrar_atividade' %}" class="menu-item-link"><i class="fas fa-edit icon"></i><span>Cadastrar</span></a>
-</li>
-
-<li class="menu-item">
-    <a href="{% url 'listar_atividades' %}" class="menu-item-link"><i class="fas fa-list icon"></i><span class="collapse">Listar</span></a>
-</li>
-
-<li class="menu-item">
-    <a href="{% url 'listar_ano_mes_semana' ano_atual 'semana' semana_atual %}" class="menu-item-link"><i class="fas fa-list icon"></i><span class="collapse">Listar Semana Atual</span></a>
-</li>
-
-<br><br><br><br>
-<li>Temporário:</li>
-
-<li class="menu-item">
-    <a href="{% url 'buscar' %}" class="menu-item-link"><i class="fa-solid fa-magnifying-glass"></i><span class="collapse">Buscar</span></a>
-</li>
-
-<li class="menu-item">
-    <a href="{% url 'settings' %}" class="menu-item-link"><i class="fa-solid fa-gear"></i><span class="collapse">Settings</span></a>
-</li>
+                <!-- INÍCIO EXEMPLO ÍTEM COMUM -->
+                <li>
+                    <a href="{% url 'listar_semana_atual' %}">
+                        <div>
+                            <i class="fa-solid fa-house"></i>
+                        </div>
+                        <div class="toggle">
+                            <span>Início</span>
+                        </div>
+                    </a>
+                </li>
+                <!-- FIM EXEMPLO ÍTEM COMUM -->
+                <li>
+                    <a href="{% url 'cadastrar_atividade' %}">
+                        <div>
+                            <i class="fas fa-edit icon"></i>
+                        </div>
+                        <div class="toggle">
+                            <span>Cadastrar</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'cadastrar_atividade_em_lote' %}">
+                        <div>
+                            <i class="fas fa-list-ol icon"></i>
+                        </div>
+                        <div class="toggle">
+                            <span>Cadastrar em Lote</span>
+                        </div>
+                    </a>
+                </li>
+                {% comment %} <li>
+                    <a href="{% url 'relatorios' %}">
+                        <div>
+                            <i class="fa-solid fa-chart-line icon"></i>
+                        </div>
+                        <div class="toggle">
+                            <span>Relatórios</span>
+                        </div>
+                    </a>
+                </li> {% endcomment %}
+                <!-- INICIO EXEMPLO ÍTEM COM DROPDOWN -->
+                <li>
+                    <a id="listar-submenu-button" onclick="toggleSubMenu('listar-submenu')">
+                        <div>
+                            <i class="fas fa-list icon"></i>
+                        </div>
+                        <div class="toggle">
+                            <span>Listar </span>
+                        </div>
+                        <div class="align-right">
+                            <i class="fa-solid fa-angle-down inverse-toggle"></i>
+                        </div>
+                    </a>
+                </li>
+                    <ul id="listar-submenu" class="toggledable toggled">
+                        <li>
+                            <a href="{% url 'listar_atividades' %}">Todas as atividades</a>
+                        </li>
+                    </ul>
+                <!-- FIM EXEMPLO ÍTEM COM DROPDOWN -->
+            </ul>
+        </aside>

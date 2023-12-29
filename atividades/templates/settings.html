@@ -1,0 +1,151 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load meus_filtros %}
+    {% block title %}
+        Settings
+    {% endblock title %}
+
+
+    {% block content %}
+        <i id="inicio"></i>
+        {% if 'settings' in request.path %}
+        <ul>
+            <li><a href="#areas">Áreas</a></li>
+            <li><a href="#subareas">Sub-Áreas</a></li>
+            <li><a href="#plataformas">Plataformas</a></li>
+            <li><a href="#pessoas">Pessoas</a></li>
+        </ul>
+        {% endif %}
+
+        {% if areas %}
+        <div class="box box-primary" id="areas">
+            <div class="box-title">
+                <h3>Áreas</h3>
+            </div>
+            <div class="box-body">
+                <a href="{% url 'cadastrar_area' %}"><input type="button" value="Cadastrar" class="btn btn-primary"></a>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="center">Nome</th>
+                        <th>Cor</th>
+                        <th class="center">Editar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                        {% for area in areas %}
+                            <tr>
+                                <td class="center">{{ area.nome }}</td>
+                                <td class="center">
+                                    <div class="center-div" style="background-color: {{ area.cor }}; width: 20px; height: 20px; border-radius: 10px;"></div>
+                                </td>
+                                <td class="center">
+                                    <a href="{% url 'editar_area' area.id %}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                </table>
+            </div>
+            <div class="box-footer">
+                <a href="#inicio"><input type="button" value="Voltar" class="btn"></a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if subareas %}
+        <div class="box box-primary" id="subareas">
+            <div class="box-title">
+                <h3>Sub-Áreas</h3>
+            </div>
+            <div class="box-body">
+                <a href="{% url 'cadastrar_subarea' %}"><input type="button" value="Cadastrar" class="btn btn-primary"></a>
+                <table class="table">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Editar</th>
+                    </tr>
+                    {% for subarea in subareas %}
+                    <tr>
+                        <td>{{ subarea.nome }}</td>
+                        <td>
+                            <a href="{% url 'editar_subarea' subarea.id %}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="box-footer">
+                <a href="#inicio"><input type="button" value="Voltar" class="btn"></a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if plataformas %}
+        <div class="box box-primary" id="plataformas">
+            <div class="box-title">
+                <h3>Plataformas</h3>
+            </div>
+            <div class="box-body">
+                <a href="{% url 'cadastrar_plataforma' %}"><input type="button" value="Cadastrar" class="btn btn-primary"></a>
+                <table class="table">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Editar</th>
+                    </tr>
+                    {% for plataforma in plataformas %}
+                    <tr>
+                        <td>{{ plataforma.nome }}</td>
+                        <td>
+                            <a href="{% url 'editar_plataforma' plataforma.id %}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="box-footer">
+                <a href="#inicio"><input type="button" value="Voltar" class="btn"></a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if pessoas %}
+        <div class="box box-primary" id="pessoas">
+            <div class="box-title">
+                <h3>Pessoas</h3>
+            </div>
+            <div class="box-body">
+                <a href="{% url 'cadastrar_pessoa' %}"><input type="button" value="Cadastrar" class="btn btn-primary"></a>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pessoa in pessoas %}
+                        <tr>
+                            <td>{{ pessoa.nome }}</td>
+                            <td>
+                                <a href="{% url 'editar_pessoa' pessoa.id %}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="box-footer">
+                <a href="#inicio"><input type="button" value="Voltar" class="btn"></a>
+            </div>
+        </div>
+        {% endif %}
+    {% endblock content %}

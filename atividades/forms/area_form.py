@@ -8,5 +8,5 @@ class AreaForm(forms.ModelForm):
         model = Area
         fields = ['nome', 'descricao', 'cor']
         widgets = {
-            'cor': TextInput(attrs={'type': 'color'})
+            'cor': TextInput(attrs={'type': 'color', 'class': 'form-control'})
         }

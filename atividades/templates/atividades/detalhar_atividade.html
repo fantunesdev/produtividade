@@ -1,0 +1,82 @@
+{% extends "index.html" %}
+{% load meus_filtros %}
+
+    {% block title %}
+        {% if 'remover' in request.path %}
+        Exclusão da atividade {{ atividade.descricao }}
+        {% else %}
+        Atividade: {{ atividade.descricao }}
+        {% endif %}
+    {% endblock title %}
+
+    {% block content %}
+        <div class="box box-primary">
+            <form method="post">
+                <div class="box-header">
+                    <h3 class="box-title">
+                        {% if 'remover' in request.path %}
+                        Atenção! Você está prestes a excluir a atividade {{ atividade.descricao }} do dia
+                        {{ atividade.data }}. Esta operação é irreversível.
+                        {% else %}
+                        {{ atividade.descricao }}
+                        {% endif %}
+                    </h3>
+                </div>
+                <div class="box-body">
+                    <p>Área: <b>{{ atividade.area }}</b></p>
+                    <p>Sub-Área: <b>{{ atividade.subarea }}</b></p>
+                    <p>Plataforma: <b>{{ atividade.plataforma }}</b></p>
+                    <p>Início: <b>{{ atividade.inicio }}</b></p>
+                    <p>Conclusão: <b>{{ atividade.fim }}</b></p>
+                    <p>Tempo atividade: <b>{{ tempo_atividade }} min. (Cálculo Automático)</b></p>
+                    <p>Tempo atividade: <b>{{ atividade.tempo }} min. (Cronometrado)</b></p>
+                    {% if tempo_total %}
+                    <p>Tempo Total: <b>{{ tempo_total|em_horas }}</b></p>
+                    {% endif %}
+                    <p>Detalhamento: <br><br>
+                    {{ atividade.detalhamento|safe }}</p>
+                    {% if 'remover' in request.path %}
+                    <div class="btn-danger">
+                        {% csrf_token %}
+                        <h4>
+                            {{ form_exclusao }}
+                            Sim, desejo excluir e estou ciente de que esta operação é irreversível.
+                        </h4>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="box-footer">
+                    {% if 'remover' in request.path %}
+                    <a href="{{request.META.HTTP_REFERER}}"><input type="button" value="Voltar" class="btn btn-primary"></a>
+                    {% csrf_token %}
+                    <input type="submit" value="Excluir" class="btn btn-danger">
+                    {% else %}
+                    <td><a href="{% url 'listar_sessao' 'descricao' atividade.descricao %}">Ver tabela com todas as ocorrências</a></td>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+
+        {% if not 'remover' in request.path %}
+        {% for i in atividades %}
+            {% if i.detalhamento != '' %}
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            {% if not projeto %}
+                                {{ i.descricao|upper }} -
+                            {% endif %}
+                            {{ i.data }} - {{ i.tempo }} minutos
+                        </h3>
+                    </div>
+                    <div class="box-body">
+                        <p>{{ i.detalhamento|safe }}</p>
+                    </div>
+                    <div class="box-footer">
+                        <a href="{% url 'editar_atividade' i.id %}">Editar</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+    {% endblock content %}
