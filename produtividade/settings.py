@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
-from my_conf import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,12 +20,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SECRET_DJANGO
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = HOSTS
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS').split(',')
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').split(',')
 
 
 # Application definition
@@ -82,11 +83,11 @@ WSGI_APPLICATION = 'produtividade.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': BANCO_DE_DADOS,
-        'USER': USUARIO,
-        'PASSWORD': SENHA,
-        'HOST': SERVIDOR,
-        'PORT': PORTA
+        'NAME': os.getenv('MYSQL_DATABASE'),
+        'USER': os.getenv('MYSQL_USER'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': os.getenv('MYSQL_HOST'),
+        'PORT': os.getenv('MYSQL_PORT')
     }
 }
 
