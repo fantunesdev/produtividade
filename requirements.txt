@@ -22,3 +22,4 @@ urllib3
 openpyxl
 django-ckeditor
 djangorestframework
+djangorestframework-simplejwt
